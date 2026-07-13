@@ -1,0 +1,57 @@
+# EditorConfig helps maintain consistent coding styles.
+# https://editorconfig.org
+
+root = true
+
+#################################
+# General
+#################################
+
+[*]
+
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+
+#################################
+# C#
+#################################
+
+[*.cs]
+
+# Indentation
+indent_style = space
+indent_size = 4
+
+
+# New lines
+csharp_new_line_before_members_in_chained_object_initializers = true
+
+
+# Braces
+csharp_prefer_braces = true:suggestion
+
+
+# Using directives
+dotnet_sort_system_directives_first = true
+
+
+# Naming
+dotnet_naming_rule.interfaces_should_start_with_i.severity = warning
+dotnet_naming_rule.interfaces_should_start_with_i.symbols = interface_symbols
+dotnet_naming_rule.interfaces_should_start_with_i.style = interface_style
+
+dotnet_naming_symbols.interface_symbols.applicable_kinds = interface
+
+dotnet_naming_style.interface_style.capitalization = pascal_case
+dotnet_naming_style.interface_style.required_prefix = I
+
+
+#################################
+# Warnings
+#################################
+
+dotnet_diagnostic.IDE0052.severity = warning
+dotnet_diagnostic.IDE0044.severity = warning
