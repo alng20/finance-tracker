@@ -1,4 +1,4 @@
-# ExpenseElements Table
+# ExpenseDetails Table
 
 Stores information about an individual element from expanse payment
 
@@ -8,12 +8,12 @@ Stores information about an individual element from expanse payment
 | Id | UUID | No | Primary key |
 | ExpenseId | UUID | No | Expense that element belongs |
 | ItemId | UUID | No | Item decribes an element |
-| ActualPrice | decimal(18,2) | No | Actual element price |
-| Discount | decimal(5, 2) | Yes | Discount percent |
-| TotalPrice | decimal(18,2) | No | Total element price with discount |
-| Currency | enum | No | Price currency |
+| TotalPrice | decimal(18,2) | No | Total price |
+| Discount | decimal(5, 2) | No | Discount percent |
+| UnitPrice | decimal(18,2) | No | Price of 1 unit |
+| UnitDiscountPrice | decimal(18,2) | Yes | Price of 1 unit with discount |
 | Quantity | decimal(5, 2) | No | Quantity of element |
-| Notes | varchar(500) | Yes | Additional information |
+| Currency | enum | No | Price currency |
 | CreatedAt | datetime | No | Creation timestamp |
 | CreatedBy | UUID | No | User who created a record |
 | UpdatedAt | datetime | Yes | Update timestamp |
@@ -34,16 +34,19 @@ Foreign Keys:
 
 ### Relationships
 
-Expenses (1) ---- (*) ExpenseElements
+Expenses (1) ---- (*) ExpenseDetails
 
-Items (1) ---- (*) Expenses
+Items (1) ---- (*) ExpenseDetails
 
-Users (1) ---- (*) ExpenseElements
+Users (1) ---- (*) ExpenseDetails
 
 
 ### Business Rules
 
-- ActualPrice stores price without discount.
-- TotalPrice stores price with discount if discount exists.
-- Discount range is from 0% to 100%, NULL is 0%
+- UnitPrice stores price without discount and calculates from TotalPrice, Discount and Quantity
+- TotalPrice stores price with discount if discount exists
+- TotalPrice cannot be negative
+- Quantity cannot be negative
+- Discount range is from 0% to 100%
+- TotalPrice, Quantity and Discount can be updated
 

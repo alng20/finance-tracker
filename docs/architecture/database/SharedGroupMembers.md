@@ -1,14 +1,12 @@
-# GroupMembers Table
+# SharedGroupMembers Table
 
 Stores information about a member of group
 
 ## Columns
 | Column | Type | Nullable | Description |
 |---|---|---|---|
-| Id | UUID | No | Primary key |
 | GroupId | UUID | No | Group id that member belongs |
 | UserId | UUID | No | User id of member |
-| Role | enum | No | Member role |
 | CanRead | bool | No | if user can read expenses |
 | CanWrite | bool | No | if user can write expenses |
 | CanAdd | bool | No | if user can add expenses |
@@ -22,7 +20,7 @@ Stores information about a member of group
 ### Constraints
 
 Primary Key:
-- Id
+- GroupId + UserId
 
 Foreign Keys:
 - GroupId -> Groups.Id
@@ -33,11 +31,13 @@ Foreign Keys:
 
 ### Relationships
 
-Groups (1) ---- (*) GroupMembers
-Users (1) ---- (*) GroupMembers
+Groups (1) ---- (*) SharedGroupMembers
+
+Users (1) ---- (*) SharedGroupMembers
 
 
 ### Business Rules
 
-- 
+- Member's permissions can be updated
+- Shared group's owner has all permissions
 

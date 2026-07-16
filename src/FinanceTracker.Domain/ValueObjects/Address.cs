@@ -4,13 +4,13 @@ namespace FinanceTracker.Domain.ValueObjects;
 
 public record Address
 {
-    public string Country;
-    public string City;
+    public string Country { get; }
+    public string City { get; }
 
     public Address(string country, string city)
     {
-        Guard.AgainstEmpty(country);
-        Guard.AgainstEmpty(city);
+        Guard.AgainstEmpty(country, nameof(country));
+        Guard.AgainstEmpty(city, nameof(city));
 
         Country = country;
         City = city;

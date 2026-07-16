@@ -13,8 +13,8 @@ public class Shop
 
     public Shop(Guid id, string name, Guid? retailerId, Address? address)
     {
-        Guard.AgainstEmpty(name);
-        Guard.AgainstEmpty(id);
+        Guard.AgainstEmpty(id, nameof(id));
+        Guard.AgainstEmpty(name, nameof(name));
 
         Id = id;
         Name = name;
@@ -24,14 +24,14 @@ public class Shop
 
     public void Rename(string name)
     {
-        Guard.AgainstEmpty(name);
+        Guard.AgainstEmpty(name, nameof(name));
 
         Name = name;
     }
 
     public void AssignRetailer(Guid retailerId)
     {
-        Guard.AgainstEmpty(retailerId);
+        Guard.AgainstEmpty(retailerId, nameof(retailerId));
 
         RetailerId = retailerId;
     }
