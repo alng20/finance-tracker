@@ -7,6 +7,7 @@ Stores payment information by user
 |---|---|---|---|
 | Id | UUID | No | Primary key |
 | UserId | UUID | No | User who did a payment |
+| SharedGroupId | UUID | Yes | Shared group id |
 | ShopId | UUID | Yes | Store where payment was made |
 | Date | datetime | No | Date of payment |
 | TotalAmount | decimal(18,2) | No | Total expense amount |
@@ -25,6 +26,7 @@ Primary Key:
 
 Foreign Keys:
 - UserId -> Users.Id
+- SharedGroupId -> SharedGroups.Id
 - ShopId -> Shops.Id
 - CreatedBy -> Users.Id
 - UpdatedBy -> Users.Id
@@ -34,11 +36,15 @@ Foreign Keys:
 
 Users (1) ---- (*) Expenses
 
+SharedGroups (1) ---- (*) Expenses
+
 Shops (1) ---- (*) Expenses
 
 
 ### Business Rules
 
 - TotalAmount stores the final payment amount.
-- TotalAmount should match the sum of ExpenseDetails when all items are added.
-
+- TotalAmount cannot be negative
+- Expense has to have an user who does a payment
+- Expense can be added to a shared group
+- Expense can be deleted from a shared group
