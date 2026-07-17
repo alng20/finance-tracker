@@ -37,7 +37,7 @@ public class SharedGroupMember
         return Permission.Read |
                Permission.Write |
                Permission.Edit |
-               Permission.Delete | 
+               Permission.Delete |
                Permission.ManageMembers;
     }
 }
