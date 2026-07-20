@@ -21,10 +21,16 @@ trim_trailing_whitespace = true
 
 [*.cs]
 
+max_line_length = 100
+
 # Indentation
 indent_style = space
 indent_size = 4
-
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = true
+csharp_style_indent_method_call_chains = true
+csharp_new_line_before_members_in_chained_calls = true
 
 # New lines
 csharp_new_line_before_members_in_chained_object_initializers = true

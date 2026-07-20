@@ -19,7 +19,16 @@ public class Expense
     private readonly List<ExpenseDetail> _details = new();
     public IReadOnlyCollection<ExpenseDetail> Details => _details;
 
-    public Expense(Guid id, Guid userId, Guid? sharedGroupId, Guid? shopId, Money amount, DateTime date)
+    private Expense() { }
+
+    public Expense(
+        Guid id,
+        Guid userId,
+        Guid? sharedGroupId,
+        Guid? shopId,
+        Money totalAmount,
+        DateTime date
+    )
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(userId, nameof(userId));
@@ -28,7 +37,7 @@ public class Expense
         UserId = userId;
         SharedGroupId = sharedGroupId;
         ShopId = shopId;
-        TotalAmount = amount;
+        TotalAmount = totalAmount;
         Date = date;
     }
 
@@ -62,8 +71,7 @@ public class Expense
 
     public void RemoveDetail(ExpenseDetail detail)
     {
-        detail.AssignExpense(Id);
-        _details.Add(detail);
+        _details.Remove(detail);
     }
 
     public void AssignSharedGroup(Guid sharedGroupId)

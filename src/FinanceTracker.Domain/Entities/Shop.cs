@@ -11,6 +11,10 @@ public class Shop
     public Retailer? Retailer { get; private set; }
     public Address? Address { get; private set; }
 
+    public DateTime? DeletedAt { get; private set; }
+
+    private Shop() { }
+
     public Shop(Guid id, string name, Guid? retailerId, Address? address)
     {
         Guard.AgainstEmpty(id, nameof(id));
@@ -39,5 +43,10 @@ public class Shop
     public void RemoveRetailer()
     {
         RetailerId = null;
+    }
+
+    public void SoftDelete()
+    {
+        DeletedAt = DateTime.UtcNow;
     }
 }

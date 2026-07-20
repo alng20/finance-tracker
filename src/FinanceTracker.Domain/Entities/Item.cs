@@ -7,15 +7,16 @@ public class Item
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = null!;
-    public Guid CategoryId { get; private set; }
-    public ItemCategory ItemCategory { get; private set; } = null!;
+    public Guid? CategoryId { get; private set; }
+    public ItemCategory? Category { get; private set; }
     public Unit Unit { get; private set; }
 
-    public Item(Guid id, string name, Guid categoryId, Unit unit)
+    public DateTime? DeletedAt { get; private set; }
+
+    public Item(Guid id, string name, Guid? categoryId, Unit unit)
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(name, nameof(name));
-        Guard.AgainstEmpty(categoryId, nameof(categoryId));
 
         Id = id;
         Name = name;
@@ -33,5 +34,10 @@ public class Item
     public void ChangeUnit(Unit unit)
     {
         Unit = unit;
+    }
+
+    public void SoftDelete()
+    {
+        DeletedAt = DateTime.UtcNow;
     }
 }

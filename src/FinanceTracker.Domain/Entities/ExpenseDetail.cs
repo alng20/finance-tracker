@@ -18,18 +18,26 @@ public class ExpenseDetail
     public decimal Quantity { get; private set; }
     public decimal DiscountPercent { get; private set; }
 
-    public ExpenseDetail(Guid id, Guid itemId, Money total, decimal quantity, decimal discountPercent)
+    private ExpenseDetail() { }
+
+    public ExpenseDetail(
+        Guid id,
+        Guid itemId,
+        Money totalPrice,
+        decimal quantity,
+        decimal discountPercent
+    )
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(itemId, nameof(itemId));
         Guard.GreaterThan(quantity, 0, nameof(quantity));
-        Guard.GreaterThan(total.Amount, 0, nameof(total));
+        Guard.GreaterThan(totalPrice.Amount, 0, nameof(totalPrice));
         Guard.InRange(discountPercent, 0, 100, nameof(discountPercent));
 
         Id = id;
         ItemId = itemId;
 
-        TotalPrice = total;
+        TotalPrice = totalPrice;
         Quantity = quantity;
         DiscountPercent = discountPercent;
 

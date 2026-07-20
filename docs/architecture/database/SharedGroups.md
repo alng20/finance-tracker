@@ -12,7 +12,7 @@ Stores information about a group of users
 | CreatedBy | UUID | No | User who created a record |
 | UpdatedAt | datetime | Yes | Update timestamp |
 | UpdatedBy | UUID | Yes | Last User who updated a record |
-| isDeleted | bool | No | Is record deleted |
+| DeletedAt | bool | No | Is record deleted |
 
 ### Constraints
 
@@ -37,4 +37,5 @@ Users (1) ---- (*) UserGroups
 - Owner cannot leave a group without tranfering permission
 - SharedGroup is deleted if owner is only user and leaves
 - SharedGroup has only unique members
+- SharedGroup can be archived
 

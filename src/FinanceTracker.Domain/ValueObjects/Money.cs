@@ -1,6 +1,5 @@
-using System.Security.AccessControl;
-
 using FinanceTracker.Domain.Enums;
+using FinanceTracker.Domain.Exceptions;
 
 namespace FinanceTracker.Domain.ValueObjects;
 
@@ -9,6 +8,17 @@ public record Money
 {
     public decimal Amount { get; }
     public Currency Currency { get; }
+
+    private Money() { }
+
+    private static void CheckCurrency(Money left, Money right)
+    {
+        if (left.Currency != right.Currency)
+        {
+            throw new DomainException(
+                "Cannot operate with different currencies");
+        }
+    }
 
     public Money(decimal amount, Currency currency)
     {
@@ -23,6 +33,7 @@ public record Money
 
     public static Money operator /(Money left, Money right)
     {
+        CheckCurrency(left, right);
         return new Money(left.Amount / right.Amount, left.Currency);
     }
 
@@ -33,6 +44,7 @@ public record Money
 
     public int CompareTo(Money other)
     {
+        CheckCurrency(this, other);
         if (other == null)
         {
             return 1;
