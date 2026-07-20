@@ -10,7 +10,20 @@ public class User
     public string? Email { get; private set; }
     public string? Phone { get; private set; }
 
-    public User(Guid id, string firstName, string lastName, string? email, string? phone)
+    // TODO: Add Status{Active, Blocked, Archived} instead of DeletedAt
+    public DateTime? DeletedAt { get; private set; }
+
+    private readonly List<SharedGroupMember> _groupMemberships = new();
+    public IReadOnlyCollection<SharedGroupMember> GroupMemberships =>
+        _groupMemberships;
+
+    public User(
+        Guid id,
+        string firstName,
+        string lastName,
+        string? email,
+        string? phone
+    )
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(firstName, nameof(firstName));
@@ -54,5 +67,10 @@ public class User
     public void RemovePhone()
     {
         Phone = null;
+    }
+
+    public void SoftDelete() // TODO: make class SoftDeletableEntity
+    {
+        DeletedAt = DateTime.UtcNow;
     }
 }

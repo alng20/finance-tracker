@@ -13,5 +13,7 @@ public class RetailerConfiguration : IEntityTypeConfiguration<Retailer>
 
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
+        builder.Property(x => x.DeletedAt).IsRequired(false);
+        builder.HasQueryFilter(x => x.DeletedAt == null);
     }
 }

@@ -6,8 +6,8 @@ namespace FinanceTracker.Domain.ValueObjects;
 // TODO: Support different currency
 public record Money
 {
-    public decimal Amount { get; private set; }
-    public Currency Currency { get; private set; }
+    public decimal Amount { get; }
+    public Currency Currency { get; }
 
     private Money() { }
 
