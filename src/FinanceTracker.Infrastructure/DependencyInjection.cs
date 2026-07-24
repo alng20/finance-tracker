@@ -1,4 +1,6 @@
+using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Infrastructure.Persistence;
+using FinanceTracker.Infrastructure.Persistence.Repositories;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +23,10 @@ public static class DependencyInjection
         {
             options.UseNpgsql(connectionString);
         });
+
+        services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

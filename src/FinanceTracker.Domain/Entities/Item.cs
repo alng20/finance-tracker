@@ -7,13 +7,18 @@ public class Item
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = null!;
-    public Guid? CategoryId { get; private set; }
-    public ItemCategory? Category { get; private set; }
+    public Guid CategoryId { get; private set; }
+    public ItemCategory Category { get; private set; }
     public Unit Unit { get; private set; }
 
     public DateTime? DeletedAt { get; private set; }
 
-    public Item(Guid id, string name, Guid? categoryId, Unit unit)
+    static public Item Create(string name, Guid categoryId, Unit unit)
+    {
+        return new Item(Guid.NewGuid(), name, categoryId, unit);
+    }
+
+    private Item(Guid id, string name, Guid categoryId, Unit unit)
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(name, nameof(name));

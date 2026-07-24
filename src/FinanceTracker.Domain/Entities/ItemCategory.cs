@@ -9,7 +9,12 @@ public class ItemCategory
     public Guid Id { get; private set; }
     public string Name { get; private set; } = null!;
 
-    public ItemCategory(Guid id, string name)
+    static public ItemCategory Create(string name)
+    {
+        return new ItemCategory(Guid.NewGuid(), name);
+    }
+
+    private ItemCategory(Guid id, string name)
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(name, nameof(name));

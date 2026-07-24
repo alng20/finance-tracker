@@ -1,3 +1,4 @@
+using FinanceTracker.Domain.Common;
 using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Exceptions;
 
@@ -20,12 +21,14 @@ public record Money
         }
     }
 
-    public Money(decimal amount, Currency currency)
+    static public Money Create(decimal amount, Currency currency)
     {
-        if (amount < 0)
-        {
-            throw new ArgumentOutOfRangeException($"Amount {amount} can't be less than 0");
-        }
+        return new Money(amount, currency);
+    }
+
+    private Money(decimal amount, Currency currency)
+    {
+        Guard.AgainstNegative(amount, nameof(amount));
 
         Amount = amount;
         Currency = currency;

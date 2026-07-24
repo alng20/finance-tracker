@@ -7,6 +7,12 @@ Personal and family finance tracking application.
 Backend:
 - .NET 10
 - ASP.NET Core
+- FluentValidation
+- Vertical Slice Architecture (Application layer)
+- CQRS
+- MediatR
+- Repository Pattern
+- Docker
 
 Frontend:
 - React
