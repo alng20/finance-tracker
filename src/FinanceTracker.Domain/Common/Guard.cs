@@ -4,6 +4,14 @@ namespace FinanceTracker.Domain.Common;
 
 public static class Guard
 {
+    public static void AgainstNull(Object value, string name)
+    {
+        if (value == null)
+        {
+            throw new DomainException($"{name} cannot be null");
+        }
+    }
+
     public static void AgainstEmpty(string value, string name)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -43,4 +51,13 @@ public static class Guard
             throw new DomainException($"{name} have to be greater than {check}");
         }
     }
+
+    public static void AgainstFutureDate(DateTime value, string name)
+    {
+        if (value > DateTime.UtcNow)
+        {
+            throw new DomainException($"{name} is future date");
+        }
+    }
+
 }

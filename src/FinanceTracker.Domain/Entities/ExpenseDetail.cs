@@ -1,3 +1,5 @@
+using System.Globalization;
+
 using FinanceTracker.Domain.Common;
 using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Exceptions;
@@ -20,8 +22,27 @@ public class ExpenseDetail
 
     private ExpenseDetail() { }
 
-    public ExpenseDetail(
+    static internal ExpenseDetail Create(
+        Guid expenseId,
+        Guid itemId,
+        Money totalPrice,
+        decimal quantity,
+        decimal discountPercent
+    )
+    {
+        return new ExpenseDetail(
+            Guid.NewGuid(),
+            expenseId,
+            itemId,
+            totalPrice,
+            quantity,
+            discountPercent
+        );
+    }
+
+    private ExpenseDetail(
         Guid id,
+        Guid expenseId,
         Guid itemId,
         Money totalPrice,
         decimal quantity,
@@ -29,12 +50,15 @@ public class ExpenseDetail
     )
     {
         Guard.AgainstEmpty(id, nameof(id));
+        Guard.AgainstEmpty(expenseId, nameof(expenseId));
         Guard.AgainstEmpty(itemId, nameof(itemId));
         Guard.GreaterThan(quantity, 0, nameof(quantity));
+        Guard.AgainstNull(totalPrice, nameof(totalPrice));
         Guard.GreaterThan(totalPrice.Amount, 0, nameof(totalPrice));
         Guard.InRange(discountPercent, 0, 100, nameof(discountPercent));
 
         Id = id;
+        ExpenseId = expenseId;
         ItemId = itemId;
 
         TotalPrice = totalPrice;
@@ -42,16 +66,6 @@ public class ExpenseDetail
         DiscountPercent = discountPercent;
 
         CalculatePrices();
-    }
-
-    public void AssignExpense(Guid expenseId)
-    {
-        if (ExpenseId != Guid.Empty)
-        {
-            throw new DomainException("ExpenseId is already set");
-        }
-
-        ExpenseId = expenseId;
     }
 
     private void CalculatePrices()
@@ -69,15 +83,16 @@ public class ExpenseDetail
         }
     }
 
-    public void UpdateTotalPrice(Money total)
+    internal void UpdateTotalPrice(Money totalPrice)
     {
-        Guard.GreaterThan(total.Amount, 0, nameof(total));
+        Guard.AgainstNull(totalPrice, nameof(totalPrice));
+        Guard.GreaterThan(totalPrice.Amount, 0, nameof(totalPrice));
 
-        TotalPrice = total;
+        TotalPrice = totalPrice;
         CalculatePrices();
     }
 
-    public void UpdateQuantity(decimal quantity)
+    internal void UpdateQuantity(decimal quantity)
     {
         Guard.GreaterThan(quantity, 0, nameof(quantity));
 
@@ -85,7 +100,7 @@ public class ExpenseDetail
         CalculatePrices();
     }
 
-    public void UpdateDiscount(decimal discountPercent)
+    internal void UpdateDiscount(decimal discountPercent)
     {
         Guard.GreaterThan(discountPercent, 0, nameof(discountPercent));
 

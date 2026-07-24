@@ -17,7 +17,7 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
             .HasOne(x => x.Category)
             .WithMany()
             .HasForeignKey(x => x.CategoryId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
         builder.Property(x => x.Unit).IsRequired().HasConversion<string>();
 
         builder.Property(x => x.DeletedAt).IsRequired(false);

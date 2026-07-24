@@ -21,7 +21,18 @@ public class Expense
 
     private Expense() { }
 
-    public Expense(
+    public static Expense Create(
+        Guid userId,
+        Guid? sharedGroupId,
+        Guid? shopId,
+        Money totalAmount,
+        DateTime date
+    )
+    {
+        return new Expense(Guid.NewGuid(), userId, sharedGroupId, shopId, totalAmount, date);
+    }
+
+    private Expense(
         Guid id,
         Guid userId,
         Guid? sharedGroupId,
@@ -32,6 +43,7 @@ public class Expense
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(userId, nameof(userId));
+        Guard.AgainstFutureDate(date, nameof(date));
 
         Id = id;
         UserId = userId;
@@ -41,7 +53,7 @@ public class Expense
         Date = date;
     }
 
-    public void ChangeShop(Guid shopId)
+    public void AssignShop(Guid shopId)
     {
         Guard.AgainstEmpty(shopId, nameof(shopId));
 
@@ -55,23 +67,47 @@ public class Expense
 
     public void UpdateAmount(Money amount)
     {
+        Guard.AgainstNull(amount, nameof(amount));
+        Guard.AgainstNegative(amount.Amount, nameof(amount));
+
         TotalAmount = amount;
     }
 
-    public void AddDetail(ExpenseDetail detail)
+    public void AddDetail(
+        Guid itemId,
+        Money totalPrice,
+        decimal quantity,
+        decimal discountPercent
+    )
     {
-        if (_details.Any(x => x.Id == detail.Id))
-        {
-            throw new DomainException("ExpenseDetail already exists in group");
-        }
+        ExpenseDetail detail = ExpenseDetail.Create(Id, itemId, totalPrice, quantity, discountPercent);
 
-        detail.AssignExpense(Id);
         _details.Add(detail);
     }
 
-    public void RemoveDetail(ExpenseDetail detail)
+    public void RemoveDetail(Guid detailId)
     {
+        ExpenseDetail detail = GetDetail(detailId);
+
         _details.Remove(detail);
+    }
+
+    public void UpdateDetailPrice(Guid detailId, Money totalPrice)
+    {
+        ExpenseDetail detail = GetDetail(detailId);
+
+        detail.UpdateTotalPrice(totalPrice);
+    }
+
+    private ExpenseDetail GetDetail(Guid detailId)
+    {
+        ExpenseDetail? detail = _details.FirstOrDefault(x => x.Id == detailId);
+        if (detail == null)
+        {
+            throw new DomainException("ExpenseDetail doesn't exists");
+        }
+
+        return detail;
     }
 
     public void AssignSharedGroup(Guid sharedGroupId)
@@ -81,6 +117,13 @@ public class Expense
         {
             throw new DomainException("Expense already has group");
         }
+
+        SharedGroupId = sharedGroupId;
+    }
+
+    public void ChangeSharedGroup(Guid sharedGroupId)
+    {
+        Guard.AgainstEmpty(sharedGroupId, nameof(sharedGroupId));
 
         SharedGroupId = sharedGroupId;
     }
