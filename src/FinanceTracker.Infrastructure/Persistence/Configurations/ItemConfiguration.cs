@@ -22,5 +22,6 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
 
         builder.Property(x => x.DeletedAt).IsRequired(false);
         builder.HasQueryFilter(x => x.DeletedAt == null);
+        builder.HasIndex(x => x.Name).IsUnique();
     }
 }

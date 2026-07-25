@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.ItemCategories.DTOs;
 using FinanceTracker.Domain.Entities;
@@ -19,6 +20,12 @@ public class CreateItemCategoryHandler(
         CancellationToken cancellationToken
     )
     {
+        ItemCategory? categoryWithName = await _categoryRepository.FindByNameAsync(cmd.Name, cancellationToken);
+        if (categoryWithName != null)
+        {
+            throw new ItemCategoryAlreadyExistsException(categoryWithName.Id, categoryWithName.Name);       
+        }
+        
         ItemCategory category = ItemCategory.Create(cmd.Name);
         _categoryRepository.Add(category);
 

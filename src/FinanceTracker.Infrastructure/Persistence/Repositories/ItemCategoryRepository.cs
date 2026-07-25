@@ -21,8 +21,18 @@ public class ItemCategoryRepository(FinanceTrackerDbContext ctx) : IItemCategory
         return await _ctx.ItemCategories.ToListAsync(cancellationToken);
     }
 
+    public async Task<ItemCategory?> FindByNameAsync(string name, CancellationToken cancellationToken)
+    {
+        return await _ctx.ItemCategories.FirstOrDefaultAsync(x => x.Name == name, cancellationToken);
+    }
+
     public void Add(ItemCategory category)
     {
         _ctx.ItemCategories.Add(category);
+    }
+
+    public void Delete(ItemCategory category)
+    {
+        _ctx.ItemCategories.Remove(category);
     }
 }
