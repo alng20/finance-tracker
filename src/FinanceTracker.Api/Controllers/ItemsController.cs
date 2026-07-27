@@ -1,9 +1,9 @@
 using FinanceTracker.Application.Items.Commands.CreateItem;
 using FinanceTracker.Application.Items.DTOs;
-
 using MediatR;
-
 using Microsoft.AspNetCore.Mvc;
+
+namespace FinanceTracker.Api.Controllers;
 
 [ApiController]
 [Route("api/items")]

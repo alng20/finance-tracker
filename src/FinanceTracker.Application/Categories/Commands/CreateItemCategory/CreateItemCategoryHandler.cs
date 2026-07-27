@@ -2,7 +2,6 @@ using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.ItemCategories.DTOs;
 using FinanceTracker.Domain.Entities;
-
 using MediatR;
 
 namespace FinanceTracker.Application.ItemCategories.Commands.CreateItemCategory;
@@ -20,12 +19,17 @@ public class CreateItemCategoryHandler(
         CancellationToken cancellationToken
     )
     {
-        ItemCategory? categoryWithName = await _categoryRepository.FindByNameAsync(cmd.Name, cancellationToken);
+        ItemCategory? categoryWithName = await _categoryRepository.FindByNameAsync(
+            cmd.Name,
+            cancellationToken
+        );
         if (categoryWithName != null)
         {
-            throw new ItemCategoryAlreadyExistsException(categoryWithName.Id, categoryWithName.Name);       
+            throw new ConflictException(
+                $"Item category {categoryWithName.Id} with name '{categoryWithName.Name}' already exists"
+            );
         }
-        
+
         ItemCategory category = ItemCategory.Create(cmd.Name);
         _categoryRepository.Add(category);
 

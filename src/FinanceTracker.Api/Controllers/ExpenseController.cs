@@ -5,6 +5,9 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
+namespace FinanceTracker.Api.Controllers;
+
+
 [ApiController]
 [Route("api/expenses")]
 public class ExpenseController(IMediator mediator) : ControllerBase

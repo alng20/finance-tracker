@@ -4,9 +4,10 @@ using FinanceTracker.Application.ItemCategories.Commands.UpdateItemCategory;
 using FinanceTracker.Application.ItemCategories.DTOs;
 using FinanceTracker.Application.ItemCategories.Queries.GetItemCategories;
 using FinanceTracker.Application.ItemCategories.Queries.GetItemCategory;
-
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+
+namespace FinanceTracker.Api.Controllers;
 
 [ApiController]
 [Route("api/categories")]
@@ -57,10 +58,7 @@ public class ItemCategoriesController(IMediator mediator) : ControllerBase
 
     // TODO: [Authorize(Roles="Admin")]
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(
-        [FromRoute] Guid id,
-        CancellationToken cancellationToken
-    )
+    public async Task<ActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         await _mediator.Send(new DeleteItemCategoryCommand(id), cancellationToken);
         return NoContent();

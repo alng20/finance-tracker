@@ -13,7 +13,7 @@ public class ItemCategoryRepository(FinanceTrackerDbContext ctx) : IItemCategory
     public async Task<ItemCategory> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         ItemCategory? category = await _ctx.ItemCategories.FindAsync(new object[] { id }, cancellationToken);
-        return category ?? throw new ItemCategoryNotFoundException(id);
+        return category ?? throw new NotFoundException($"Item category with id {id} was not found");
     }
 
     public async Task<IReadOnlyList<ItemCategory>> GetAllAsync(CancellationToken cancellationToken)
