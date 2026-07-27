@@ -13,7 +13,7 @@ public class ItemRepository(FinanceTrackerDbContext ctx) : IItemRepository
     public async Task<Item> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         Item? item = await _ctx.Items.FindAsync(new object[] { id }, cancellationToken);
-        return item ?? throw new ItemNotFoundException(id);
+        return item ?? throw new NotFoundException($"Item with id '{id}' was not found");
     }
 
     public void Add(Item item)

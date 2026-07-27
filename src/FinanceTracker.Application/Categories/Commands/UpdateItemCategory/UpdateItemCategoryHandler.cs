@@ -31,9 +31,8 @@ public class UpdateItemCategoryHandler(
         );
         if (categoryWithSameName != null && categoryWithSameName.Id != category.Id)
         {
-            throw new ItemCategoryAlreadyExistsException(
-                categoryWithSameName.Id,
-                categoryWithSameName.Name
+            throw new ConflictException(
+                $"Item category with name '{categoryWithSameName.Name}' already exists"
             );
         }
 
