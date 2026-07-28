@@ -8,12 +8,12 @@ public class Item
     public Guid Id { get; private set; }
     public string Name { get; private set; } = null!;
     public Guid CategoryId { get; private set; }
-    public ItemCategory Category { get; private set; }
+    public ItemCategory Category { get; private set; } = null!;
     public Unit Unit { get; private set; }
 
     public DateTime? DeletedAt { get; private set; }
 
-    static public Item Create(string name, Guid categoryId, Unit unit)
+    public static Item Create(string name, Guid categoryId, Unit unit)
     {
         return new Item(Guid.NewGuid(), name, categoryId, unit);
     }

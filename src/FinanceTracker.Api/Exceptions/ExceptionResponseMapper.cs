@@ -26,12 +26,14 @@ public class ExceptionResponseMapper : IExceptionResponseMapper
                 Instance = context.Request.Path,
             },
 
-            ValidationAppException => new ProblemDetails
+            AppValidationException validationException => new ValidationProblemDetails(
+                validationException.Errors
+            )
             {
                 Status = StatusCodes.Status400BadRequest,
-                Title = "Validation error",
-                Detail = exception.Message,
+                Title = "Validation failed",
                 Instance = context.Request.Path,
+                Errors = validationException.Errors,
             },
 
             DomainException => new ProblemDetails
