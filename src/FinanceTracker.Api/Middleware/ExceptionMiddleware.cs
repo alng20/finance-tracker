@@ -41,11 +41,12 @@ public class ExceptionMiddleware
 
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        ProblemDetails problemDetails = _exceptionResponseMapper.Map(exception, context);
+        var problemDetails = _exceptionResponseMapper.Map(exception, context);
 
-        context.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
+        context.Response.StatusCode =
+            problemDetails.Status ?? StatusCodes.Status500InternalServerError;
         context.Response.ContentType = "application/problem+json";
 
-        await context.Response.WriteAsJsonAsync(problemDetails);
+        await context.Response.WriteAsJsonAsync(problemDetails, problemDetails.GetType());
     }
 }
