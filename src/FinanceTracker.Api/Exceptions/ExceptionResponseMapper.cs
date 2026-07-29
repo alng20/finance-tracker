@@ -44,6 +44,14 @@ public class ExceptionResponseMapper : IExceptionResponseMapper
                 Instance = context.Request.Path,
             },
 
+            UnauthorizedException => new ProblemDetails
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Title = "User is unauthorized",
+                Detail = exception.Message,
+                Instance = context.Request.Path,
+            },
+
             _ => new ProblemDetails
             {
                 Status = StatusCodes.Status500InternalServerError,
