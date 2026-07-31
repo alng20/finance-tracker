@@ -1,5 +1,6 @@
 using FinanceTracker.Domain.Common;
 using FinanceTracker.Domain.Enums;
+using FinanceTracker.Domain.Exceptions;
 
 namespace FinanceTracker.Domain.Entities;
 
@@ -21,6 +22,9 @@ public class User
 
     private readonly List<SharedGroupMember> _groupMemberships = new();
     public IReadOnlyCollection<SharedGroupMember> GroupMemberships => _groupMemberships;
+
+    private readonly List<RefreshToken> _refreshTokens = new();
+    public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens;
 
     public static User Create(
         string firstName,
@@ -60,7 +64,7 @@ public class User
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
-    
+
     public void SetPasswordHash(string passwordHash)
     {
         Guard.AgainstEmpty(passwordHash, nameof(passwordHash));
@@ -120,5 +124,15 @@ public class User
     {
         DeletedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void AddRefreshToken(RefreshToken refreshToken)
+    {
+        Guard.AgainstNull(refreshToken, nameof(refreshToken));
+        if (_refreshTokens.Count(x => x.IsValid()) >= 5)
+        {
+            throw new DomainException("User has too many active refresh tokens");
+        }
+        _refreshTokens.Add(refreshToken);
     }
 }

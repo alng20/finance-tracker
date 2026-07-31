@@ -1,5 +1,4 @@
 using FinanceTracker.Domain.Entities;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence;
@@ -10,6 +9,7 @@ public class FinanceTrackerDbContext : DbContext
     public DbSet<ExpenseDetail> ExpenseDetails => Set<ExpenseDetail>();
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<SharedGroup> SharedGroups => Set<SharedGroup>();
     public DbSet<SharedGroupMember> SharedGroupMembers => Set<SharedGroupMember>();
 

@@ -20,10 +20,14 @@ public static class DependencyInjection
 
         services.AddSingleton<IExceptionResponseMapper, ExceptionResponseMapper>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<ICurrentRequestService, CurrentRequestService>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
+        services.Configure<RefreshTokenOptions>(configuration.GetSection(RefreshTokenOptions.SectionName));
 
-        JwtOptions jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()!;
+        JwtOptions jwtOptions =
+            configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
+            ?? throw new InvalidOperationException("JWT configuration is absent.");
 
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

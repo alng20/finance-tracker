@@ -43,7 +43,7 @@ public class JwtTokenService : IJwtTokenService
         );
 
         var expiresAt = DateTime.UtcNow.AddMinutes(_options.ExpirationMinutes);
-        var token = new SystemJwt.JwtSecurityToken(
+        var accessToken = new SystemJwt.JwtSecurityToken(
             issuer: _options.Issuer,
             audience: _options.Audience,
             claims: claims,
@@ -53,6 +53,6 @@ public class JwtTokenService : IJwtTokenService
 
         var handler = new SystemJwt.JwtSecurityTokenHandler();
 
-        return new JwtTokenResult(handler.WriteToken(token), expiresAt);
+        return new JwtTokenResult(handler.WriteToken(accessToken), expiresAt);
     }
 }
