@@ -46,9 +46,9 @@ public static class Guard
 
     public static void GreaterThan<Type>(Type value, Type check, string name) where Type : IComparable<Type>
     {
-        if (value.CompareTo(check) > 0)
+        if (value.CompareTo(check) <= 0)
         {
-            throw new DomainException($"{name} have to be greater than {check}");
+            throw new DomainException($"{name} {value} have to be greater than {check}");
         }
     }
 
