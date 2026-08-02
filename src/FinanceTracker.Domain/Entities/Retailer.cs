@@ -7,9 +7,16 @@ public class Retailer
     public Guid Id { get; private set; }
     public string Name { get; private set; } = null!;
 
-    public DateTime? DeletedAt { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
 
-    public Retailer(Guid id, string name)
+    public static Retailer Create(string name)
+    {
+        return new Retailer(Guid.NewGuid(), name);
+    }
+
+    private Retailer() { }
+
+    private Retailer(Guid id, string name)
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(name, nameof(name));
@@ -18,7 +25,7 @@ public class Retailer
         Name = name;
     }
 
-    public void Rename(string name)
+    public void ChangeName(string name)
     {
         Guard.AgainstEmpty(name, nameof(name));
 
@@ -27,6 +34,6 @@ public class Retailer
 
     public void SoftDelete()
     {
-        DeletedAt = DateTime.UtcNow;
+        DeletedAt = DateTimeOffset.UtcNow;
     }
 }

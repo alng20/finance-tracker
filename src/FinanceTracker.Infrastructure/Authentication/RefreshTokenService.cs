@@ -19,7 +19,7 @@ public class RefreshTokenService(IOptions<RefreshTokenOptions> options) : IRefre
         var refreshToken = RefreshToken.Create(
             user.Id,
             hash,
-            DateTime.UtcNow.AddDays(_options.ExpirationDays),
+            DateTimeOffset.UtcNow.AddDays(_options.ExpirationDays),
             ipAddress,
             userAgent
         );

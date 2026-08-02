@@ -11,11 +11,16 @@ public class Shop
     public Retailer? Retailer { get; private set; }
     public Address? Address { get; private set; }
 
-    public DateTime? DeletedAt { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
+
+    public static Shop Create(string name, Guid? retailerId, Address? address)
+    {
+        return new Shop(Guid.NewGuid(), name, retailerId, address);
+    }
 
     private Shop() { }
 
-    public Shop(Guid id, string name, Guid? retailerId, Address? address)
+    private Shop(Guid id, string name, Guid? retailerId, Address? address)
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(name, nameof(name));
@@ -47,6 +52,6 @@ public class Shop
 
     public void SoftDelete()
     {
-        DeletedAt = DateTime.UtcNow;
+        DeletedAt = DateTimeOffset.UtcNow;
     }
 }

@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using FinanceTracker.Api.Exceptions;
 using FinanceTracker.Api.Services;
 using FinanceTracker.Application.Common.Interfaces.Services;
@@ -15,7 +16,13 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        services.AddControllers();
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+        ;
         services.AddHttpContextAccessor();
 
         services.AddSingleton<IExceptionResponseMapper, ExceptionResponseMapper>();
@@ -23,7 +30,9 @@ public static class DependencyInjection
         services.AddScoped<ICurrentRequestService, CurrentRequestService>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
-        services.Configure<RefreshTokenOptions>(configuration.GetSection(RefreshTokenOptions.SectionName));
+        services.Configure<RefreshTokenOptions>(
+            configuration.GetSection(RefreshTokenOptions.SectionName)
+        );
 
         JwtOptions jwtOptions =
             configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()

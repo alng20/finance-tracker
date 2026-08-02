@@ -11,7 +11,7 @@ public class SharedGroup
     public Guid OwnerId { get; private set; }
     public User Owner { get; private set; } = null!;
 
-    public DateTime? DeletedAt { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
 
     private readonly List<SharedGroupMember> _members = new();
     public IReadOnlyCollection<SharedGroupMember> Members => _members;
@@ -70,7 +70,7 @@ public class SharedGroup
         {
             if (_members.Count == 1)
             {
-                DeletedAt = DateTime.UtcNow;
+                DeletedAt = DateTimeOffset.UtcNow;
                 return;
             }
             throw new DomainException(
@@ -106,6 +106,6 @@ public class SharedGroup
 
     public void SoftDelete()
     {
-        DeletedAt = DateTime.UtcNow;
+        DeletedAt = DateTimeOffset.UtcNow;
     }
 }

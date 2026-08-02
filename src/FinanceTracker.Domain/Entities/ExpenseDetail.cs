@@ -1,8 +1,4 @@
-using System.Globalization;
-
 using FinanceTracker.Domain.Common;
-using FinanceTracker.Domain.Enums;
-using FinanceTracker.Domain.Exceptions;
 using FinanceTracker.Domain.ValueObjects;
 
 namespace FinanceTracker.Domain.Entities;
@@ -54,7 +50,7 @@ public class ExpenseDetail
         Guard.AgainstEmpty(itemId, nameof(itemId));
         Guard.GreaterThan(quantity, 0, nameof(quantity));
         Guard.AgainstNull(totalPrice, nameof(totalPrice));
-        Guard.GreaterThan(totalPrice.Amount, 0, nameof(totalPrice));
+        Guard.GreaterThanOrEqualTo(totalPrice.Amount, 0, nameof(totalPrice));
         Guard.InRange(discountPercent, 0, 100, nameof(discountPercent));
 
         Id = id;
@@ -86,7 +82,7 @@ public class ExpenseDetail
     internal void UpdateTotalPrice(Money totalPrice)
     {
         Guard.AgainstNull(totalPrice, nameof(totalPrice));
-        Guard.GreaterThan(totalPrice.Amount, 0, nameof(totalPrice));
+        Guard.GreaterThanOrEqualTo(totalPrice.Amount, 0, nameof(totalPrice));
 
         TotalPrice = totalPrice;
         CalculatePrices();
@@ -102,7 +98,7 @@ public class ExpenseDetail
 
     internal void UpdateDiscount(decimal discountPercent)
     {
-        Guard.GreaterThan(discountPercent, 0, nameof(discountPercent));
+        Guard.InRange(discountPercent, 0, 100, nameof(discountPercent));
 
         DiscountPercent = discountPercent;
         CalculatePrices();
