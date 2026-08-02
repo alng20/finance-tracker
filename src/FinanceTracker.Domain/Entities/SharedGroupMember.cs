@@ -11,8 +11,8 @@ public class SharedGroupMember
     public User User { get; private set; } = null!;
     public Permission Permission { get; private set; }
 
-    public DateTime JoinedAt { get; private set; }
-    public DateTime? DeletedAt { get; private set; }
+    public DateTimeOffset JoinedAt { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
 
     public bool CanRead => Permission.HasFlag(Permission.Read);
     public bool CanWrite => Permission.HasFlag(Permission.Write);
@@ -38,7 +38,7 @@ public class SharedGroupMember
         SharedGroupId = sharedGroupId;
         UserId = userId;
         Permission = permission;
-        JoinedAt = DateTime.UtcNow;
+        JoinedAt = DateTimeOffset.UtcNow;
     }
 
     public static Permission GetOwnerPermission()
@@ -52,6 +52,6 @@ public class SharedGroupMember
 
     public void SoftDelete()
     {
-        DeletedAt = DateTime.UtcNow;
+        DeletedAt = DateTimeOffset.UtcNow;
     }
 }

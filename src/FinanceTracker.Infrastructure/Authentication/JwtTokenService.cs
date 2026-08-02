@@ -42,12 +42,12 @@ public class JwtTokenService : IJwtTokenService
             SecurityAlgorithms.HmacSha256
         );
 
-        var expiresAt = DateTime.UtcNow.AddMinutes(_options.ExpirationMinutes);
+        var expiresAt = DateTimeOffset.UtcNow.AddMinutes(_options.ExpirationMinutes);
         var accessToken = new SystemJwt.JwtSecurityToken(
             issuer: _options.Issuer,
             audience: _options.Audience,
             claims: claims,
-            expires: expiresAt,
+            expires: expiresAt.UtcDateTime,
             signingCredentials: signingCredentials
         );
 

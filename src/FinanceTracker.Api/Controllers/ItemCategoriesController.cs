@@ -18,7 +18,7 @@ public class ItemCategoriesController(IMediator mediator) : ControllerBase
     private readonly IMediator _mediator = mediator;
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<ItemCategoryResultDto>>> GetAll(
+    public async Task<ActionResult<IReadOnlyList<ItemCategoryDto>>> GetAll(
         CancellationToken cancellationToken
     )
     {
@@ -27,7 +27,7 @@ public class ItemCategoriesController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ItemCategoryResultDto>> GetById(
+    public async Task<ActionResult<ItemCategoryDto>> GetById(
         [FromRoute] Guid id,
         CancellationToken cancellationToken
     )
@@ -38,7 +38,7 @@ public class ItemCategoriesController(IMediator mediator) : ControllerBase
 
     [Authorize(Roles="Admin")]
     [HttpPost]
-    public async Task<ActionResult<ItemCategoryResultDto>> Create(
+    public async Task<ActionResult<ItemCategoryDto>> Create(
         [FromBody] CreateItemCategoryCommand cmd,
         CancellationToken cancellationToken
     )
@@ -49,7 +49,7 @@ public class ItemCategoriesController(IMediator mediator) : ControllerBase
 
     [Authorize(Roles="Admin")]
     [HttpPut]
-    public async Task<ActionResult<ItemCategoryResultDto>> Update(
+    public async Task<ActionResult<ItemCategoryDto>> Update(
         [FromBody] UpdateItemCategoryCommand cmd,
         CancellationToken cancellationToken
     )

@@ -1,5 +1,4 @@
 using FinanceTracker.Domain.Entities;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,14 +21,8 @@ public class ShopConfiguration : IEntityTypeConfiguration<Shop>
             x => x.Address,
             address =>
             {
-                address
-                    .Property(x => x.Country)
-                    .HasColumnName("Country")
-                    .HasConversion<string>();
-                address
-                    .Property(x => x.City)
-                    .HasColumnName("City")
-                    .HasConversion<string>();
+                address.Property(x => x.Country).HasColumnName("Country").HasConversion<string>();
+                address.Property(x => x.City).HasColumnName("City").HasConversion<string>();
             }
         );
         builder.Property(x => x.DeletedAt).IsRequired(false);

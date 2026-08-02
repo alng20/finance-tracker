@@ -15,10 +15,10 @@ public class User
     public string? Phone { get; private set; }
 
     // TODO: Add Status{Active, Blocked, Archived} instead of DeletedAt
-    public DateTime? DeletedAt { get; private set; }
-    public DateTime CreatedAt { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
-    public DateTime UpdatedAt { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 
     private readonly List<SharedGroupMember> _groupMemberships = new();
     public IReadOnlyCollection<SharedGroupMember> GroupMemberships => _groupMemberships;
@@ -61,8 +61,8 @@ public class User
         Role = role;
         Phone = phone;
 
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        CreatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     public void SetPasswordHash(string passwordHash)
@@ -79,7 +79,7 @@ public class User
 
         FirstName = firstName;
         LastName = lastName;
-        UpdatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     public void ChangeEmail(string email)
@@ -87,7 +87,7 @@ public class User
         Guard.AgainstEmpty(email, nameof(email));
 
         Email = email;
-        UpdatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     public void ChangePasswordHash(string passwordHash)
@@ -95,7 +95,7 @@ public class User
         Guard.AgainstEmpty(passwordHash, nameof(passwordHash));
 
         PasswordHash = passwordHash;
-        UpdatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     public void ChangeRole(UserRole role)
@@ -103,7 +103,7 @@ public class User
         Guard.AgainstNull(role, nameof(role));
 
         Role = role;
-        UpdatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     public void AssignPhone(string phone)
@@ -111,19 +111,19 @@ public class User
         Guard.AgainstEmpty(phone, nameof(phone));
 
         Phone = phone;
-        UpdatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     public void RemovePhone()
     {
         Phone = null;
-        UpdatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     public void SoftDelete() // TODO: make class SoftDeletableEntity
     {
-        DeletedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        DeletedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     public void AddRefreshToken(RefreshToken refreshToken)

@@ -11,15 +11,15 @@ public class RefreshToken
     public string TokenHash { get; private set; } = null!;
     public string CreatedByIp { get; private set; } = null!;
     public string UserAgent { get; private set; } = null!;
-    public DateTime CreatedAt { get; private set; }
-    public DateTime ExpiresAt { get; private set; }
-    public DateTime? RevokedAt { get; private set; }
-    public DateTime? UsedAt { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
+    public DateTimeOffset ExpiresAt { get; private set; }
+    public DateTimeOffset? RevokedAt { get; private set; }
+    public DateTimeOffset? UsedAt { get; private set; }
 
     public static RefreshToken Create(
         Guid userId,
         string tokenHash,
-        DateTime expiresAt,
+        DateTimeOffset expiresAt,
         string createdByIp,
         string userAgent
     )
@@ -40,7 +40,7 @@ public class RefreshToken
         Guid id,
         Guid userId,
         string tokenHash,
-        DateTime expiresAt,
+        DateTimeOffset expiresAt,
         string createdByIp,
         string userAgent
     )
@@ -51,7 +51,7 @@ public class RefreshToken
         Guard.AgainstEmpty(createdByIp, nameof(createdByIp));
         Guard.AgainstEmpty(userAgent, nameof(userAgent));
 
-        var now = DateTime.UtcNow;
+        var now = DateTimeOffset.UtcNow;
         Guard.GreaterThan(expiresAt, now, nameof(expiresAt));
 
         Id = id;
@@ -65,7 +65,7 @@ public class RefreshToken
 
     public bool IsExpired()
     {
-        return DateTime.UtcNow >= ExpiresAt;
+        return DateTimeOffset.UtcNow >= ExpiresAt;
     }
 
     public bool IsRevoked()
@@ -85,7 +85,7 @@ public class RefreshToken
             return;
         }
 
-        RevokedAt = DateTime.UtcNow;
+        RevokedAt = DateTimeOffset.UtcNow;
     }
 
     public void MarkUsed()
@@ -94,6 +94,6 @@ public class RefreshToken
         {
             throw new DomainException("Refresh token was already used");
         }
-        UsedAt = DateTime.UtcNow;
+        UsedAt = DateTimeOffset.UtcNow;
     }
 }

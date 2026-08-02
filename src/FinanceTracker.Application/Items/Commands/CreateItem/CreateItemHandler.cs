@@ -29,6 +29,6 @@ public class CreateItemHandler(
         _itemRepository.Add(item);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new ItemDto(item.Id, item.Name, item.CategoryId, item.Unit);
+        return new ItemDto(item.Id, item.Name, item.Unit);
     }
 }

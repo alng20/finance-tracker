@@ -14,7 +14,7 @@ public class Expense
     public Guid? ShopId { get; private set; }
     public Shop? Shop { get; private set; }
     public Money TotalAmount { get; private set; } = null!;
-    public DateTime Date { get; private set; }
+    public DateOnly Date { get; private set; }
 
     private readonly List<ExpenseDetail> _details = new();
     public IReadOnlyCollection<ExpenseDetail> Details => _details;
@@ -26,7 +26,7 @@ public class Expense
         Guid? sharedGroupId,
         Guid? shopId,
         Money totalAmount,
-        DateTime date
+        DateOnly date
     )
     {
         return new Expense(Guid.NewGuid(), userId, sharedGroupId, shopId, totalAmount, date);
@@ -38,11 +38,13 @@ public class Expense
         Guid? sharedGroupId,
         Guid? shopId,
         Money totalAmount,
-        DateTime date
+        DateOnly date
     )
     {
         Guard.AgainstEmpty(id, nameof(id));
         Guard.AgainstEmpty(userId, nameof(userId));
+        Guard.AgainstNull(totalAmount, nameof(totalAmount));
+        Guard.AgainstNegative(totalAmount.Amount, nameof(totalAmount));
         Guard.AgainstFutureDate(date, nameof(date));
 
         Id = id;
@@ -73,14 +75,22 @@ public class Expense
         TotalAmount = amount;
     }
 
-    public void AddDetail(
-        Guid itemId,
-        Money totalPrice,
-        decimal quantity,
-        decimal discountPercent
-    )
+    public void AddDetail(Guid itemId, Money totalPrice, decimal quantity, decimal discountPercent)
     {
-        ExpenseDetail detail = ExpenseDetail.Create(Id, itemId, totalPrice, quantity, discountPercent);
+        Guard.AgainstNull(totalPrice, nameof(totalPrice));
+
+        if (totalPrice.Currency != TotalAmount.Currency)
+        {
+            throw new DomainException("Expense detail currency must match expense currency");
+        }
+
+        ExpenseDetail detail = ExpenseDetail.Create(
+            Id,
+            itemId,
+            totalPrice,
+            quantity,
+            discountPercent
+        );
 
         _details.Add(detail);
     }
@@ -94,6 +104,13 @@ public class Expense
 
     public void UpdateDetailPrice(Guid detailId, Money totalPrice)
     {
+        Guard.AgainstNull(totalPrice, nameof(totalPrice));
+
+        if (totalPrice.Currency != TotalAmount.Currency)
+        {
+            throw new DomainException("Expense detail currency must match expense currency");
+        }
+
         ExpenseDetail detail = GetDetail(detailId);
 
         detail.UpdateTotalPrice(totalPrice);

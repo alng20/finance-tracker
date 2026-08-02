@@ -34,12 +34,6 @@ public record Money
         Currency = currency;
     }
 
-    public static Money operator /(Money left, Money right)
-    {
-        CheckCurrency(left, right);
-        return new Money(left.Amount / right.Amount, left.Currency);
-    }
-
     public static Money operator /(Money money, decimal value)
     {
         return new Money(money.Amount / value, money.Currency);

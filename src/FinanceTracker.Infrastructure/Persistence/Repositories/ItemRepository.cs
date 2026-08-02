@@ -1,7 +1,6 @@
 using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Domain.Entities;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
@@ -16,19 +15,39 @@ public class ItemRepository(FinanceTrackerDbContext ctx) : IItemRepository
         return item ?? throw new NotFoundException($"Item with id '{id}' was not found");
     }
 
+    public async Task<Item?> FindByNameAsync(string name, CancellationToken cancellationToken)
+    {
+        return await _ctx.Items.FirstOrDefaultAsync(
+            x => EF.Functions.ILike(x.Name, name),
+            cancellationToken
+        );
+    }
+
+    public async Task<IReadOnlyList<Item>> SearchByNameAsync(
+        string SearchString,
+        CancellationToken cancellationToken
+    )
+    {
+        return await _ctx
+            .Items.AsNoTracking()
+            .Where(x => EF.Functions.ILike(x.Name, $"%{SearchString}%"))
+            .OrderBy(x => x.Name)
+            .Take(10)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _ctx.Items.AnyAsync(x => x.Id == id, cancellationToken);
+    }
+
     public void Add(Item item)
     {
         _ctx.Items.Add(item);
     }
 
-
-    public async Task<IReadOnlyList<Item>> SearchAsync(
-        string text,
-        CancellationToken cancellationToken
-    )
+    public void Delete(Item item)
     {
-        return await _ctx
-            .Items.Where(item => item.Name.Contains(text))
-            .ToListAsync(cancellationToken);
+        _ctx.Items.Remove(item);
     }
 }

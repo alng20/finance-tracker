@@ -44,17 +44,25 @@ public static class Guard
         }
     }
 
+    public static void GreaterThanOrEqualTo<Type>(Type value, Type check, string name) where Type : IComparable<Type>
+    {
+        if (value.CompareTo(check) < 0)
+        {
+            throw new DomainException($"{name} have to be greater than {check}");
+        }
+    }
+
     public static void GreaterThan<Type>(Type value, Type check, string name) where Type : IComparable<Type>
     {
         if (value.CompareTo(check) <= 0)
         {
-            throw new DomainException($"{name} {value} have to be greater than {check}");
+            throw new DomainException($"{name} have to be greater than {check}");
         }
     }
 
-    public static void AgainstFutureDate(DateTime value, string name)
+    public static void AgainstFutureDate(DateOnly value, string name)
     {
-        if (value > DateTime.UtcNow)
+        if (value > DateOnly.FromDateTime(DateTime.UtcNow))
         {
             throw new DomainException($"{name} is future date");
         }

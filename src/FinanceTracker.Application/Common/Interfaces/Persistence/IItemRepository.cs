@@ -8,5 +8,10 @@ public interface IItemRepository
 
     void Add(Item item);
 
-    Task<IReadOnlyList<Item>> SearchAsync(string text, CancellationToken cancellationToken);
+    Task<Item?> FindByNameAsync(string name, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Item>> SearchByNameAsync(
+        string SearchString,
+        CancellationToken cancellationToken
+    );
+    Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken);
 }

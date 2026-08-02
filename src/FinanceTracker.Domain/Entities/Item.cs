@@ -11,7 +11,7 @@ public class Item
     public ItemCategory Category { get; private set; } = null!;
     public Unit Unit { get; private set; }
 
-    public DateTime? DeletedAt { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
 
     public static Item Create(string name, Guid categoryId, Unit unit)
     {
@@ -43,6 +43,6 @@ public class Item
 
     public void SoftDelete()
     {
-        DeletedAt = DateTime.UtcNow;
+        DeletedAt = DateTimeOffset.UtcNow;
     }
 }
