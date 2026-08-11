@@ -12,6 +12,7 @@ public class ItemCategoryConfiguration : IEntityTypeConfiguration<ItemCategory>
         builder.ToTable("ItemCategories");
 
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
+        builder.Property(x => x.Name).IsRequired().HasMaxLength(100).HasColumnType("citext");
+        builder.HasIndex(x => x.Name).IsUnique();
     }
 }

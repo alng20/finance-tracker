@@ -16,6 +16,6 @@ public class GetItemHandler(IItemRepository itemRepository)
     )
     {
         var item = await _itemRepository.GetByIdAsync(query.Id, cancellationToken);
-        return new ItemDto(item.Id, item.Name, item.Unit);
+        return new ItemDto(item.Id, item.Name, item.CategoryId, item.Unit);
     }
 }

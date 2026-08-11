@@ -75,7 +75,7 @@ public class Expense
         TotalAmount = amount;
     }
 
-    public void AddDetail(Guid itemId, Money totalPrice, decimal quantity, decimal discountPercent)
+    public ExpenseDetail AddDetail(Guid itemId, Money totalPrice, decimal quantity, decimal discountPercent)
     {
         Guard.AgainstNull(totalPrice, nameof(totalPrice));
 
@@ -93,6 +93,32 @@ public class Expense
         );
 
         _details.Add(detail);
+        
+        return detail;
+    }
+
+    public void DeleteDetail(Guid detailId)
+    {
+        Guard.AgainstEmpty(detailId, nameof(detailId));
+        
+        var detail = GetDetail(detailId);
+        _details.Remove(detail);
+    }
+    
+    public ExpenseDetail UpdateDetail(Guid detailId, Guid itemId, Money totalPrice, decimal quantity, decimal discountPercent)
+    {
+        if (totalPrice.Currency != TotalAmount.Currency)
+        {
+            throw new DomainException("Expense detail currency must match expense currency");
+        }
+
+        ExpenseDetail detail = GetDetail(detailId);
+        detail.UpdateItemId(itemId);
+        detail.UpdateTotalPrice(totalPrice);
+        detail.UpdateQuantity(quantity);
+        detail.UpdateDiscount(discountPercent);
+        
+        return detail;
     }
 
     public void RemoveDetail(Guid detailId)
@@ -100,20 +126,6 @@ public class Expense
         ExpenseDetail detail = GetDetail(detailId);
 
         _details.Remove(detail);
-    }
-
-    public void UpdateDetailPrice(Guid detailId, Money totalPrice)
-    {
-        Guard.AgainstNull(totalPrice, nameof(totalPrice));
-
-        if (totalPrice.Currency != TotalAmount.Currency)
-        {
-            throw new DomainException("Expense detail currency must match expense currency");
-        }
-
-        ExpenseDetail detail = GetDetail(detailId);
-
-        detail.UpdateTotalPrice(totalPrice);
     }
 
     private ExpenseDetail GetDetail(Guid detailId)
@@ -138,7 +150,7 @@ public class Expense
         SharedGroupId = sharedGroupId;
     }
 
-    public void ChangeSharedGroup(Guid sharedGroupId)
+    public void UpdateSharedGroup(Guid sharedGroupId)
     {
         Guard.AgainstEmpty(sharedGroupId, nameof(sharedGroupId));
 
@@ -148,5 +160,25 @@ public class Expense
     public void RemoveSharedGroup()
     {
         SharedGroupId = null;
+    }
+
+    public void UpdateDate(DateOnly date)
+    {
+        Guard.AgainstNull(date, nameof(date));
+        Guard.AgainstFutureDate(date, nameof(date));
+
+        Date = date;
+    }
+
+    public void Update(Guid? shopId, Guid? sharedGroupId, Money totalAmount, DateOnly date)
+    {
+        Guard.AgainstNull(totalAmount, nameof(totalAmount));
+        Guard.AgainstNegative(totalAmount.Amount, nameof(totalAmount));
+        Guard.AgainstFutureDate(date, nameof(date));
+
+        ShopId = shopId;
+        SharedGroupId = sharedGroupId;
+        TotalAmount = totalAmount;
+        Date = date;
     }
 }

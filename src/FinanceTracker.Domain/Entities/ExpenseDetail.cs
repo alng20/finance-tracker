@@ -79,6 +79,13 @@ public class ExpenseDetail
         }
     }
 
+    internal void UpdateItemId(Guid itemId)
+    {
+        Guard.AgainstEmpty(itemId, nameof(itemId));
+
+        ItemId = itemId;
+    }
+
     internal void UpdateTotalPrice(Money totalPrice)
     {
         Guard.AgainstNull(totalPrice, nameof(totalPrice));

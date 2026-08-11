@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Items.Commands.CreateItem;
 using FinanceTracker.Application.Items.DTOs;
@@ -19,6 +20,12 @@ public class CreateItemHandler(
 
     public async Task<ItemDto> Handle(CreateItemCommand cmd, CancellationToken cancellationToken)
     {
+        var itemWithName = await _itemRepository.FindByNameAsync(cmd.Name, cancellationToken);
+        if (itemWithName != null)
+        {
+            throw new ConflictException($"Item with name '{itemWithName.Name}' already exists");
+        }
+
         ItemCategory category = await _itemCategoryRepository.GetByIdAsync(
             cmd.CategoryId,
             cancellationToken
@@ -29,6 +36,6 @@ public class CreateItemHandler(
         _itemRepository.Add(item);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new ItemDto(item.Id, item.Name, item.Unit);
+        return new ItemDto(item.Id, item.Name, item.CategoryId, item.Unit);
     }
 }

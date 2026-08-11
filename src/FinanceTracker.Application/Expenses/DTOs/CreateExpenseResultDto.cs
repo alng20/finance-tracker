@@ -2,7 +2,7 @@ using FinanceTracker.Domain.Enums;
 
 namespace FinanceTracker.Application.Expenses.DTOs;
 
-public record ExpenseDto(
+public record ExpenseResultDto(
     Guid Id,
     Guid UserId,
     Guid? SharedGroupId,

@@ -11,4 +11,4 @@ public record CreateExpenseCommand(
     Currency Currency,
     DateOnly ExpenseDate,
     IReadOnlyList<CreateExpenseDetailDto> Details
-) : IRequest<ExpenseDto>;
+) : IRequest<ExpenseResultDto>;
