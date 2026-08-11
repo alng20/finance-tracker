@@ -31,6 +31,15 @@ public class Shop
         Address = address;
     }
 
+    public void Update(string name, Guid? retailerId, Address? address)
+    {
+        Guard.AgainstEmpty(name, nameof(name));
+
+        Name = name;
+        RetailerId = retailerId;
+        Address = address;
+    }
+
     public void Rename(string name)
     {
         Guard.AgainstEmpty(name, nameof(name));

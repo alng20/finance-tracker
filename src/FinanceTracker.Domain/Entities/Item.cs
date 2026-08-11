@@ -29,6 +29,16 @@ public class Item
         Unit = unit;
     }
 
+    public void Update(string name, Guid categoryId, Unit unit)
+    {
+        Guard.AgainstEmpty(name, nameof(name));
+        Guard.AgainstEmpty(categoryId, nameof(categoryId));
+
+        Name = name;
+        CategoryId = categoryId;
+        Unit = unit;
+    }
+
     public void ChangeCategory(Guid categoryId)
     {
         Guard.AgainstEmpty(categoryId, nameof(categoryId));

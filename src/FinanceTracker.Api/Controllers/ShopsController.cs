@@ -1,11 +1,10 @@
 using FinanceTracker.Application.Shops.Commands.CreateShop;
 using FinanceTracker.Application.Shops.Commands.DeleteShop;
+using FinanceTracker.Application.Shops.Commands.UpdateShop;
 using FinanceTracker.Application.Shops.DTOs;
 using FinanceTracker.Application.Shops.Queries.GetShopById;
 using FinanceTracker.Application.Shops.Queries.SearchShop;
-
 using MediatR;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +37,17 @@ public class ShopsController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = shop.Id }, shop);
     }
 
+    // [Authorize(Roles="Admin")]
+    [HttpPut]
+    public async Task<ActionResult<ShopDto>> Update(
+        [FromBody] UpdateShopCommand cmd,
+        CancellationToken cancellationToken
+    )
+    {
+        var shop = await _mediator.Send(cmd, cancellationToken);
+        return Ok(shop);
+    }
+
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<SearchShopResultDto>>> Search(
         [FromQuery] string searchString,
@@ -48,7 +58,7 @@ public class ShopsController(IMediator mediator) : ControllerBase
         return Ok(shops);
     }
 
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {

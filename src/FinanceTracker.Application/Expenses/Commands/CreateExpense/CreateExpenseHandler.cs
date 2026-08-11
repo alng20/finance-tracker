@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Expenses.DTOs;
@@ -13,7 +14,7 @@ public class CreateExpenseHandler(
     IShopRepository shopRepository,
     IItemRepository itemRepository,
     IUnitOfWork unitOfWork
-) : IRequestHandler<CreateExpenseCommand, ExpenseDto>
+) : IRequestHandler<CreateExpenseCommand, ExpenseResultDto>
 {
     private readonly ICurrentUserService _currentUser = currentUser;
     private readonly IExpenseRepository _expenseRepository = expenseRepository;
@@ -21,44 +22,48 @@ public class CreateExpenseHandler(
     private readonly IItemRepository _itemRepository = itemRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    public async Task<ExpenseDto> Handle(
+    public async Task<ExpenseResultDto> Handle(
         CreateExpenseCommand cmd,
         CancellationToken cancellationToken
     )
     {
         Guid userId = _currentUser.UserId;
 
-        // TODO: Add and use ExistAsync
-        Shop? shop = cmd.ShopId is Guid shopId
-            ? await _shopRepository.GetByIdAsync(shopId, cancellationToken)
-            : null;
+        if (cmd.ShopId is Guid shopId)
+        {
+            if (!await _shopRepository.ExistAsync(shopId, cancellationToken))
+            {
+                throw new NotFoundException($"Shop with id {shopId} was not found");
+            }
+        }
 
         // TODO: Check if SharedGroupId
-        // SharedGroup? sharedGroup = cmd.SharedGroupId is Guid sharedGroupId ? await _sharedGroupRepository.GetByIdAsync(sharedGroupId, cancellationToken) : null;
 
         Money money = Money.Create(cmd.TotalAmount, cmd.Currency);
 
         Expense expense = Expense.Create(
             userId,
             cmd.SharedGroupId,
-            shop?.Id,
+            cmd.ShopId,
             money,
             cmd.ExpenseDate
         );
 
         foreach (var detail in cmd.Details)
         {
-            // TODO: Add and use ExistAsync
-            Item item = await _itemRepository.GetByIdAsync(detail.ItemId, cancellationToken);
+            if (!await _itemRepository.ExistAsync(detail.ItemId, cancellationToken))
+            {
+                throw new NotFoundException($"Item with id {detail.ItemId} was not found");
+            }
 
             Money detailMoney = Money.Create(detail.TotalPrice, cmd.Currency);
-            expense.AddDetail(item.Id, detailMoney, detail.Quantity, detail.DiscountPercent);
+            expense.AddDetail(detail.ItemId, detailMoney, detail.Quantity, detail.DiscountPercent);
         }
 
         _expenseRepository.Add(expense);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new ExpenseDto(
+        return new ExpenseResultDto(
             expense.Id,
             expense.UserId,
             expense.SharedGroupId,

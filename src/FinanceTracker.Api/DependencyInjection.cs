@@ -6,6 +6,7 @@ using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Common.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 
 namespace FinanceTracker.Api;
 
@@ -16,6 +17,28 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
+        services.AddOpenApi(options =>
+        {
+            options.AddDocumentTransformer(
+                (document, context, cancellationToken) =>
+                {
+                    document.Components ??= new();
+
+                    document.Components.SecuritySchemes ??=
+                        new Dictionary<string, IOpenApiSecurityScheme>();
+
+                    document.Components.SecuritySchemes["Bearer"] = new OpenApiSecurityScheme
+                    {
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "bearer",
+                        BearerFormat = "JWT",
+                    };
+
+                    return Task.CompletedTask;
+                }
+            );
+        });
+
         services
             .AddControllers()
             .AddJsonOptions(options =>

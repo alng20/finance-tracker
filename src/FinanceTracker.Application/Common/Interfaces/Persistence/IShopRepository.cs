@@ -4,6 +4,7 @@ namespace FinanceTracker.Application.Common.Interfaces.Persistence;
 
 public interface IShopRepository
 {
+    Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken);
     Task<Shop> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     Task<Shop> GetByIdWithRetailerAsync(Guid id, CancellationToken cancellationToken);
     Task<Shop?> FindByNameAsync(string name, CancellationToken cancellationToken);

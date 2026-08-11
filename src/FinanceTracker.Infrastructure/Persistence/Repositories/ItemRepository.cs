@@ -9,6 +9,11 @@ public class ItemRepository(FinanceTrackerDbContext ctx) : IItemRepository
 {
     private readonly FinanceTrackerDbContext _ctx = ctx;
 
+    public async Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _ctx.Items.AnyAsync(x => x.Id == id, cancellationToken);
+    }
+
     public async Task<Item> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         Item? item = await _ctx.Items.FindAsync(new object[] { id }, cancellationToken);

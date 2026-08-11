@@ -9,6 +9,11 @@ public class ShopRepository(FinanceTrackerDbContext ctx) : IShopRepository
 {
     private readonly FinanceTrackerDbContext _ctx = ctx;
 
+    public async Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _ctx.Shops.AnyAsync(x => x.Id == id, cancellationToken);
+    }
+
     public async Task<Shop> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         Shop? shop = await _ctx.Shops.FindAsync(new object[] { id }, cancellationToken);

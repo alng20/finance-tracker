@@ -1,9 +1,11 @@
 using FinanceTracker.Application.Common.Interfaces.Authentication;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
+using FinanceTracker.Application.Common.Interfaces.Providers;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Infrastructure.Authentication;
 using FinanceTracker.Infrastructure.Options;
 using FinanceTracker.Infrastructure.Persistence;
+using FinanceTracker.Infrastructure.Persistence.Providers;
 using FinanceTracker.Infrastructure.Persistence.Repositories;
 using FinanceTracker.Infrastructure.Persistence.Seed;
 using Microsoft.AspNetCore.Identity;
@@ -40,6 +42,8 @@ public static class DependencyInjection
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+
+        services.AddScoped<IExpenseProvider, ExpenseProvider>();
 
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();
