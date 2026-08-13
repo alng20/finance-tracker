@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Domain.Enums;
 
 namespace FinanceTracker.Api.Requests;
@@ -7,5 +8,5 @@ public record CreateExpenseDetailRequest(
     decimal TotalPrice,
     Currency Currency,
     decimal Quantity,
-    decimal DiscountPercent
+    Discount? Discount
 );

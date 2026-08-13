@@ -2,7 +2,8 @@ namespace FinanceTracker.Domain.Enums;
 
 public enum Currency
 {
-    NZD = 0,
+    Undefined = 0,
+    NZD,
     USD,
     RUB
 }

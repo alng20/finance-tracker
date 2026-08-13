@@ -9,5 +9,7 @@ public record ExpenseResultDto(
     Guid? ShopId,
     decimal TotalAmount,
     Currency Currency,
-    DateOnly ExpenseDate
+    DateOnly ExpenseDate,
+    decimal DetailedAmount,
+    decimal UndetailedAmount
 );

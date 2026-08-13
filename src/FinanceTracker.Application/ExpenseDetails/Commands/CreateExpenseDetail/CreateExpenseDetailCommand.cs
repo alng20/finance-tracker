@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.ExpenseDetails.DTOs;
 using FinanceTracker.Domain.Enums;
 using MediatR;
@@ -10,5 +11,5 @@ public record CreateExpenseDetailCommand(
     decimal TotalPrice,
     Currency Currency,
     decimal Quantity,
-    decimal DiscountPercent
+    Discount? Discount
 ) : IRequest<ExpenseDetailResultDto>;
