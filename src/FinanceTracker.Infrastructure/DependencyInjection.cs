@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Interfaces.Authentication;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Providers;
+using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Infrastructure.Authentication;
 using FinanceTracker.Infrastructure.Options;
@@ -8,6 +9,7 @@ using FinanceTracker.Infrastructure.Persistence;
 using FinanceTracker.Infrastructure.Persistence.Providers;
 using FinanceTracker.Infrastructure.Persistence.Repositories;
 using FinanceTracker.Infrastructure.Persistence.Seed;
+using FinanceTracker.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -50,9 +52,12 @@ public static class DependencyInjection
         services.AddScoped<IShopRepository, ShopRepository>();
         services.AddScoped<IRetailerRepository, RetailerRepository>();
         services.AddScoped<IExpenseRepository, ExpenseRepository>();
+        services.AddScoped<IExpenseReportRepository, ExpenseReportRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddSingleton<ICurrencyConverter, CurrencyConverter>();
 
         return services;
     }

@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Enums;
 using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
@@ -26,7 +27,10 @@ public class UpdateExpenseDetailHandler(
     {
         Guid userId = _currentUser.UserId;
 
-        var expense = await _expenseRepository.GetByIdWithDetailsAsync(cmd.ExpenseId, cancellationToken);
+        var expense = await _expenseRepository.GetByIdWithDetailsAsync(
+            cmd.ExpenseId,
+            cancellationToken
+        );
         // TODO: Check if expense.UserId have access to shared group
         if (userId != expense.UserId)
         {
@@ -38,12 +42,26 @@ public class UpdateExpenseDetailHandler(
             throw new NotFoundException($"Item with id {cmd.ItemId} was not found");
         }
 
+        decimal discountPercent = 0;
+        if (cmd.Discount is not null)
+        {
+            // TODO: refactor with original price
+            if (cmd.Discount.Type == DiscountType.Amount)
+            {
+                discountPercent = cmd.Discount.Value / cmd.TotalPrice * 100;
+            }
+            if (cmd.Discount.Type == DiscountType.Percent)
+            {
+                discountPercent = cmd.Discount.Value;
+            }
+        }
+
         var detail = expense.UpdateDetail(
             cmd.Id,
             cmd.ItemId,
             Money.Create(cmd.TotalPrice, cmd.Currency),
             cmd.Quantity,
-            cmd.DiscountPercent
+            discountPercent
         );
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

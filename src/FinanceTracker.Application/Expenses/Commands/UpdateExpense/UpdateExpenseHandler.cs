@@ -26,7 +26,7 @@ public class UpdateExpenseHandler(
     {
         Guid userId = _currentUser.UserId;
 
-        var expense = await _expenseRepository.GetByIdAsync(cmd.Id, cancellationToken);
+        var expense = await _expenseRepository.GetByIdWithDetailsAsync(cmd.Id, cancellationToken);
         // TODO: Check if expense.UserId have access to shared group
         if (userId != expense.UserId)
         {
@@ -44,6 +44,9 @@ public class UpdateExpenseHandler(
 
         expense.Update(cmd.ShopId, cmd.SharedGroupId, Money.Create(cmd.TotalAmount, cmd.Currency), cmd.ExpenseDate);
 
+        var detailedAmount = expense.Details.Sum(x => x.TotalPrice.Amount);
+        var undetailedAmount = expense.TotalAmount.Amount - detailedAmount;
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return new ExpenseResultDto(
@@ -53,7 +56,9 @@ public class UpdateExpenseHandler(
             expense.ShopId,
             expense.TotalAmount.Amount,
             expense.TotalAmount.Currency,
-            expense.Date
+            expense.Date,
+            detailedAmount,
+            undetailedAmount
         );
     }
 }

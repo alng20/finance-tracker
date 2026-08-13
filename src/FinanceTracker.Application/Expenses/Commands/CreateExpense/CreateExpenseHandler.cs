@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Enums;
 using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
@@ -49,6 +50,7 @@ public class CreateExpenseHandler(
             cmd.ExpenseDate
         );
 
+        decimal detailedAmount = 0;
         foreach (var detail in cmd.Details)
         {
             if (!await _itemRepository.ExistAsync(detail.ItemId, cancellationToken))
@@ -56,9 +58,27 @@ public class CreateExpenseHandler(
                 throw new NotFoundException($"Item with id {detail.ItemId} was not found");
             }
 
+            decimal discountPercent = 0;
+            if (detail.Discount is not null)
+            {
+                // TODO: refactor with original price
+                if (detail.Discount.Type == DiscountType.Amount)
+                {
+                    discountPercent = detail.Discount.Value / detail.TotalPrice * 100;
+                }
+                if (detail.Discount.Type == DiscountType.Percent)
+                {
+                    discountPercent = detail.Discount.Value;
+                }
+            }
+
             Money detailMoney = Money.Create(detail.TotalPrice, cmd.Currency);
-            expense.AddDetail(detail.ItemId, detailMoney, detail.Quantity, detail.DiscountPercent);
+            expense.AddDetail(detail.ItemId, detailMoney, detail.Quantity, discountPercent);
+
+            detailedAmount += detail.TotalPrice;
         }
+
+        var undetailedAmount = expense.TotalAmount.Amount - detailedAmount;
 
         _expenseRepository.Add(expense);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -70,7 +90,9 @@ public class CreateExpenseHandler(
             expense.ShopId,
             expense.TotalAmount.Amount,
             expense.TotalAmount.Currency,
-            expense.Date
+            expense.Date,
+            detailedAmount,
+            undetailedAmount
         );
     }
 }

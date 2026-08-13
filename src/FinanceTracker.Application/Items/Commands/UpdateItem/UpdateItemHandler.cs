@@ -20,7 +20,7 @@ public class UpdateItemHandler(
     )
     {
         Item item = await _itemRepository.GetByIdAsync(cmd.Id, cancellationToken);
-        if (item.Name == cmd.Name)
+        if (item.Name == cmd.Name && item.CategoryId == cmd.CategoryId && item.Unit == cmd.Unit)
         {
             return new ItemDto(item.Id, item.Name, item.CategoryId, item.Unit);
         }

@@ -30,7 +30,7 @@ public class ExpenseDetailController(IMediator mediator) : ControllerBase
                 req.TotalPrice,
                 req.Currency,
                 req.Quantity,
-                req.DiscountPercent
+                req.Discount
             ),
             cancellationToken
         );
@@ -54,7 +54,7 @@ public class ExpenseDetailController(IMediator mediator) : ControllerBase
                 req.TotalPrice,
                 req.Currency,
                 req.Quantity,
-                req.DiscountPercent
+                req.Discount
             ),
             cancellationToken
         );
