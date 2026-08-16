@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Testcontainers.PostgreSql;
@@ -17,6 +16,7 @@ public class FinanceTrackerApiFactory : WebApplicationFactory<Program>, IAsyncLi
         .WithUsername("postgres")
         .WithPassword("postgres")
         .Build();
+
     public string TestUserRole { get; set; } = "User";
 
     public async Task InitializeAsync()
@@ -31,6 +31,8 @@ public class FinanceTrackerApiFactory : WebApplicationFactory<Program>, IAsyncLi
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        builder.UseEnvironment("Testing");
+
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<FinanceTrackerDbContext>();
