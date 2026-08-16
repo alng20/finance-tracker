@@ -1,5 +1,6 @@
 namespace FinanceTracker.Infrastructure.Options;
 
+// TODO: Move to DatabaseSeederOptions
 public sealed class UserAdminOptions
 {
     public const string SectionName = "UserAdmin";

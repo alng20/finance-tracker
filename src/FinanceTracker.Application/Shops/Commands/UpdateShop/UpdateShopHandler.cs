@@ -20,7 +20,12 @@ public class UpdateShopHandler(
     public async Task<ShopDto> Handle(UpdateShopCommand cmd, CancellationToken cancellationToken)
     {
         Shop shop = await _shopRepository.GetByIdAsync(cmd.Id, cancellationToken);
-        if (shop.Name == cmd.Name)
+        if (
+            shop.Name == cmd.Name
+            && shop.RetailerId == cmd.RetailerId
+            && shop.Address?.City == cmd.City
+            && shop.Address?.Country == cmd.Country
+        )
         {
             return new ShopDto(
                 shop.Id,

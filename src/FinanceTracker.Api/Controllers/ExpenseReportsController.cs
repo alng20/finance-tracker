@@ -2,6 +2,7 @@ using FinanceTracker.Application.Reports.DTOs;
 using FinanceTracker.Application.Reports.Enums;
 using FinanceTracker.Application.Reports.Queries.GetCategoryAmountForPeriod;
 using FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;
+using FinanceTracker.Application.Reports.Queries.GetRetailerAmountForPeriod;
 using FinanceTracker.Application.Reports.Queries.GetShopAmountForPeriod;
 using FinanceTracker.Domain.Enums;
 using MediatR;
@@ -63,5 +64,29 @@ public class ExpenseReportController(IMediator mediator) : ControllerBase
             cancellationToken
         );
         return Ok(report);
+    }
+
+    [Authorize]
+    [HttpGet("by_retailer")]
+    public async Task<ActionResult<GetRetailerAmountForPeriodResultDto>> GetAmountByRetailer(
+        [FromQuery] Currency currency,
+        [FromQuery] DateOnly? fromDate = null,
+        [FromQuery] DateOnly? toDate = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var report = await _mediator.Send(
+            new GetRetailerAmountForPeriodQuery(fromDate, toDate, currency),
+            cancellationToken
+        );
+        return Ok(report);
+    }
+
+    [Authorize]
+    [HttpGet("by_retailers_shop")]
+    public async Task<ActionResult> GetShopAmountByRetailer()
+    {
+        // TODO: Implement
+        return NotFound("Not implemented yet");
     }
 }

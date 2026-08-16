@@ -36,6 +36,9 @@ public static class DependencyInjection
         services.Configure<UserAdminOptions>(
             configuration.GetSection(UserAdminOptions.SectionName)
         );
+        services.Configure<DatabaseSeederOptions>(
+            configuration.GetSection(DatabaseSeederOptions.SectionName)
+        );
 
         services.AddScoped<UserAdminSeeder>();
         services.AddScoped<ItemCategorySeeder>();

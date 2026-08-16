@@ -5,4 +5,10 @@
     <Project Path="src/FinanceTracker.Domain/FinanceTracker.Domain.csproj" />
     <Project Path="src/FinanceTracker.Infrastructure/FinanceTracker.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FinanceTracker.Api.Tests/FinanceTracker.Api.Tests.csproj" />
+    <Project Path="tests/FinanceTracker.Application.Tests/FinanceTracker.Application.Tests.csproj" />
+    <Project Path="tests/FinanceTracker.Infrastructure.Tests/FinanceTracker.Infrastructure.Tests.csproj" />
+    <Project Path="tests/FinanceTracker.TestHelpers/FinanceTracker.TestHelpers.csproj" />
+  </Folder>
 </Solution>

@@ -14,6 +14,12 @@ public class ShopRepository(FinanceTrackerDbContext ctx) : IShopRepository
         return await _ctx.Shops.AnyAsync(x => x.Id == id, cancellationToken);
     }
 
+    public async Task<IReadOnlyList<Shop>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        // TODO: Sort shop and add pagination
+        return await _ctx.Shops.Include(x => x.Retailer).ToListAsync(cancellationToken);
+    }
+
     public async Task<Shop> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         Shop? shop = await _ctx.Shops.FindAsync(new object[] { id }, cancellationToken);
