@@ -23,6 +23,12 @@ public interface IExpenseReportRepository
         DateOnly? toDate,
         CancellationToken cancellationToken
     );
+    Task<IReadOnlyCollection<ExpenseRetailerAmountData>> GetExpensesAmountByRetailerAsync(
+        Guid userId,
+        DateOnly? fromDate,
+        DateOnly? toDate,
+        CancellationToken cancellationToken
+    );
     Task<IReadOnlyCollection<GroupedTotalByPeriodData>> GetGroupedAmountByPeriodAsync(
         Guid userId,
         DateOnly? fromDate,

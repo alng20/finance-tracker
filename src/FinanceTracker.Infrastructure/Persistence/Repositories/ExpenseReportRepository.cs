@@ -116,6 +116,47 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         return result;
     }
 
+    public async Task<
+        IReadOnlyCollection<ExpenseRetailerAmountData>
+    > GetExpensesAmountByRetailerAsync(
+        Guid userId,
+        DateOnly? fromDate,
+        DateOnly? toDate,
+        CancellationToken cancellationToken
+    )
+    {
+        var query = _ctx.Expenses.AsNoTracking().Where(x => x.UserId == userId);
+
+        if (fromDate.HasValue)
+        {
+            query = query.Where(x => x.Date >= fromDate.Value);
+        }
+
+        if (toDate.HasValue)
+        {
+            query = query.Where(x => x.Date <= toDate.Value);
+        }
+
+        var result = await query
+            .GroupBy(x => new
+            {
+                RetailerId = x.Shop == null ? null : x.Shop.RetailerId,
+                RetailerName = x.Shop == null
+                    ? "Unknown"
+                    : (x.Shop.Retailer == null ? "Unknown" : x.Shop.Retailer.Name),
+                x.TotalAmount.Currency,
+            })
+            .Select(g => new ExpenseRetailerAmountData(
+                g.Key.RetailerId,
+                g.Key.RetailerName,
+                g.Sum(x => x.TotalAmount.Amount),
+                g.Key.Currency
+            ))
+            .ToListAsync(cancellationToken);
+
+        return result;
+    }
+
     public async Task<IReadOnlyCollection<GroupedTotalByPeriodData>> GetGroupedAmountByPeriodAsync(
         Guid userId,
         DateOnly? fromDate,
