@@ -25,6 +25,7 @@ app.MapControllers();
 
 if (app.Environment.IsDevelopment())
 {
+    app.Logger.LogInformation("Finance Tracker API is starting in development mode");
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
