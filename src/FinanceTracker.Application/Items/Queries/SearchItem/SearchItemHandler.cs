@@ -15,6 +15,6 @@ public class SearchItemHandler(IItemRepository itemRepository)
     )
     {
         var items = await _itemRepository.SearchByNameAsync(query.SearchString, cancellationToken);
-        return items.Select(x => new SearchItemResultDto(x.Id, x.Name, x.Unit)).ToList();
+        return items.Select(x => new SearchItemResultDto(x.Id, x.Name, x.CategoryId, x.Category.Name, x.Unit)).ToList();
     }
 }

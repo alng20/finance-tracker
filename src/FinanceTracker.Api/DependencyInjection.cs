@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using FinanceTracker.Api.Common.Options;
 using FinanceTracker.Api.Exceptions;
 using FinanceTracker.Api.Services;
 using FinanceTracker.Application.Common.Interfaces.Services;
@@ -45,7 +46,25 @@ public static class DependencyInjection
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-        ;
+
+        CorsOptions frontendOptions =
+            configuration.GetSection(CorsOptions.SectionName).Get<CorsOptions>()
+            ?? throw new InvalidOperationException("Frontend configuration is absent.");
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy(
+                "Frontend",
+                policy =>
+                {
+                    policy
+                        .WithOrigins(frontendOptions.AllowedHosts.ToArray())
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                }
+            );
+        });
+
         services.AddHttpContextAccessor();
 
         services.AddSingleton<IExceptionResponseMapper, ExceptionResponseMapper>();

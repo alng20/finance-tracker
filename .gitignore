@@ -9,5 +9,6 @@ obj/
 bin/
 logs/
 
-docs/learning/
+*/learning/
 
+frontend/node_modules/*
