@@ -19,6 +19,7 @@ app.UseHttpsRedirection();
 
 await DatabaseInitializer.InitializeAsync(app.Services);
 
+app.UseCors("Frontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

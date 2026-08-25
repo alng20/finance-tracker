@@ -35,6 +35,7 @@ public class ItemRepository(FinanceTrackerDbContext ctx) : IItemRepository
     {
         return await _ctx
             .Items.AsNoTracking()
+            .Include(x => x.Category)
             .Where(x => EF.Functions.ILike(x.Name, $"%{SearchString}%"))
             .OrderBy(x => x.Name)
             .Take(10)

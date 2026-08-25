@@ -1,0 +1,9 @@
+:root {
+  --text-color: black;
+  --primary-color: rgb(238, 213, 168);
+
+  color: var(--text-color);
+  background-color: var(--primary-color);
+
+  font-family: "Paytone One", sans-serif;
+}

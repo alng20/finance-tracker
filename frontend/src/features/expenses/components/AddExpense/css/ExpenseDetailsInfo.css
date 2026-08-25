@@ -1,0 +1,110 @@
+.expense-details-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.expense-details-info h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.expense-details-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+
+  font-size: 14px;
+}
+
+.expense-details-table th {
+  padding: 6px 8px;
+
+  background: white;
+
+  font-weight: bold;
+  text-align: center;
+}
+
+.expense-details-table th:first-child {
+  border-radius: 14px 0 0 14px;
+}
+
+.expense-details-table th:last-child {
+  border-radius: 0 14px 14px 0;
+}
+
+.expense-details-table td {
+  padding: 6px 8px;
+
+  background: #e6a7e8;
+
+  text-align: center;
+}
+
+.expense-details-table td:first-child {
+  border-radius: 14px 0 0 14px;
+}
+
+.expense-details-table td:last-child {
+  border-radius: 0 14px 14px 0;
+}
+
+.expense-details-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.expense-details-add-button {
+  align-self: flex-start;
+
+  padding: 2px 8px;
+
+  border: 2px solid #000;
+  border-radius: 10px;
+
+  background: #fff;
+
+  font-size: 12px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.expense-details-add-button:hover {
+  background: #eaafea;
+}
+
+.expense-details-delete-button,
+.expense-details-edit-button {
+  width: 16px;
+  height: 16px;
+
+  padding: 0;
+  margin-top: -4px;
+
+  box-sizing: border-box;
+
+  border: 1px solid black;
+  border-radius: 50%;
+
+  color: black;
+  background: white;
+
+  font-family: inherit;
+  font-size: 10px;
+  line-height: 14px;
+
+  cursor: pointer;
+}
+
+.expense-details-delete-button:hover,
+.expense-details-edit-button:hover {
+  color: white;
+  background: black;
+}

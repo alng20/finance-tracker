@@ -1,0 +1,160 @@
+.expense-detail-row-form {
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  padding: 8px;
+
+  border: 1px solid black;
+  border-radius: 16px;
+
+  background: #eaafea;
+}
+
+.expense-detail-row-form__top {
+  overflow: visible;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4px;
+
+  width: 100%;
+  min-width: 0;
+}
+
+.expense-detail-row-form__fields {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.expense-detail-row-form__fields input,
+.expense-detail-row-form__fields select {
+  flex: 1 1 0;
+
+  min-width: 0;
+  width: 0;
+  height: 28px;
+
+  box-sizing: border-box;
+
+  padding: 0 10px;
+
+  border: 1px solid black;
+  border-radius: 14px;
+
+  background: white;
+
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.expense-detail-row-form__close {
+  flex: 0 0 16px;
+
+  width: 16px;
+  height: 16px;
+
+  padding: 0;
+  margin-top: -4px;
+
+  box-sizing: border-box;
+
+  border: 1px solid black;
+  border-radius: 50%;
+
+  color: black;
+  background: white;
+
+  font-family: inherit;
+  font-size: 10px;
+  line-height: 14px;
+
+  cursor: pointer;
+}
+
+.expense-detail-row-form__close:hover {
+  color: black;
+  background: #eadaea;
+  font-weight: bold;
+}
+
+.expense-detail-row-form__actions {
+  display: flex;
+  justify-content: flex-end;
+
+  width: 100%;
+}
+
+.expense-detail-row-form__save {
+  height: 24px;
+
+  padding: 0 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid black;
+  border-radius: 12px;
+
+  background: white;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.expense-detail-row-form__save:hover {
+  background: #eadaea;
+  color: black;
+}
+.item-search__results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+
+  width: 187px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 0;
+
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+
+  z-index: 1000;
+}
+
+.item-search__results button {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 7px 10px;
+
+  border: none;
+  background: white;
+  border-radius: 9px;
+
+  text-align: left;
+
+  font-family: inherit;
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.item-search__results button:hover {
+  background: #eeeeee;
+}
