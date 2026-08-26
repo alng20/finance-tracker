@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import Header from "../features/expenses/components/Header/Header";
-import AddExpenseButton from "../features/expenses/components/AddExpense/AddExpenseButton";
-import AddExpenseModal from "../features/expenses/components/AddExpense/AddExpenseModal";
+import Header from "../features/Expenses/components/Header/Header";
+import AddExpenseButton from "../features/Expenses/components/AddExpense/AddExpenseButton";
+import AddExpenseModal from "../features/Expenses/components/AddExpense/AddExpenseModal";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);

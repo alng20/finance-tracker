@@ -28,7 +28,6 @@
 }
 
 .expense-detail-row-form__fields {
-  position: relative;
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -37,14 +36,20 @@
   min-width: 0;
 }
 
-.expense-detail-row-form__fields input,
-.expense-detail-row-form__fields select {
+.detail-field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
   flex: 1 1 0;
-
   min-width: 0;
-  width: 0;
-  height: 28px;
+}
 
+.detail-field input,
+.detail-field select {
+  width: 100%;
+  height: 28px;
+  min-width: 0;
   box-sizing: border-box;
 
   padding: 0 10px;
@@ -56,6 +61,19 @@
 
   font-family: inherit;
   font-size: 12px;
+}
+
+.add-expense-detail__field_error {
+  display: inline-block;
+  align-self: flex-start;
+
+  width: fit-content;
+  margin-top: 4px;
+  padding: 0 2px;
+
+  color: red;
+
+  font-size: 10px;
 }
 
 .expense-detail-row-form__close {
@@ -117,12 +135,20 @@
   background: #eadaea;
   color: black;
 }
+.detail-field--search {
+  position: relative;
+}
 .item-search__results {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
 
   width: 187px;
+  min-width: 187px;
+
+  max-height: min(180px, calc(100vh - 250px));
+  overflow-y: auto;
+
   box-sizing: border-box;
 
   display: flex;
@@ -135,26 +161,4 @@
   border-radius: 10px;
 
   z-index: 1000;
-}
-
-.item-search__results button {
-  width: 100%;
-  box-sizing: border-box;
-
-  padding: 7px 10px;
-
-  border: none;
-  background: white;
-  border-radius: 9px;
-
-  text-align: left;
-
-  font-family: inherit;
-  font-size: 16px;
-
-  cursor: pointer;
-}
-
-.item-search__results button:hover {
-  background: #eeeeee;
 }

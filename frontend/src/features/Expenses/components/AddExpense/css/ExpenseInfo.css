@@ -1,0 +1,114 @@
+.expense-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 4px 0px;
+}
+
+.expense-info__fields {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 24px;
+}
+
+.expense-info__field {
+  flex: 0 1 150px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.expense-info__field label {
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+}
+
+.expense-info__field input,
+.expense-info__field select {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 150px;
+  min-width: 0;
+  height: 30px;
+
+  padding: 0 12px;
+
+  border: 2px solid #000000;
+  border-radius: 14px;
+  font-family: inherit;
+
+  font-size: 14px;
+}
+
+/* TODO: Make the same css style as for item search */
+.expense-info__shop_search {
+  position: relative;
+}
+
+.expense-info__shop_search {
+  position: relative;
+}
+
+.expense-info__shop_search_results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+
+  width: 187px;
+  min-width: 187px;
+
+  max-height: min(180px, calc(100vh - 250px));
+  overflow-y: auto;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 0;
+
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+
+  z-index: 1000;
+}
+
+.expense-info__shop_search_results button {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 4px 8px;
+
+  border: none;
+  background: white;
+  border-radius: 9px;
+
+  text-align: left;
+
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 20px;
+
+  cursor: pointer;
+}
+
+.expense-info__shop_search_results button:hover {
+  background: #eeeeee;
+}
+
+.expense-info__field_error {
+  display: inline-block;
+  align-self: flex-start;
+
+  width: fit-content;
+  margin-top: 4px;
+  padding: 0 2px;
+
+  color: red;
+
+  font-size: 10px;
+}
