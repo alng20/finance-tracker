@@ -2,15 +2,27 @@ import "./css/ExpenseDetailsInfo.css";
 
 import { useEffect, useState } from "react";
 import AddExpenseDetail from "./AddExpenseDetail";
-import type { ExpenseDetail } from "./AddExpenseDetail";
+import type { ExpenseDetail } from "../../types/ExpenseDetail";
 
-type AddExpenseDetailButtonProps = {
-  expenseAmount: string;
+type AddExpenseDetailButton = {
   isAddingExpenseDetail: boolean;
-  onClick: () => void;
-  onCancel: () => void;
-  onSave: () => void;
+  onClickAddDetail: () => void;
 };
+
+type ExpenseDetailRowButtons = {
+  onClickSaveDetail: (detail: ExpenseDetail) => void;
+  onClickEditDetail: (index: number) => void;
+  onClickDeleteDetail: (index: number) => void;
+  onClickCancelDetail: () => void;
+  editingDetailIdx: number | null;
+};
+
+type ExpenseDetailsInfoProps = {
+  expenseAmount: string;
+  currency: string;
+  details: ExpenseDetail[];
+} & AddExpenseDetailButton &
+  ExpenseDetailRowButtons;
 
 type ExpenseDetailsSummary = {
   number: number;
@@ -18,44 +30,17 @@ type ExpenseDetailsSummary = {
   undetailed: number;
 };
 
-function ExpenseDetailsInfo({
-  expenseAmount,
-  isAddingExpenseDetail,
-  onClick,
-  onCancel,
-  onSave,
-}: AddExpenseDetailButtonProps) {
+function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
   const [summary, setSummary] = useState<ExpenseDetailsSummary | null>(null);
-  const [details, setExpenseDetails] = useState<ExpenseDetail[]>([]);
-  const [editingDetailIndex, setEditingDetailIndex] = useState<number | null>(
-    null,
-  );
-
-  function storeDetail(detail: ExpenseDetail) {
-    if (editingDetailIndex !== null) {
-      setExpenseDetails((prev) =>
-        prev.map((item, detailIndex) =>
-          detailIndex === editingDetailIndex ? detail : item,
-        ),
-      );
-
-      setEditingDetailIndex(null);
-    } else {
-      setExpenseDetails((prev) => [...prev, detail]);
-    }
-    onSave();
-  }
-
-  function cancelDetail() {
-    setEditingDetailIndex(null);
-    onCancel();
-  }
 
   function calculateSummary() {
-    const detailed = details.reduce((sum, detail) => sum + detail.price, 0);
-    const undetailed = Number(expenseAmount) - detailed;
+    const detailed = props.details.reduce(
+      (sum, detail) => sum + detail.price,
+      0,
+    );
+    const undetailed = Number(props.expenseAmount) - detailed;
     const summary: ExpenseDetailsSummary = {
-      number: details.length,
+      number: props.details.length,
       detailed: detailed,
       undetailed: undetailed,
     };
@@ -64,7 +49,7 @@ function ExpenseDetailsInfo({
 
   useEffect(() => {
     calculateSummary();
-  }, [details, expenseAmount]);
+  }, [props.details, props.expenseAmount]);
 
   return (
     <section className="expense-details-info">
@@ -85,7 +70,7 @@ function ExpenseDetailsInfo({
         </thead>
 
         <tbody>
-          {details.map((detail, index) => (
+          {props.details.map((detail, index) => (
             <tr>
               <td>{detail.itemName}</td>
               <td>{detail.categoryName}</td>
@@ -98,7 +83,7 @@ function ExpenseDetailsInfo({
                   type="button"
                   className="expense-details-edit-button"
                   onClick={() => {
-                    setEditingDetailIndex(index);
+                    props.onClickEditDetail(index);
                   }}
                 >
                   /
@@ -109,9 +94,7 @@ function ExpenseDetailsInfo({
                   type="button"
                   className="expense-details-delete-button"
                   onClick={() => {
-                    setExpenseDetails((prev) =>
-                      prev.filter((_, detailIndex) => detailIndex !== index),
-                    );
+                    props.onClickDeleteDetail(index);
                   }}
                 >
                   X
@@ -125,29 +108,33 @@ function ExpenseDetailsInfo({
       <div className="expense-details-summary">
         <span>number: {summary?.number ?? "0"} </span>
         <span>•</span>
-        <span>detailed: {summary?.detailed ?? "0"} NZD</span>
+        <span>
+          detailed: {summary?.detailed ?? "0"} {props.currency}
+        </span>
         <span>•</span>
-        <span>undetailed: {summary?.undetailed ?? "0"} NZD</span>
+        <span>
+          undetailed: {summary?.undetailed ?? "0"} {props.currency}
+        </span>
       </div>
 
       <button
-        onClick={onClick}
+        onClick={props.onClickAddDetail}
         type="button"
         className="expense-details-add-button"
       >
         + Detail
       </button>
 
-      {(isAddingExpenseDetail || editingDetailIndex != null) && (
+      {(props.isAddingExpenseDetail || props.editingDetailIdx != null) && (
         <AddExpenseDetail
-          key={editingDetailIndex ?? "new"}
+          key={props.editingDetailIdx ?? "new"}
           initialDetail={
-            editingDetailIndex !== null
-              ? details[editingDetailIndex]
+            props.editingDetailIdx !== null
+              ? props.details[props.editingDetailIdx]
               : undefined
           }
-          onSave={storeDetail}
-          onCancel={cancelDetail}
+          onSave={props.onClickSaveDetail}
+          onCancel={props.onClickCancelDetail}
         />
       )}
     </section>

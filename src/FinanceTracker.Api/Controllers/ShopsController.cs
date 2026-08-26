@@ -59,9 +59,9 @@ public class ShopsController(IMediator mediator) : ControllerBase
         return Ok(shop);
     }
 
-    [HttpGet("search/{searchString}")]
+    [HttpGet("search")]
     public async Task<ActionResult<IReadOnlyList<SearchShopResultDto>>> Search(
-        [FromRoute] string searchString,
+        [FromQuery] string searchString,
         CancellationToken cancellationToken
     )
     {
