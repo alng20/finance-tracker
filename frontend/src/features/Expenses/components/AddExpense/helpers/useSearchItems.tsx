@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import type { Item } from "../../../../Items/types/Item";
+
 import { searchItems } from "../../../../Items/api/searchItems";
+import type { Item } from "../../../../Items/types/Item";
 
 export function useSearchItems(searchName: string, selectedItem: Item | null) {
   const [items, setItems] = useState<Item[]>([]);

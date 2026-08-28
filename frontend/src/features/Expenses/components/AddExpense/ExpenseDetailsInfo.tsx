@@ -1,8 +1,9 @@
 import "./css/ExpenseDetailsInfo.css";
 
 import { useEffect, useState } from "react";
-import AddExpenseDetail from "./AddExpenseDetail";
+
 import type { ExpenseDetail } from "../../types/ExpenseDetail";
+import AddExpenseDetail from "./AddExpenseDetail";
 
 type AddExpenseDetailButton = {
   isAddingExpenseDetail: boolean;

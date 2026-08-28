@@ -1,14 +1,23 @@
+import { useAuth } from "../../../Authentication/hooks/useAuth";
+
 type HeaderProps = {
   title: string;
   date: string;
 };
 
 function Header(header: HeaderProps) {
+  const { isAuthenticated, user } = useAuth();
+
   return (
     <header>
       <h1>
         {header.title}, {header.date}
       </h1>
+      {isAuthenticated && (
+        <h2>
+          Hello, {user?.firstName} {user?.lastName}!!!
+        </h2>
+      )}
     </header>
   );
 }

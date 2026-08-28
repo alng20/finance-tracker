@@ -22,6 +22,7 @@ public class JwtTokenService : IJwtTokenService
 
     public JwtTokenResult GenerateToken(User user)
     {
+        var now = DateTimeOffset.UtcNow;
         var claims = new List<Claim>
         {
             new Claim(MicrosoftJwt.JwtRegisteredClaimNames.Sub, user.Id.ToString()),

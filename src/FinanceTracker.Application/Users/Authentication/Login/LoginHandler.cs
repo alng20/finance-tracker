@@ -2,6 +2,7 @@ using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Authentication;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Users.DTOs;
 using FinanceTracker.Domain.Entities;
 using MediatR;
@@ -63,7 +64,12 @@ public class LoginHandler(
         _refreshTokenRepository.Add(refreshToken.Entity);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return new LoginResultDto(accessToken.Token, refreshToken.Token, accessToken.ExpiresAt);
+        
+        return new LoginResultDto(
+            new TokenResult(accessToken.Token, accessToken.ExpiresAt),
+            new TokenResult(refreshToken.Token, refreshToken.Entity.ExpiresAt),
+            user.FirstName,
+            user.LastName
+        );
     }
 }

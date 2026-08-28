@@ -18,6 +18,9 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
+        var loggerFactory = services.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger("FinanceTracker.Api");
+
         services.AddOpenApi(options =>
         {
             options.AddDocumentTransformer(
@@ -47,9 +50,21 @@ public static class DependencyInjection
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
-        CorsOptions frontendOptions =
-            configuration.GetSection(CorsOptions.SectionName).Get<CorsOptions>()
-            ?? throw new InvalidOperationException("Frontend configuration is absent.");
+        CorsOptions? frontendOptions = configuration
+            .GetSection(CorsOptions.SectionName)
+            .Get<CorsOptions>();
+        if (frontendOptions == null)
+        {
+            logger.LogWarning("CORS options is absent");
+        }
+
+        RefreshTokenCookieOptions refreshTokenCookieOptions =
+            configuration
+                .GetSection(RefreshTokenCookieOptions.SectionName)
+                .Get<RefreshTokenCookieOptions>()
+            ?? throw new InvalidOperationException(
+                "Refresh token cookies configuration is absent."
+            );
 
         services.AddCors(options =>
         {
@@ -58,7 +73,8 @@ public static class DependencyInjection
                 policy =>
                 {
                     policy
-                        .WithOrigins(frontendOptions.AllowedHosts.ToArray())
+                        .WithOrigins(frontendOptions!.AllowedHosts.ToArray())
+                        .AllowCredentials()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 }
@@ -93,6 +109,7 @@ public static class DependencyInjection
                     ValidAudience = jwtOptions.Audience,
 
                     ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
 
                     ValidateIssuerSigningKey = true,
 
