@@ -1,10 +1,12 @@
+import { apiClient } from "../../../api/api";
+import { makeUrlSearch } from "../../shared/utils";
 import type { Item } from "../types/Item";
 
-const API_URL = "http://localhost:5067/api/items";
+const API_ITEMS = "api/items";
 
 export async function searchItems(searchString: string): Promise<Item[]> {
-  const response = await fetch(
-    `${API_URL}?searchString=${encodeURIComponent(searchString)}`,
+  const response = await apiClient.get(
+    `${API_ITEMS}?${makeUrlSearch(searchString)}`,
   );
 
   if (!response.ok) {

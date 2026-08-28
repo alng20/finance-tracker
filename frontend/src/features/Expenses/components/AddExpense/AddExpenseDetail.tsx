@@ -1,15 +1,15 @@
 import "./css/AddExpenseDetail.css";
 
-import { useState, useEffect } from "react";
-import { getCategories } from "../../../Categories/api/categoriesApi";
-import { searchItems } from "../../../Items/api/searchItems";
-import type { Category } from "../../../Categories/types/Category";
-import type { Item } from "../../../Items/types/Item";
-import type { ExpenseDetail } from "../../types/ExpenseDetail";
-import { useSearchItems } from "./helpers/useSearchItems";
+import { useEffect, useState } from "react";
 
-import { validateExpenseDetail } from "./validation/expenseValidation";
+import { getCategories } from "../../../Categories/api/categoriesApi";
+import type { Category } from "../../../Categories/types/Category";
+import { searchItems } from "../../../Items/api/itemsApi";
+import type { Item } from "../../../Items/types/Item";
+import { useSearch } from "../../hooks/useSearch";
+import type { ExpenseDetail } from "../../types/ExpenseDetail";
 import type { ExpenseDetailValidationErrors } from "./validation/expenseValidation";
+import { validateExpenseDetail } from "./validation/expenseValidation";
 
 type AddExpenseDetailProps = {
   initialDetail?: ExpenseDetail;
@@ -38,7 +38,11 @@ function AddExpenseDetail({
   const [categories, setCategories] = useState<Category[]>([]);
 
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-  const { items, clearItems } = useSearchItems(name, selectedItem);
+  const { results: items, clearResults: clearItems } = useSearch<Item>(
+    name,
+    selectedItem,
+    searchItems,
+  );
 
   const [validationErrors, setValidationErrors] =
     useState<ExpenseDetailValidationErrors>({});

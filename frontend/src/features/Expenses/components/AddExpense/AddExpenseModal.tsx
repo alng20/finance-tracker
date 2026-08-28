@@ -1,14 +1,14 @@
 import "./css/AddExpenseModal.css";
 
 import { useState } from "react";
-import ExpenseInfo from "./ExpenseInfo";
-import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
-import type { ExpenseDetail } from "../../types/ExpenseDetail";
-import { defaultCurrency } from "../../../shared/consts/consts";
-import type { Shop } from "../../../Shops/types/Shop";
 
-import { validateExpense } from "./validation/expenseValidation";
+import { defaultCurrency } from "../../../shared/consts";
+import type { Shop } from "../../../Shops/types/Shop";
+import type { ExpenseDetail } from "../../types/ExpenseDetail";
+import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
+import ExpenseInfo from "./ExpenseInfo";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
+import { validateExpense } from "./validation/expenseValidation";
 
 type AddExpenseModalProps = {
   onClose: () => void;

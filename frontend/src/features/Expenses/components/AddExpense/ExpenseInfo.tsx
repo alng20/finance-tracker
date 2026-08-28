@@ -1,8 +1,11 @@
 import "./css/ExpenseInfo.css";
-import { defaultCurrency } from "../../../shared/consts/consts";
+
 import { useState } from "react";
+
+import { defaultCurrency } from "../../../shared/consts";
+import { searchShops } from "../../../Shops/api/shopsApi";
 import type { Shop } from "../../../Shops/types/Shop";
-import { useSearchShop } from "./helpers/useSearchShops";
+import { useSearch } from "../../hooks/useSearch";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
 
 type DateProps = {
@@ -32,7 +35,11 @@ type ExpenseInfoProps = { errors: ExpenseValidationErrors } & DateProps &
 
 function ExpenseInfo(props: ExpenseInfoProps) {
   const [searchShop, setSearchShop] = useState("");
-  const { shops, clearShops } = useSearchShop(searchShop, props.shop);
+  const { results: shops, clearResults: clearShops } = useSearch<Shop>(
+    searchShop,
+    props.shop,
+    searchShops,
+  );
 
   return (
     <section className="expense-info">
