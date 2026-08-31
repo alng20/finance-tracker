@@ -1,5 +1,6 @@
 import { getAccessToken, setAccessToken } from "./apiToken";
 
+// TODO: Move to env
 const API_URL = "http://localhost:5067";
 
 function buildUrl(url: string): string {

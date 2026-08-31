@@ -1,0 +1,61 @@
+.expense-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 12px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: white;
+  padding: 8px 12px;
+  max-width: 800px;
+}
+
+.expense-row__info {
+  display: grid;
+  grid-template-columns: 100px 200px 150px;
+  align-items: start;
+  column-gap: 20px;
+}
+
+.expense-row__date,
+.expense-row__shop {
+  text-align: center;
+  padding: 2px 12px;
+  border-radius: 12px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: #eaafea;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.expense-row__info_button_amount {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2px 12px;
+  gap: 4px;
+  border-radius: 12px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: #eaafea;
+  white-space: nowrap;
+}
+
+.expense-row__amount {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.expenses-table__button {
+  font-size: 10px;
+  padding: 0px;
+  padding: 0px 12px;
+  border-radius: 12px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.expenses-table__button:hover {
+  background-color: rgba(223, 209, 209, 0.7);
+}

@@ -7,3 +7,14 @@
 
   font-family: "Paytone One", sans-serif;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}

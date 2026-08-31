@@ -21,12 +21,18 @@ public class GetExpenseByIdHandler(
     {
         Guid userId = _currentUser.UserId;
 
-        var expense = await _expenseRepository.GetByIdWithInfoNoTrackingAsync(query.Id, cancellationToken);
+        var expense = await _expenseRepository.GetByIdWithInfoNoTrackingAsync(
+            query.Id,
+            cancellationToken
+        );
         // TODO: Check if expense.UserId have access to shared group
         if (userId != expense.UserId)
         {
             throw new UnauthorizedException("No access to expense");
         }
+
+        var detailedAmount = expense.Details.Sum(x => x.TotalPrice.Amount);
+        var undetailedAmount = expense.TotalAmount.Amount - detailedAmount;
 
         return new GetExpenseByIdResultDto(
             expense.Id,
@@ -42,13 +48,17 @@ public class GetExpenseByIdHandler(
                     x.Id,
                     x.ItemId,
                     x.Item.Name,
+                    x.Item.Category.Name,
+                    x.Item.Unit,
                     x.TotalPrice.Amount,
                     x.Quantity,
                     x.DiscountPercent,
                     x.UnitPrice.Amount,
                     x.UnitDiscountPrice?.Amount
                 ))
-                .ToList()
+                .ToList(),
+            detailedAmount,
+            undetailedAmount
         );
     }
 }

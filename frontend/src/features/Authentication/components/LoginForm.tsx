@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { apiClient } from "../../../api/api";
 import { useAuth } from "../hooks/useAuth";
 
 function LoginForm() {
@@ -68,25 +67,6 @@ function LoginForm() {
           }}
         >
           Logout
-        </button>
-
-        <button
-          type="button"
-          onClick={() => {
-            async function get() {
-              try {
-                const response = await apiClient.get("api/expenses");
-                const data = await response.json();
-                // TODO: Implement GET expenses
-                console.log("expenses:", data);
-              } catch {
-                setError("Failed to get expenses");
-              }
-            }
-            get();
-          }}
-        >
-          Get expenses
         </button>
       </form>
     </div>
