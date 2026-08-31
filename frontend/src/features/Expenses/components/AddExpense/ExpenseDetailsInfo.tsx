@@ -2,16 +2,17 @@ import "./css/ExpenseDetailsInfo.css";
 
 import { useEffect, useState } from "react";
 
-import type { ExpenseDetail } from "../../types/ExpenseDetail";
+import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import AddExpenseDetail from "./AddExpenseDetail";
+import type { Currency } from "../../types/Defs";
 
 type AddExpenseDetailButton = {
   isAddingExpenseDetail: boolean;
   onClickAddDetail: () => void;
 };
 
-type ExpenseDetailRowButtons = {
-  onClickSaveDetail: (detail: ExpenseDetail) => void;
+type ExpenseDetailRowDataButtons = {
+  onClickSaveDetail: (detail: AddExpenseDetailData) => void;
   onClickEditDetail: (index: number) => void;
   onClickDeleteDetail: (index: number) => void;
   onClickCancelDetail: () => void;
@@ -20,16 +21,20 @@ type ExpenseDetailRowButtons = {
 
 type ExpenseDetailsInfoProps = {
   expenseAmount: string;
-  currency: string;
-  details: ExpenseDetail[];
+  currency: Currency;
+  details: AddExpenseDetailData[];
 } & AddExpenseDetailButton &
-  ExpenseDetailRowButtons;
+  ExpenseDetailRowDataButtons;
 
 type ExpenseDetailsSummary = {
   number: number;
   detailed: number;
   undetailed: number;
 };
+
+function round(value: number): number {
+  return Math.round(value * 100) / 100;
+}
 
 function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
   const [summary, setSummary] = useState<ExpenseDetailsSummary | null>(null);
@@ -42,8 +47,8 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
     const undetailed = Number(props.expenseAmount) - detailed;
     const summary: ExpenseDetailsSummary = {
       number: props.details.length,
-      detailed: detailed,
-      undetailed: undetailed,
+      detailed: round(detailed),
+      undetailed: round(undetailed),
     };
     setSummary(summary);
   }

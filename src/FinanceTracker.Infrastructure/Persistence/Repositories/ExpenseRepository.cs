@@ -33,6 +33,7 @@ public class ExpenseRepository(FinanceTrackerDbContext ctx) : IExpenseRepository
             .Include(x => x.Shop)
             .Include(x => x.Details)
                 .ThenInclude(x => x.Item)
+                    .ThenInclude(x => x.Category)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         return expense ?? throw new NotFoundException($"Expense with id {id} was not found");
     }

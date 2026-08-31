@@ -11,5 +11,7 @@ public record GetExpenseByIdResultDto(
     decimal TotalAmount,
     Currency Currency,
     DateOnly ExpenseDate,
-    IReadOnlyList<GetExpenseByIdDetailResultDto> Details
+    IReadOnlyList<GetExpenseByIdDetailResultDto> Details,
+    decimal DetailedAmount,
+    decimal UndetailedAmount
 );

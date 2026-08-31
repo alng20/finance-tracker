@@ -4,11 +4,12 @@ import { useState } from "react";
 
 import { defaultCurrency } from "../../../shared/consts";
 import type { Shop } from "../../../Shops/types/Shop";
-import type { ExpenseDetail } from "../../types/ExpenseDetail";
+import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
 import ExpenseInfo from "./ExpenseInfo";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
 import { validateExpense } from "./validation/expenseValidation";
+import { createExpense } from "../../api/expensesApi";
 
 type AddExpenseModalProps = {
   onClose: () => void;
@@ -19,7 +20,7 @@ function AddExpenseModal({ onClose }: AddExpenseModalProps) {
   const [shop, setShop] = useState<Shop | null>(null);
   const [amount, setAmount] = useState("");
   const [currency, setCurrency] = useState(defaultCurrency);
-  const [details, setDetails] = useState<ExpenseDetail[]>([]);
+  const [details, setDetails] = useState<AddExpenseDetailData[]>([]);
 
   const [isAddingExpenseDetail, setIsAddingExpenseDetail] = useState(false);
   const [editingDetailIdx, setEditingDetailIdx] = useState<number | null>(null);
@@ -27,7 +28,7 @@ function AddExpenseModal({ onClose }: AddExpenseModalProps) {
   const [validationErrors, setValidationErrors] =
     useState<ExpenseValidationErrors>({});
 
-  function handleSave() {
+  async function handleSave() {
     const errors = validateExpense({
       date,
       shop,
@@ -39,12 +40,26 @@ function AddExpenseModal({ onClose }: AddExpenseModalProps) {
     if (Object.keys(errors).length > 0) {
       setValidationErrors(errors);
       return;
-    } else {
+    }
+    setValidationErrors({});
+
+    try {
+      await createExpense({
+        sharedGroupId: null,
+        shopId: shop?.id ?? null,
+        totalAmount: Number(amount),
+        currency,
+        expenseDate: date,
+        details,
+      });
+
+      onClose();
+    } catch {
       setValidationErrors({});
     }
   }
 
-  function saveDetail(detail: ExpenseDetail) {
+  function saveDetail(detail: AddExpenseDetailData) {
     if (editingDetailIdx !== null) {
       setDetails((prev) =>
         prev.map((item, detailIndex) =>

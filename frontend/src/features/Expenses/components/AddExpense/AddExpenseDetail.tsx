@@ -7,13 +7,13 @@ import type { Category } from "../../../Categories/types/Category";
 import { searchItems } from "../../../Items/api/itemsApi";
 import type { Item } from "../../../Items/types/Item";
 import { useSearch } from "../../hooks/useSearch";
-import type { ExpenseDetail } from "../../types/ExpenseDetail";
+import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import type { ExpenseDetailValidationErrors } from "./validation/expenseValidation";
 import { validateExpenseDetail } from "./validation/expenseValidation";
 
 type AddExpenseDetailProps = {
-  initialDetail?: ExpenseDetail;
-  onSave: (detail: ExpenseDetail) => void;
+  initialDetail?: AddExpenseDetailData;
+  onSave: (detail: AddExpenseDetailData) => void;
   onCancel: () => void;
 };
 
@@ -27,7 +27,7 @@ function AddExpenseDetail({
   const [quantity, setQuantity] = useState(
     initialDetail ? String(initialDetail.quantity) : "",
   );
-  const [unit, setUnit] = useState(initialDetail?.unit ?? "");
+  const [unit, setUnit] = useState(initialDetail?.unit ?? ""); // TODO: Set by item.unit
   const [discount, setDiscount] = useState(
     initialDetail ? String(initialDetail.discount) : "",
   );
@@ -89,7 +89,7 @@ function AddExpenseDetail({
       return;
     }
 
-    const detail: ExpenseDetail = {
+    const detail: AddExpenseDetailData = {
       itemId: selectedItem?.id ?? initialDetail!.itemId,
       itemName: selectedItem?.name ?? initialDetail!.itemName,
       categoryName: category?.name ?? "Other",

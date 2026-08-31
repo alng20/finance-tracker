@@ -9,7 +9,7 @@ function Header(header: HeaderProps) {
   const { isAuthenticated, user } = useAuth();
 
   return (
-    <header>
+    <header className="app-header">
       <h1>
         {header.title}, {header.date}
       </h1>

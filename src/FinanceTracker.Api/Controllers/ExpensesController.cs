@@ -8,6 +8,7 @@ using FinanceTracker.Application.Expenses.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using FinanceTracker.Application.Common.Models;
 
 namespace FinanceTracker.Api.Controllers;
 
@@ -30,7 +31,7 @@ public class ExpenseController(IMediator mediator) : ControllerBase
 
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<GetExpensesByUserResultDto>>> GetByUser(
+    public async Task<ActionResult<PageResult<GetExpensesByUserResultDto>>> GetByUser(
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20,
         [FromQuery] DateOnly? fromDate = null,

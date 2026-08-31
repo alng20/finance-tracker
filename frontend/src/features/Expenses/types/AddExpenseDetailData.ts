@@ -1,4 +1,4 @@
-export type ExpenseDetail = {
+export type AddExpenseDetailData = {
   itemId: string;
   itemName: string;
   categoryName: string;

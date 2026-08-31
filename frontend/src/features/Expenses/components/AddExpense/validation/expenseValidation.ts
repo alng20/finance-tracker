@@ -1,5 +1,6 @@
 import type { Shop } from "../../../../Shops/types/Shop";
-import type { ExpenseDetail } from "../../../types/ExpenseDetail";
+import type { AddExpenseDetailData } from "../../../types/AddExpenseDetailData";
+import type { Currency } from "../../../types/Defs";
 
 export type ExpenseValidationErrors = {
   date?: string;
@@ -28,9 +29,9 @@ export function validateExpense({
 }: {
   date: string;
   shop: Shop | null;
-  currency: string;
+  currency: Currency;
   amount: string;
-  details: ExpenseDetail[];
+  details: AddExpenseDetailData[];
 }): ExpenseValidationErrors {
   const errors: ExpenseValidationErrors = {};
 
@@ -69,7 +70,7 @@ export function validateExpense({
 }
 
 export function validateExpenseDetail(
-  detail: ExpenseDetail,
+  detail: AddExpenseDetailData,
 ): ExpenseDetailValidationErrors {
   const errors: ExpenseDetailValidationErrors = {};
 
@@ -89,8 +90,8 @@ export function validateExpenseDetail(
     errors.unit = "Unit is required";
   }
 
-  if (detail.discount < 0 || detail.discount > 100) {
-    errors.discount = "Discount must be between 0 and 100";
+  if (detail.discount < 0 || detail.discount > detail.price) {
+    errors.discount = `Discount amount must be between 0 and ${detail.price}`;
   }
 
   if (detail.price <= 0) {
