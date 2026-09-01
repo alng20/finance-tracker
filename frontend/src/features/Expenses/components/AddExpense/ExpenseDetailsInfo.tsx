@@ -61,7 +61,7 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
     <section className="expense-details-info">
       <h2>Details</h2>
 
-      <table className="expense-details-table">
+      <table className="expense-details-info__table">
         <thead>
           <tr>
             <th>Name</th>

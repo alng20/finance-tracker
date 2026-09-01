@@ -1,2 +1,1 @@
-// TODO: Create enums
-export type Currency = string;
+export type Currency = "NZD" | "RUB" | "USD";

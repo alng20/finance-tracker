@@ -1,0 +1,29 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.sidebar__navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar__button_logout {
+  align-self: center;
+  width: 50%;
+  padding: 4px 12px;
+  margin-top: auto;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 2px solid black;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.sidebar__button_logout:hover {
+  background-color: #eaafea;
+}

@@ -1,0 +1,26 @@
+.sidebar__navlink {
+  width: 70%;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  border: 1px solid black;
+  border-color: black;
+  border-radius: 12px;
+  padding: 4px 20px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  color: black;
+  background-color: white;
+
+  cursor: pointer;
+}
+
+.sidebar__navlink:hover {
+  background-color: #e9d5e9;
+}
+
+.sidebar__navlink.sidebar__navlink_active {
+  background-color: #eaafea;
+}

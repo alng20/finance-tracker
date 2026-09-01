@@ -1,5 +1,6 @@
 .expense-details-table {
   display: grid;
+  table-layout: fixed;
   grid-template-columns:
     minmax(0, 1fr)
     minmax(0, 1fr)

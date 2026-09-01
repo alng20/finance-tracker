@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FinanceTracker.Api.Controllers;
 
 [ApiController]
-[Route("api/expenses/reports")]
+[Route("api/reports")]
 public class ExpenseReportController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;

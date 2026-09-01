@@ -1,0 +1,16 @@
+.expenses {
+  display: flex;
+  flex-direction: column;
+}
+
+.expenses_page__header {
+  display: flex;
+  flex-direction: row;
+}
+
+.expenses_page__header_title {
+  font-size: 24px;
+  font-weight: bold;
+  flex-grow: 1;
+  flex-basis: 80%;
+}

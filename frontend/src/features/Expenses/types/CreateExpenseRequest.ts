@@ -17,7 +17,7 @@ export type CreateExpenseDetailRequest = {
   discount: Discount | null;
 };
 
-export type CreateExpenseData = {
+export type CreateExpenseParams = {
   sharedGroupId: string | null;
   shopId: string | null;
   totalAmount: number;

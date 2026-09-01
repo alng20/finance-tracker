@@ -1,8 +1,11 @@
 import { useState } from "react";
 
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
+  const navigate = useNavigate();
+
   const { login, logout } = useAuth();
 
   const [email, setEmail] = useState("");
@@ -15,6 +18,7 @@ function LoginForm() {
 
     try {
       await login(email, password);
+      navigate("/dashboard", { replace: true });
     } catch {
       setError("Invalid email or password");
     }
