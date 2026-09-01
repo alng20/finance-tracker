@@ -7,9 +7,11 @@ type AddExpenseButtonProps = {
 
 function AddExpenseButton(props: AddExpenseButtonProps) {
   return (
-    <button onClick={props.onClick} className="add-expense-button">
-      {props.text}
-    </button>
+    <div className="add-expense-button">
+      <button onClick={props.onClick} className="add-expense-button_click">
+        {props.text}
+      </button>
+    </div>
   );
 }
 

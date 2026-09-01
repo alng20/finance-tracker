@@ -8,7 +8,7 @@ import type { ExpenseDetailRowData } from "./data/ExpenseDetailRowData";
 import ExpenseDetailsTable from "./ExpenseDetailsTable";
 import type { Currency } from "../../types/Defs";
 import type { ExpenseDetailsSummary } from "./data/ExpenseDetailsSummary";
-import { defaultCurrency } from "../../../shared/consts";
+import { defaultCurrency } from "../../../shared/common/consts";
 
 type ExpenseRowProps = {
   expense: ExpenseDto;

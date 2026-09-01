@@ -49,7 +49,7 @@ public class GetGroupedAmountByPeriodHandler(
                     g.Sum(x => _currencyConverter.Convert(x.Amount, x.Currency, query.Currency))
                 ))
                 .ToList();
-            return new GetGroupedAmountByPeriodResultDto(query.GroupingType, groupedAmount);
+            return new GetGroupedAmountByPeriodResultDto(query.Currency, query.GroupingType, groupedAmount);
         }
         else if (query.GroupingType is ReportGroupingType.Week)
         {
@@ -71,7 +71,11 @@ public class GetGroupedAmountByPeriodHandler(
                     g.Sum(x => _currencyConverter.Convert(x.Amount, x.Currency, query.Currency))
                 ))
                 .ToList();
-            return new GetGroupedAmountByPeriodResultDto(query.GroupingType, groupedAmount);
+            return new GetGroupedAmountByPeriodResultDto(
+                query.Currency,
+                query.GroupingType,
+                groupedAmount
+            );
         }
 
         throw new NotFoundException("Report grouping type is unsupported");

@@ -2,7 +2,7 @@ import "./css/AddExpenseModal.css";
 
 import { useState } from "react";
 
-import { defaultCurrency } from "../../../shared/consts";
+import { defaultCurrency } from "../../../shared/common/consts";
 import type { Shop } from "../../../Shops/types/Shop";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
@@ -10,6 +10,7 @@ import ExpenseInfo from "./ExpenseInfo";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
 import { validateExpense } from "./validation/expenseValidation";
 import { createExpense } from "../../api/expensesApi";
+import type { Currency } from "../../types/Defs";
 
 type AddExpenseModalProps = {
   onClose: () => void;
@@ -19,7 +20,7 @@ function AddExpenseModal({ onClose }: AddExpenseModalProps) {
   const [date, setDate] = useState("");
   const [shop, setShop] = useState<Shop | null>(null);
   const [amount, setAmount] = useState("");
-  const [currency, setCurrency] = useState(defaultCurrency);
+  const [currency, setCurrency] = useState<Currency>(defaultCurrency);
   const [details, setDetails] = useState<AddExpenseDetailData[]>([]);
 
   const [isAddingExpenseDetail, setIsAddingExpenseDetail] = useState(false);

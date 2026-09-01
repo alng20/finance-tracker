@@ -1,0 +1,44 @@
+.recent_expenses {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 12px;
+  align-items: center;
+  background-color: white;
+  padding: 4px 0px;
+  gap: 8px;
+  min-width: 0;
+}
+
+.recent_expenses__header {
+  margin: 0px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  width: 100%;
+  text-align: center;
+}
+
+.recent_expenses__expenses {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.recent_expenses__data {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 0px;
+  font-size: 16px;
+  width: 100%;
+  align-items: start;
+  min-width: 0;
+  gap: 4px;
+}
+
+.recent_expenses__data_row {
+  margin: 0;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+}

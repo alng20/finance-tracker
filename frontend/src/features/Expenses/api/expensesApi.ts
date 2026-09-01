@@ -2,36 +2,40 @@ import { apiClient } from "../../../api/api";
 import { mapExpenseDetailToRequest } from "../mappers/ExpenseDetailMapper";
 import type {
   CreateExpenseRequest,
-  CreateExpenseData,
+  CreateExpenseParams,
 } from "../types/CreateExpenseRequest";
 import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
 import type { GetExpensesResponse } from "../types/GetExpensesResponse";
 
 const API_EXPENSES = "api/expenses";
 
-export async function getExpenses(): Promise<GetExpensesResponse> {
-  const response = await apiClient.get(`${API_EXPENSES}`);
+export async function getExpenses(
+  page?: number,
+  pageSize?: number,
+  fromDate?: string,
+  toDate?: string,
+): Promise<GetExpensesResponse> {
+  const params = new URLSearchParams({
+    ...(page !== undefined && { page: page.toString() }),
+    ...(pageSize !== undefined && { pageSize: pageSize.toString() }),
+    ...(fromDate && { fromDate }),
+    ...(toDate && { toDate }),
+  });
 
-  if (!response.ok) {
-    throw new Error("Failed to create expense");
-  }
+  const query = params.toString();
 
-  return response.json();
+  return apiClient.get<GetExpensesResponse>(
+    `${API_EXPENSES}${query ? `?${query}` : ""}`,
+  );
 }
 
 export async function getExpenseById(
   id: string,
 ): Promise<GetExpenseByIdResponse> {
-  const response = await apiClient.get(`/api/expenses/${id}`);
-
-  if (!response.ok) {
-    throw new Error("Failed to get expense by id");
-  }
-
-  return response.json();
+  return apiClient.get<GetExpenseByIdResponse>(`${API_EXPENSES}/${id}`);
 }
 
-export async function createExpense(expense: CreateExpenseData) {
+export async function createExpense(expense: CreateExpenseParams) {
   const request: CreateExpenseRequest = {
     sharedGroupId: null,
     shopId: expense.shopId,
@@ -40,14 +44,5 @@ export async function createExpense(expense: CreateExpenseData) {
     expenseDate: expense.expenseDate,
     details: expense.details.map(mapExpenseDetailToRequest),
   };
-
-  const response = await apiClient.post(`${API_EXPENSES}`, request);
-
-  if (!response.ok) {
-    throw new Error("Failed to create expense");
-  }
-
-  const data = await response.json();
-
-  return data;
+  return apiClient.post<CreateExpenseRequest>(`${API_EXPENSES}`, request);
 }

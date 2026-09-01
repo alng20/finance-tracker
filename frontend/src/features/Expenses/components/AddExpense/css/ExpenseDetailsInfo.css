@@ -9,7 +9,7 @@
   font-size: 16px;
 }
 
-.expense-details-table {
+.expense-details-info__table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 8px;
@@ -17,7 +17,7 @@
   font-size: 14px;
 }
 
-.expense-details-table th {
+.expense-details-info__table th {
   padding: 6px 8px;
 
   background: white;
@@ -26,15 +26,15 @@
   text-align: center;
 }
 
-.expense-details-table th:first-child {
+.expense-details-info__table th:first-child {
   border-radius: 14px 0 0 14px;
 }
 
-.expense-details-table th:last-child {
+.expense-details-info__table th:last-child {
   border-radius: 0 14px 14px 0;
 }
 
-.expense-details-table td {
+.expense-details-info__table td {
   padding: 6px 8px;
 
   background: #e6a7e8;
@@ -42,11 +42,11 @@
   text-align: center;
 }
 
-.expense-details-table td:first-child {
+.expense-details-info__table td:first-child {
   border-radius: 14px 0 0 14px;
 }
 
-.expense-details-table td:last-child {
+.expense-details-info__table td:last-child {
   border-radius: 0 14px 14px 0;
 }
 

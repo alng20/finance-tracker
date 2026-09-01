@@ -2,11 +2,12 @@ import "./css/ExpenseInfo.css";
 
 import { useState } from "react";
 
-import { defaultCurrency } from "../../../shared/consts";
+import { defaultCurrency } from "../../../shared/common/consts";
 import { searchShops } from "../../../Shops/api/shopsApi";
 import type { Shop } from "../../../Shops/types/Shop";
 import { useSearch } from "../../hooks/useSearch";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
+import type { Currency } from "../../types/Defs";
 
 type DateProps = {
   date: string;
@@ -25,7 +26,7 @@ type AmountProps = {
 
 type CurrencyProps = {
   currency: string;
-  onCurrencyChange: (value: string) => void;
+  onCurrencyChange: (value: Currency) => void;
 };
 
 type ExpenseInfoProps = { errors: ExpenseValidationErrors } & DateProps &
@@ -121,7 +122,8 @@ function ExpenseInfo(props: ExpenseInfoProps) {
             defaultValue={defaultCurrency}
             value={props.currency}
             onChange={(event) => {
-              props.onCurrencyChange(event.target.value);
+              const curCurrency: Currency = event.target.value as Currency;
+              props.onCurrencyChange(curCurrency);
             }}
           >
             {/* TODO: use GET api/currencies */}
