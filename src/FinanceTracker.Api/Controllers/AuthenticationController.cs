@@ -46,7 +46,12 @@ public class AuthenticationController(
         var result = await _mediator.Send(cmd, cancellationToken);
         AppendRefreshTokenCookie(result.RefreshToken);
 
-        var response = new LoginResponse(result.AccessToken.Token, result.AccessToken.ExpiresAt, result.FirstName, result.LastName);
+        var response = new LoginResponse(
+            result.AccessToken.Token,
+            result.AccessToken.ExpiresAt,
+            result.FirstName,
+            result.LastName
+        );
         return Ok(response);
     }
 
@@ -56,15 +61,16 @@ public class AuthenticationController(
     {
         if (!Request.Cookies.TryGetValue(_refreshTokenOptions.Name, out var refreshToken))
             return Unauthorized();
-    
+
         await _mediator.Send(new LogoutCommand(refreshToken), cancellationToken);
         DeleteRefreshTokenCookie();
 
         return NoContent();
     }
 
+    // TODO: Move to UserController
     [Authorize]
-    [HttpGet("profile")]
+    [HttpGet("/api/profile")]
     public async Task<ActionResult<UserDto>> Profile(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetCurrentUserQuery(), cancellationToken);
@@ -80,7 +86,12 @@ public class AuthenticationController(
         var result = await _mediator.Send(new RefreshTokenCommand(refreshToken), cancellationToken);
         AppendRefreshTokenCookie(result.RefreshToken);
 
-        var response = new RefreshResponse(result.AccessToken.Token, result.AccessToken.ExpiresAt, result.FirstName, result.LastName);
+        var response = new RefreshResponse(
+            result.AccessToken.Token,
+            result.AccessToken.ExpiresAt,
+            result.FirstName,
+            result.LastName
+        );
         return Ok(response);
     }
 

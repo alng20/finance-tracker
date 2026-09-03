@@ -4,7 +4,7 @@ using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Expenses.DTOs;
 using MediatR;
 
-namespace FinanceTracker.Application.Expenses.Commands.GetExpensesByUser;
+namespace FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 
 public class GetExpensesByUserHandler(
     ICurrentUserService currentUser,

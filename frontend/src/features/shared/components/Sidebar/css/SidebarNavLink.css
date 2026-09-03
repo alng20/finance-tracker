@@ -1,10 +1,11 @@
 .sidebar__navlink {
   width: 70%;
+  margin: 0 auto;
+
   text-decoration: none;
   text-align: center;
   display: block;
   border: 1px solid black;
-  border-color: black;
   border-radius: 12px;
   padding: 4px 20px;
 
@@ -13,7 +14,6 @@
 
   color: black;
   background-color: white;
-
   cursor: pointer;
 }
 

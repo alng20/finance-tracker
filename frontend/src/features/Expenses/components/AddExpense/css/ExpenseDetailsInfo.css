@@ -1,29 +1,31 @@
 .expense-details-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 12px;
 }
 
 .expense-details-info h2 {
   margin: 0;
-  font-size: 16px;
+  color: #172b3a;
+  font-size: 18px;
 }
 
 .expense-details-info__table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 8px;
-
-  font-size: 14px;
+  border-spacing: 0 6px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
 }
 
 .expense-details-info__table th {
   padding: 6px 8px;
-
-  background: white;
-
+  color: #637786;
+  font-size: 10px;
   font-weight: bold;
+  letter-spacing: 0.5px;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .expense-details-info__table th:first-child {
@@ -37,8 +39,8 @@
 .expense-details-info__table td {
   padding: 6px 8px;
 
-  background: #e6a7e8;
-
+  background: #f0e8f0;
+  color: #365163;
   text-align: center;
 }
 
@@ -55,21 +57,21 @@
   align-items: center;
   gap: 12px;
 
-  font-size: 12px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
+  flex-wrap: wrap;
+  color: #637786;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
 }
 
 .expense-details-add-button {
   align-self: flex-start;
 
-  padding: 2px 8px;
-
-  border: 2px solid #000;
-  border-radius: 10px;
-
-  background: #fff;
-
+  padding: 8px 12px;
+  border: 1px solid rgba(23, 43, 58, 0.2);
+  border-radius: 8px;
+  background: white;
+  color: #365163;
+  font-family: Arial, sans-serif;
   font-size: 12px;
   font-weight: bold;
 
@@ -77,34 +79,36 @@
 }
 
 .expense-details-add-button:hover {
-  background: #eaafea;
+  background: #edb6eb;
 }
 
 .expense-details-delete-button,
 .expense-details-edit-button {
-  width: 16px;
-  height: 16px;
-
-  padding: 0;
-  margin-top: -4px;
+  min-height: 26px;
+  padding: 4px 7px;
 
   box-sizing: border-box;
-
-  border: 1px solid black;
-  border-radius: 50%;
-
-  color: black;
-  background: white;
-
-  font-family: inherit;
+  border: 1px solid rgba(23, 43, 58, 0.2);
+  border-radius: 6px;
+  color: #365163;
+  background: transparent;
+  font-family: Arial, sans-serif;
   font-size: 10px;
-  line-height: 14px;
+  font-weight: bold;
 
   cursor: pointer;
 }
 
 .expense-details-delete-button:hover,
 .expense-details-edit-button:hover {
-  color: white;
-  background: black;
+  color: #172b3a;
+  background: #e0e9ef;
+}
+
+@media (max-width: 600px) {
+  .expense-details-info__table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }

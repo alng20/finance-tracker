@@ -1,21 +1,23 @@
 .add-expense-button {
   display: inline-flex;
-  flex-direction: row;
-  justify-content: end;
-  padding: 12px;
+  flex-shrink: 0;
 }
 
 .add-expense-button_click {
-  display: block;
-  padding: 8px 16px;
-  font-weight: bold;
-
-  border-radius: 12px;
-
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid #d99ed7;
+  border-radius: 8px;
   background: #edb6eb;
+  color: #172b3a;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .add-expense-button_click:hover {
-  background: #eeeeee;
+  background: #d99ed7;
 }

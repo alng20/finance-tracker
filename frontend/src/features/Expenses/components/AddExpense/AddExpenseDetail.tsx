@@ -273,6 +273,7 @@ function AddExpenseDetail({
           type="button"
           className="expense-detail-row-form__close"
           onClick={onCancel}
+          aria-label="Cancel detail"
         >
           X
         </button>

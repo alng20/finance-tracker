@@ -35,7 +35,7 @@ type ExpenseInfoProps = { errors: ExpenseValidationErrors } & DateProps &
   CurrencyProps;
 
 function ExpenseInfo(props: ExpenseInfoProps) {
-  const [searchShop, setSearchShop] = useState("");
+  const [searchShop, setSearchShop] = useState(props.shop?.name ?? "");
   const { results: shops, clearResults: clearShops } = useSearch<Shop>(
     searchShop,
     props.shop,
@@ -46,9 +46,9 @@ function ExpenseInfo(props: ExpenseInfoProps) {
     <section className="expense-info">
       <div className="expense-info__fields">
         <div className="expense-info__field">
-          <label htmlFor="Date">Date</label>
+          <label htmlFor="date">Date</label>
           <input
-            id="Date"
+            id="date"
             type="date"
             value={props.date}
             onChange={(event) => {
@@ -99,7 +99,7 @@ function ExpenseInfo(props: ExpenseInfoProps) {
         </div>
 
         <div className="expense-info__field">
-          <label htmlFor="Amount">Amount</label>
+          <label htmlFor="amount">Amount</label>
           <input
             id="amount"
             type="number"
@@ -131,7 +131,7 @@ function ExpenseInfo(props: ExpenseInfoProps) {
             <option value="USD">USD</option>
             <option value="RUB">RUB</option>
           </select>
-          {props.errors.date && (
+          {props.errors.currency && (
             <span className="expense-info__field_error">
               {props.errors.currency}
             </span>

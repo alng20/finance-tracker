@@ -1,58 +1,85 @@
 .expense-details-table {
   display: grid;
-  table-layout: fixed;
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr)
-    minmax(0, 1fr)
-    minmax(0, 1fr)
-    minmax(0, 1fr)
-    minmax(0, 1fr);
-  gap: 8px;
-  font-size: 10px;
-  font-weight: bolder;
-  max-width: (450px, 100%);
+  grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr 1.5fr;
+  gap: 6px;
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
+  padding: 10px 0 0;
+  border-top: 1px solid rgba(23, 43, 58, 0.12);
+  color: #365163;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
 }
 
 .expense-details-table__header {
-  margin-top: 8px;
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
   align-items: center;
-  text-align: center;
-  border: 1px solid black;
-  border-radius: 20px;
+  padding: 0 8px 4px;
   max-width: 100%;
   min-width: 0;
+  color: #637786;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .expense-details-table__data {
-  max-width: 100%;
-  min-width: 0;
-  padding: 2px 8px;
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
   align-items: center;
-  text-align: center;
-  background-color: #eaafea;
-  border-radius: 20px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background-color: #f0e8f0;
+}
+
+.expense-details-table__header > div,
+.expense-details-table__data > div {
+  min-width: 0;
 }
 
 .expense-details-table__summary {
   display: grid;
-  grid-template-columns: 150px 150px 150px;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-column: 1 / -1;
-  font-size: 10px;
-  font-weight: lighter;
-  font-style: italic;
-  color: rgb(0, 0, 0, 0.5);
   align-items: center;
-  text-align: center;
-  border: 1px solid rgb(0, 0, 0, 0.5);
-  border-radius: 20px;
+  gap: 8px;
+  margin-top: 4px;
   max-width: 100%;
   min-width: 0;
+}
+
+.expense-details-table__summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background-color: #e9eef1;
+}
+
+.expense-details-table__summary span {
+  color: #637786;
+  font-size: 10px;
+}
+
+.expense-details-table__summary strong {
+  color: #172b3a;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .expense-details-table {
+    overflow-x: auto;
+    grid-template-columns: 1.6fr 1.3fr 0.8fr 0.8fr 0.9fr 1.3fr;
+  }
+
+  .expense-details-table__summary {
+    grid-template-columns: 1fr;
+  }
 }

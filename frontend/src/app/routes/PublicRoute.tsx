@@ -3,9 +3,13 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../features/Authentication/hooks/useAuth";
 
 function PublicRoute() {
-  const { isAuthenticated } = useAuth();
+  const { authState } = useAuth();
 
-  if (isAuthenticated) {
+  if (authState === "Unknown") {
+    return null;
+  }
+
+  if (authState === "Authenticated") {
     return <Navigate to="/dashboard" replace />;
   }
 

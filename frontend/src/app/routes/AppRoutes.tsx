@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import LoginPage from "../../features/Authentication/pages/LoginPage";
 import DashboardPage from "../../features/Dashboard/pages/DashboardPage";
@@ -11,6 +11,9 @@ import ProtectedRoute from "./ProtectedRoutes";
 import PublicRoute from "./PublicRoute";
 import RegisterPage from "../../features/Authentication/components/RegisterForm";
 import HomePage from "../../features/Home/pages/HomePage";
+import AdminRoute from "./AdminRoute";
+import ItemsPage from "../../features/Items/pages/ItemsPage";
+import ShopsPage from "../../features/Shops/pages/ShopsPage";
 
 function AppRoutes() {
   return (
@@ -28,6 +31,10 @@ function AppRoutes() {
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/group" element={<GroupPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route element={<AdminRoute />}>
+            <Route path="/admin/shops" element={<ShopsPage />} />
+            <Route path="/admin/items" element={<ItemsPage />} />
+          </Route>
         </Route>
       </Route>
     </Routes>
