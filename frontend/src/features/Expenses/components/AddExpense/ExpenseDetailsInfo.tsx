@@ -77,7 +77,7 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
 
         <tbody>
           {props.details.map((detail, index) => (
-            <tr>
+            <tr key={detail.id ?? `${detail.itemId}-${index}`}>
               <td>{detail.itemName}</td>
               <td>{detail.categoryName}</td>
               <td>{detail.quantity}</td>
@@ -92,7 +92,7 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
                     props.onClickEditDetail(index);
                   }}
                 >
-                  /
+                  Edit
                 </button>
               </td>
               <td>
@@ -103,7 +103,7 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
                     props.onClickDeleteDetail(index);
                   }}
                 >
-                  X
+                  Delete
                 </button>
               </td>
             </tr>
@@ -128,7 +128,7 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
         type="button"
         className="expense-details-add-button"
       >
-        + Detail
+        + Add detail
       </button>
 
       {(props.isAddingExpenseDetail || props.editingDetailIdx != null) && (

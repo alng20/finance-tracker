@@ -1,8 +1,8 @@
 using FinanceTracker.Api.Requests;
 using FinanceTracker.Application.Expenses.Commands.CreateExpense;
 using FinanceTracker.Application.Expenses.Commands.DeleteExpense;
-using FinanceTracker.Application.Expenses.Commands.GetExpenseById;
-using FinanceTracker.Application.Expenses.Commands.GetExpensesByUser;
+using FinanceTracker.Application.Expenses.Queries.GetExpenseById;
+using FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 using FinanceTracker.Application.Expenses.Commands.UpdateExpense;
 using FinanceTracker.Application.Expenses.DTOs;
 using MediatR;

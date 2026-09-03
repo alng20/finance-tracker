@@ -39,6 +39,6 @@ public class RegisterHandler(
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new UserDto(user.Id, user.FirstName, user.LastName, user.Email);
+        return new UserDto(user.Id, user.FirstName, user.LastName, user.Email, user.Role);
     }
 }

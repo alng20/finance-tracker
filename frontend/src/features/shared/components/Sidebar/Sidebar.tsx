@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import SidebarNavLink from "./SidebarNavLink";
 
 function Sidebar() {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const navigate = useNavigate();
   async function onClickLogout() {
@@ -22,6 +22,13 @@ function Sidebar() {
         <SidebarNavLink toLink="/group" children="Groups" />
         <SidebarNavLink toLink="/settings" children="Settings" />
       </nav>
+      {user?.role === "Admin" && (
+        <>
+          <SidebarNavLink toLink="/admin/shops" children="Shops" />
+          <SidebarNavLink toLink="/admin/items" children="Items" />
+        </>
+      )}
+
       <button
         className="sidebar__button_logout"
         type="button"

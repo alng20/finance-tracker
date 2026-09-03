@@ -19,7 +19,7 @@ function ExpenseDetailsTable({ details, summary }: ExpenseDetailsTableProps) {
         <div>Price</div>
       </div>
       {details.map((detail) => (
-        <div className="expense-details-table__data">
+        <div className="expense-details-table__data" key={detail.id}>
           <div className="expense-details-table__data-name">
             {detail.itemName}
           </div>
@@ -39,12 +39,21 @@ function ExpenseDetailsTable({ details, summary }: ExpenseDetailsTableProps) {
         </div>
       ))}
       <div className="expense-details-table__summary">
-        <div>Total Items: {summary.number}</div>
         <div>
-          Detailed: {summary.detailed} {summary.currency}
+          <span>Total items</span>
+          <strong>{summary.number}</strong>
         </div>
         <div>
-          Undetailed: {summary.undetailed} {summary.currency}
+          <span>Detailed</span>
+          <strong>
+            {summary.detailed} {summary.currency}
+          </strong>
+        </div>
+        <div>
+          <span>Undetailed</span>
+          <strong>
+            {summary.undetailed} {summary.currency}
+          </strong>
         </div>
       </div>
     </div>

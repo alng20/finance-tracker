@@ -1,22 +1,34 @@
 .recent_expenses {
   display: flex;
   flex-direction: column;
-  border: 2px solid black;
-  border-radius: 12px;
-  align-items: center;
-  background-color: white;
-  padding: 4px 0px;
-  gap: 8px;
+  min-height: 100%;
   min-width: 0;
+  grid-column: 1 / 1;
+  grid-row: 2;
+  padding: 20px;
+  border: 1px solid rgba(23, 43, 58, 0.12);
+  border-radius: 16px;
+  background: #f7fafb;
+}
+
+.recent_expenses__eyebrow {
+  margin: 0 0 6px;
+  color: #637786;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .recent_expenses__header {
-  margin: 0px;
-  font-size: 16px;
-  font-weight: bold;
-  border-bottom: 2px solid black;
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(23, 43, 58, 0.12);
+  color: #172b3a;
+  font-size: 18px;
+  font-weight: 600;
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 
 .recent_expenses__expenses {
@@ -24,21 +36,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.recent_expenses__data {
-  display: inline-flex;
-  flex-direction: column;
-  margin: 0px;
-  font-size: 16px;
   width: 100%;
-  align-items: start;
-  min-width: 0;
-  gap: 4px;
+  padding: 0;
+  gap: 8px;
 }
 
-.recent_expenses__data_row {
-  margin: 0;
-  font-size: 16px;
-  color: rgb(0, 0, 0);
+.recent_expenses__state {
+  margin: 20px 0;
+  color: #637786;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  text-align: center;
 }

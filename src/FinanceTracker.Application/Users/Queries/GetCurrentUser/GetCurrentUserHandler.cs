@@ -24,6 +24,6 @@ public class GetCurrentUserHandler : IRequestHandler<GetCurrentUserQuery, UserDt
     {
         var user = await _userRepository.GetByIdAsync(_currentUser.UserId, cancellationToken);
 
-        return new UserDto(user.Id, user.FirstName, user.LastName, user.Email);
+        return new UserDto(user.Id, user.FirstName, user.LastName, user.Email, user.Role);
     }
 }

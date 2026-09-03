@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace FinanceTracker.Application.Expenses.Commands.GetExpensesByUser;
+namespace FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 
 public class GetExpensesByUserValidator : AbstractValidator<GetExpensesByUserQuery>
 {

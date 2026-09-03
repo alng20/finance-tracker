@@ -1,61 +1,132 @@
 .expense-row {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  font-size: 12px;
-  border: 1px solid black;
-  border-radius: 20px;
-  background-color: white;
-  padding: 8px 12px;
-  max-width: 800px;
+  align-items: stretch;
+  gap: 9px;
+  padding: 11px 12px;
+  border: 1px solid rgba(23, 43, 58, 0.12);
+  border-radius: 14px;
+  background-color: #f7fafb;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+  flex-shrink: 1;
 }
 
 .expense-row__info {
   display: grid;
-  grid-template-columns: 100px 200px 150px;
-  align-items: start;
-  column-gap: 20px;
+  grid-template-columns: minmax(100px, 0.8fr) minmax(140px, 1.4fr) minmax(
+      150px,
+      1fr
+    );
+  gap: 8px;
+  max-width: 100%;
+  width: 100%;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.expense-row__edit_delete_buttons {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.expense-row__edit_button,
+.expense-row__delete_button {
+  padding: 4px 9px;
+  border: 1px solid rgba(23, 43, 58, 0.2);
+  border-radius: 8px;
+  background-color: transparent;
+  color: #365163;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.expense-row__edit_button:hover,
+.expense-row__delete_button:hover {
+  background-color: #edb6eb;
 }
 
 .expense-row__date,
 .expense-row__shop {
-  text-align: center;
-  padding: 2px 12px;
-  border-radius: 12px;
-  border: 1px solid rgb(0, 0, 0);
-  background-color: #eaafea;
-  white-space: normal;
-  overflow-wrap: break-word;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background-color: #e9eef1;
 }
 
 .expense-row__info_button_amount {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  padding: 2px 12px;
-  gap: 4px;
-  border-radius: 12px;
-  border: 1px solid rgb(0, 0, 0);
-  background-color: #eaafea;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 7px 8px 7px 10px;
+  border-radius: 10px;
+  background-color: #edb6eb;
   white-space: nowrap;
 }
 
 .expense-row__amount {
-  text-align: center;
-  white-space: nowrap;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+  color: #172b3a;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
-.expenses-table__button {
-  font-size: 10px;
-  padding: 0px;
-  padding: 0px 12px;
-  border-radius: 12px;
-  border: 1px solid black;
+.expense-row__label {
+  color: #637786;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.expense-row__info_button_amount .expense-row__label {
+  color: #613c60;
+}
+
+.expense-row__button {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  place-items: center;
+  border: 1px solid rgba(23, 43, 58, 0.24);
+  border-radius: 50%;
+  background-color: #f7fafb;
+  color: #172b3a;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.expense-row__button:hover {
   background-color: white;
 }
 
-.expenses-table__button:hover {
-  background-color: rgba(223, 209, 209, 0.7);
+@media (max-width: 600px) {
+  .expense-row__info {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .expense-row__info_button_amount {
+    grid-column: 1 / -1;
+  }
 }

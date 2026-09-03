@@ -9,19 +9,52 @@ import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
 import ExpenseInfo from "./ExpenseInfo";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
 import { validateExpense } from "./validation/expenseValidation";
-import { createExpense } from "../../api/expensesApi";
+import {
+  createExpense,
+  createExpenseDetail,
+  deleteExpenseDetail,
+  updateExpense,
+  updateExpenseDetail,
+} from "../../api/expensesApi";
 import type { Currency } from "../../types/Defs";
+import type { GetExpenseByIdResponse } from "../../types/GetExpenseByIdResponse";
 
 type AddExpenseModalProps = {
   onClose: () => void;
+  onCreated: () => void;
+  initialExpense?: GetExpenseByIdResponse;
 };
 
-function AddExpenseModal({ onClose }: AddExpenseModalProps) {
-  const [date, setDate] = useState("");
-  const [shop, setShop] = useState<Shop | null>(null);
-  const [amount, setAmount] = useState("");
-  const [currency, setCurrency] = useState<Currency>(defaultCurrency);
-  const [details, setDetails] = useState<AddExpenseDetailData[]>([]);
+function AddExpenseModal({
+  onClose,
+  onCreated,
+  initialExpense,
+}: AddExpenseModalProps) {
+  const isEditing = initialExpense !== undefined;
+  const [date, setDate] = useState(initialExpense?.expenseDate ?? "");
+  const [shop, setShop] = useState<Shop | null>(
+    initialExpense?.shopId && initialExpense.shopName
+      ? { id: initialExpense.shopId, name: initialExpense.shopName }
+      : null,
+  );
+  const [amount, setAmount] = useState(
+    initialExpense ? String(initialExpense.totalAmount) : "",
+  );
+  const [currency, setCurrency] = useState<Currency>(
+    initialExpense?.currency ?? defaultCurrency,
+  );
+  const [details, setDetails] = useState<AddExpenseDetailData[]>(
+    initialExpense?.details.map((detail) => ({
+      id: detail.id,
+      itemId: detail.itemId,
+      itemName: detail.itemName,
+      categoryName: detail.categoryName,
+      quantity: detail.quantity,
+      unit: detail.unit,
+      discount: detail.discountPercent,
+      price: detail.totalPrice,
+    })) ?? [],
+  );
 
   const [isAddingExpenseDetail, setIsAddingExpenseDetail] = useState(false);
   const [editingDetailIdx, setEditingDetailIdx] = useState<number | null>(null);
@@ -45,15 +78,53 @@ function AddExpenseModal({ onClose }: AddExpenseModalProps) {
     setValidationErrors({});
 
     try {
-      await createExpense({
-        sharedGroupId: null,
-        shopId: shop?.id ?? null,
-        totalAmount: Number(amount),
-        currency,
-        expenseDate: date,
-        details,
-      });
+      if (isEditing) {
+        await updateExpense(initialExpense.id, {
+          sharedGroupId: initialExpense.sharedGroupId,
+          shopId: shop?.id ?? null,
+          totalAmount: Number(amount),
+          currency,
+          expenseDate: date,
+        });
 
+        const currentDetailIds = new Set(
+          details.flatMap((detail) => (detail.id ? [detail.id] : [])),
+        );
+
+        await Promise.all(
+          initialExpense.details
+            .filter((detail) => !currentDetailIds.has(detail.id))
+            .map((detail) => deleteExpenseDetail(initialExpense.id, detail.id)),
+        );
+
+        await Promise.all(
+          details.map((detail) => {
+            const request = {
+              itemId: detail.itemId,
+              totalPrice: detail.price,
+              currency,
+              quantity: detail.quantity,
+              discount: detail.discount
+                ? { value: detail.discount, type: "Amount" as const }
+                : null,
+            };
+            return detail.id
+              ? updateExpenseDetail(initialExpense.id, detail.id, request)
+              : createExpenseDetail(initialExpense.id, request);
+          }),
+        );
+      } else {
+        await createExpense({
+          sharedGroupId: null,
+          shopId: shop?.id ?? null,
+          totalAmount: Number(amount),
+          currency,
+          expenseDate: date,
+          details,
+        });
+      }
+
+      onCreated();
       onClose();
     } catch {
       setValidationErrors({});
@@ -90,9 +161,14 @@ function AddExpenseModal({ onClose }: AddExpenseModalProps) {
     <div className="modal-overlay">
       <div className="add-expense-modal">
         <header className="add-expense-modal__header">
-          <h2>New Expense</h2>
-          <button type="button" onClick={onClose}>
-            x
+          <div>
+            <p className="add-expense-modal__eyebrow">
+              {isEditing ? "Update your records" : "Track a purchase"}
+            </p>
+            <h2>{isEditing ? "Edit Expense" : "New Expense"}</h2>
+          </div>
+          <button type="button" onClick={onClose} aria-label="Close dialog">
+            X
           </button>
         </header>
 
@@ -124,8 +200,21 @@ function AddExpenseModal({ onClose }: AddExpenseModalProps) {
           />
         </div>
 
-        <footer className="add-expense-modal__footer" onClick={handleSave}>
-          <button type="button">Add</button>
+        <footer className="add-expense-modal__footer">
+          <button
+            type="button"
+            onClick={onClose}
+            className="add-expense-modal__cancel"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            className="add-expense-modal__save"
+          >
+            {isEditing ? "Save" : "Add"}
+          </button>
         </footer>
       </div>
     </div>

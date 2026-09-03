@@ -1,41 +1,49 @@
 import "./css/ExpensesTable.css";
-import { useEffect, useState } from "react";
-import { getExpenses } from "../../api/expensesApi";
-import type { ExpenseDto } from "../../types/GetExpensesResponse";
 import ExpenseRow from "./ExpenseRow";
+import type { ExpenseDto } from "../../types/GetExpensesResponse";
+import type { GetExpenseByIdResponse } from "../../types/GetExpenseByIdResponse";
 
 export type ExpensesTableProps = {
-  isAddExpenseOpen: boolean;
+  expenses: ExpenseDto[];
+  isLoading: boolean;
+  error: Error | null;
+  onEdit: (expense: GetExpenseByIdResponse) => void;
+  onChanged: () => void;
 };
 
 function ExpensesTable(props: ExpensesTableProps) {
-  const [expenses, setExpenses] = useState<ExpenseDto[]>([]);
-  useEffect(() => {
-    async function load() {
-      try {
-        const data = await getExpenses();
-        setExpenses(data.data);
-      } catch (error) {
-        console.error("Failed to get expenses:", error);
-      }
-    }
-    load();
-  }, [props.isAddExpenseOpen]);
+  if (props.isLoading) {
+    return <div className="expenses-table">Loading...</div>;
+  }
+
+  if (props.error) {
+    return <div className="expenses-table">Failed to load expenses.</div>;
+  }
+
+  if (props.expenses.length === 0) {
+    return (
+      <div className="expenses-table">You don't have any expenses yet.</div>
+    );
+  }
 
   return (
     <div className="expenses-table">
-      {expenses.length > 0 && (
-        <div className="expenses-table__data">
-          {expenses.map((expense) => (
-            <ExpenseRow expense={expense} />
-          ))}
-        </div>
-      )}
-      {expenses.length == 0 && (
-        <div className="expenses-table__data">
-          You don't have any expenses yet.
-        </div>
-      )}
+      <div className="expenses-table__data">
+        {props.expenses.length === 0 ? (
+          <p className="expenses-table__no_expenses">
+            You don't have any expenses yet.
+          </p>
+        ) : (
+          props.expenses.map((expense) => (
+            <ExpenseRow
+              key={expense.id}
+              expense={expense}
+              onEdit={props.onEdit}
+              onChanged={props.onChanged}
+            />
+          ))
+        )}
+      </div>
     </div>
   );
 }

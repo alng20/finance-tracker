@@ -1,0 +1,52 @@
+.recent_expenses_row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(23, 43, 58, 0.1);
+  border-radius: 10px;
+  background: white;
+  color: #172b3a;
+}
+
+.recent_expenses_row__first_line {
+  display: flex;
+  flex-direction: row;
+}
+
+.recent_expenses_row__date {
+  color: #637786;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  margin-left: auto;
+}
+
+.recent_expenses_row__second_line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.recent_expenses_row__shop {
+  min-width: 0;
+  overflow: hidden;
+  color: #365163;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent_expenses_row__amount {
+  flex-shrink: 0;
+  color: #172b3a;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: end;
+}

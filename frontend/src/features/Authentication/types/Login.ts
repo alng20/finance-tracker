@@ -3,4 +3,5 @@ export type LoginResponse = {
   accessTokenExpiresAt: string;
   firstName: string;
   lastName: string;
+  role: string;
 };

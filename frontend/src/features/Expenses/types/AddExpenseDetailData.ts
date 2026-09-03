@@ -1,4 +1,5 @@
 export type AddExpenseDetailData = {
+  id?: string;
   itemId: string;
   itemName: string;
   categoryName: string;

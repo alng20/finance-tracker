@@ -4,13 +4,11 @@ import * as expensesApi from "../../Expenses/api/expensesApi";
 import type { GetExpensesResponse } from "../../Expenses/types/GetExpensesResponse";
 import {
   mapRecentExpense,
-  type RecentExpense,
-} from "../components/data/RecentExpense";
+  type RecentExpenseData,
+} from "../components/data/RecentExpenseData";
 
 function useRecentExpenses() {
-  const [recentExpenses, setRecentExpenses] = useState<RecentExpense[] | null>(
-    null,
-  );
+  const [recentExpenses, setRecentExpenses] = useState<RecentExpenseData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 

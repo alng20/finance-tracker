@@ -7,8 +7,6 @@ import { getTotalAmount } from "../../Reports/types/GetGroupedAmountResponse";
 import { formatAmount } from "../../shared/common/utils";
 import { defaultCurrency } from "../../shared/common/consts";
 
-const dashboardGroupingType = "Month";
-
 type MonthAmountResult = {
   currency: Currency;
   amount: number;
@@ -45,10 +43,12 @@ function useMonthAmount() {
     setIsLoading(true);
     setError(null);
 
+    const groupingType = "Month";
+
     reportsApi
       .getGroupedAmount(
         defaultCurrency,
-        dashboardGroupingType,
+        groupingType,
         getFirstDayOfCurrentMonth(),
       )
       .then(setResult)
