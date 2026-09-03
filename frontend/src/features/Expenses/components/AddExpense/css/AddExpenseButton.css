@@ -12,7 +12,7 @@
   border-radius: 8px;
   background: #edb6eb;
   color: #172b3a;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 13px;
   font-weight: bold;
   cursor: pointer;

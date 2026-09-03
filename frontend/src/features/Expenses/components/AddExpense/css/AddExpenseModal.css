@@ -43,7 +43,7 @@
 .add-expense-modal__eyebrow {
   margin: 0 0 8px;
   color: #637786;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 11px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -89,7 +89,7 @@
 .add-expense-modal__footer button {
   padding: 9px 18px;
   border-radius: 8px;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 13px;
   font-weight: bold;
   cursor: pointer;

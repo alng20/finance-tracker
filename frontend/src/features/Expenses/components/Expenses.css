@@ -35,7 +35,7 @@
 .expenses_page__header_description {
   margin: 8px 0 0;
   color: #637786;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 14px;
 }
 
