@@ -19,7 +19,7 @@
 
 .recent_expenses_row__date {
   color: #637786;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 10px;
   margin-left: auto;
 }
@@ -36,7 +36,7 @@
   min-width: 0;
   overflow: hidden;
   color: #365163;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 13px;
   font-weight: bold;
   text-overflow: ellipsis;

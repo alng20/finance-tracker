@@ -14,7 +14,7 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 6px;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 12px;
 }
 
@@ -59,7 +59,7 @@
 
   flex-wrap: wrap;
   color: #637786;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 11px;
 }
 
@@ -71,7 +71,7 @@
   border-radius: 8px;
   background: white;
   color: #365163;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 12px;
   font-weight: bold;
 
@@ -92,7 +92,7 @@
   border-radius: 6px;
   color: #365163;
   background: transparent;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 10px;
   font-weight: bold;
 

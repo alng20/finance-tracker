@@ -2,9 +2,18 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  background-color: #e0e9ef;
-  padding: 32px;
+  background-color: var(--surface-soft);
+  padding: 24px;
   border-radius: 24px;
   max-width: 1000px;
   margin: 0 auto;
+}
+
+@media (max-width: 700px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 18px;
+  }
 }

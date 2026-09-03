@@ -51,7 +51,7 @@
   border-radius: 7px;
   background: white;
   color: #172b3a;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 12px;
   outline: none;
 }
@@ -71,7 +71,7 @@
   padding: 0 2px;
 
   color: #8f3242;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 10px;
 }
 
@@ -84,7 +84,7 @@
   border-radius: 50%;
   color: #365163;
   background: white;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 10px;
   font-weight: bold;
 
@@ -112,7 +112,7 @@
   border-radius: 7px;
   background: white;
   color: #365163;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 12px;
   font-weight: bold;
 
@@ -157,7 +157,7 @@
   border-radius: 6px;
   background: white;
   text-align: left;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 12px;
   cursor: pointer;
 }

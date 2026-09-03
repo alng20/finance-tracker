@@ -1,10 +1,11 @@
 .month_weekly_amount_card {
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--surface);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
   min-width: 0;
   grid-column: 2 / 2;
   grid-row: 2;
@@ -15,13 +16,13 @@
   font-size: 18px;
   font-weight: 600;
   padding-bottom: 8px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border);
   width: 100%;
   text-align: left;
 }
 
 .month_weekly_amount_card__no_amounts {
-  color: #64748b;
+  color: var(--muted-text);
 }
 
 .month_weekly_amount_card__amounts {
@@ -38,19 +39,19 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 8px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border);
 }
 
 .month_weekly_amount_card__period {
   display: flex;
   flex-direction: column;
   font-size: 12px;
-  color: #64748b;
+  color: var(--muted-text);
   text-align: right;
 }
 
 .month_weekly_amount_card__amount {
   font-weight: 600;
   font-size: 15px;
-  color: #1e293b;
+  color: var(--text-color);
 }

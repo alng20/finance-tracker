@@ -14,7 +14,7 @@
 .recent_expenses__eyebrow {
   margin: 0 0 6px;
   color: #637786;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -44,7 +44,7 @@
 .recent_expenses__state {
   margin: 20px 0;
   color: #637786;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 13px;
   text-align: center;
 }

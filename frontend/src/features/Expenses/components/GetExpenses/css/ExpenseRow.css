@@ -43,7 +43,7 @@
   background-color: transparent;
   color: #365163;
   cursor: pointer;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 11px;
   font-weight: bold;
 }
@@ -91,7 +91,7 @@
 
 .expense-row__label {
   color: #637786;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 9px;
   font-weight: normal;
   letter-spacing: 0.5px;

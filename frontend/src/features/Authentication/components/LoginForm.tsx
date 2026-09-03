@@ -1,3 +1,4 @@
+import "./css/LoginForm.css";
 import { useState } from "react";
 
 import { useAuth } from "../hooks/useAuth";
@@ -25,11 +26,12 @@ function LoginForm() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="login-form-shell">
+      <form className="login-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
+        <p className="login-form__hint">Welcome back.</p>
 
-        <div>
+        <div className="login-form__field">
           <label htmlFor="email">Email</label>
           <input
             id="email"
@@ -41,7 +43,7 @@ function LoginForm() {
           />
         </div>
 
-        <div>
+        <div className="login-form__field">
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -53,11 +55,14 @@ function LoginForm() {
           />
         </div>
 
-        {error && <div>{error}</div>}
+        {error && <div className="login-form__error">{error}</div>}
 
-        <button type="submit">Login</button>
+        <button className="login-form__submit" type="submit">
+          Login
+        </button>
 
         <button
+          className="login-form__logout"
           type="button"
           onClick={() => {
             async function out() {

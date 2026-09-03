@@ -19,7 +19,7 @@ function Expenses() {
           <p className="expenses_page__eyebrow">Spending overview</p>
           <h1 className="expenses_page__header_title">My Expenses</h1>
           <p className="expenses_page__header_description">
-            Control the spendings.
+            Control the spendings
           </p>
         </div>
         <AddExpenseButton

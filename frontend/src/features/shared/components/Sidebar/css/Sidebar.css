@@ -1,29 +1,54 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 16px;
+  gap: 20px;
+  padding: 28px 16px;
+  background: #e0e9ef;
 }
 
 .sidebar__navigation {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  justify-content: center;
+  gap: 6px;
   align-items: stretch;
 }
 
 .sidebar__button_logout {
-  align-self: center;
-  width: 50%;
-  padding: 4px 12px;
+  width: 100%;
+  padding: 9px 14px;
   margin-top: auto;
-  background-color: rgba(255, 255, 255, 0.6);
-  border: 2px solid black;
-  border-radius: 12px;
-  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.58);
+  color: var(--muted-text);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .sidebar__button_logout:hover {
-  background-color: #eaafea;
+  background-color: var(--accent);
+  color: var(--text-color);
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 20px;
+  }
+
+  .sidebar__navigation {
+    flex-direction: row;
+    min-width: max-content;
+  }
+
+  .sidebar__button_logout {
+    width: auto;
+    min-width: max-content;
+    margin-top: 0;
+  }
 }

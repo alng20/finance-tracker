@@ -1,13 +1,14 @@
 .application-layout {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  grid-template-rows: 70px 1fr;
+  grid-template-columns: 224px minmax(0, 1fr);
+  grid-template-rows: 76px 1fr;
   min-height: 100vh;
+  background: var(--page-bg);
 }
 
 .application-layout > header {
   grid-column: 1 / -1;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--border);
 }
 
 .application-layout > aside {
@@ -20,5 +21,20 @@
   grid-column: 2;
   grid-row: 2;
   min-width: 0;
-  padding: 0px 32px;
+  padding: 32px 40px 48px;
+}
+
+@media (max-width: 760px) {
+  .application-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .application-layout > aside {
+    order: 3;
+  }
+
+  .application-layout__main {
+    padding: 24px 20px 32px;
+  }
 }

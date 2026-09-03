@@ -1,10 +1,11 @@
 .month_amount_card {
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--surface);
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
   grid-column: 1 / -1;
   align-items: center;
 }
@@ -12,7 +13,7 @@
 .month_amount_card__title {
   margin: 0 0 12px 0;
   font-size: 14px;
-  color: #64748b;
+  color: var(--muted-text);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border: none;
@@ -22,5 +23,5 @@
   margin: 0;
   font-size: 32px;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--text-color);
 }

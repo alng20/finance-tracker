@@ -1,0 +1,44 @@
+.login-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  align-items: center;
+  gap: 80px;
+  width: min(100%, 980px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.login-page__intro {
+  max-width: 480px;
+}
+
+.login-page__eyebrow {
+  margin: 0 0 18px;
+  color: #9c5b99;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.login-page__intro h1 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: clamp(38px, 6vw, 64px);
+  line-height: 0.98;
+}
+
+@media (max-width: 760px) {
+  .login-page {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    min-height: auto;
+    padding: 32px 20px;
+  }
+
+  .login-page__intro h1 {
+    font-size: 44px;
+  }
+}
