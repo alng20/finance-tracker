@@ -60,7 +60,7 @@
 }
 
 .login-form__submit,
-.login-form__logout {
+.login-form__register {
   min-height: 40px;
   border-radius: 8px;
   font-family: var(--font-ui);
@@ -79,13 +79,13 @@
   background: var(--accent-strong);
 }
 
-.login-form__logout {
+.login-form__register {
   border: 1px solid var(--border);
   background: transparent;
   color: var(--muted-text);
 }
 
-.login-form__logout:hover {
+.login-form__register:hover {
   background: var(--surface-soft);
   color: var(--text-color);
 }

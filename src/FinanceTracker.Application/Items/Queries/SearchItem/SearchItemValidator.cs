@@ -1,8 +1,6 @@
-using FinanceTracker.Application.Items.Queries.SearchItem;
-
 using FluentValidation;
 
-namespace FinanceTracker.Application.Items.Commands.SearchItem;
+namespace FinanceTracker.Application.Items.Queries.SearchItem;
 
 public class CreateItemValidator : AbstractValidator<SearchItemQuery>
 {

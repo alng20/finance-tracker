@@ -75,7 +75,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     refresh().catch(() => {
       setAccessToken(null);
       setIsAuthenticated(false);
-      setAuthState("Unknown");
+      setAuthState("Unauthenticated");
       setUser(null);
     });
   }, []);

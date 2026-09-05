@@ -20,6 +20,20 @@ public class ItemRepository(FinanceTrackerDbContext ctx) : IItemRepository
         return item ?? throw new NotFoundException($"Item with id '{id}' was not found");
     }
 
+    public async Task<IReadOnlyList<Item>> GetAllAsync(
+        int? count,
+        CancellationToken cancellationToken
+    )
+    {
+        var query = _ctx.Items.AsNoTracking();
+        if (count.HasValue)
+        {
+            query = query.Take(count.Value);
+        }
+
+        return await query.ToListAsync(cancellationToken);
+    }
+
     public async Task<Item?> FindByNameAsync(string name, CancellationToken cancellationToken)
     {
         return await _ctx.Items.FirstOrDefaultAsync(

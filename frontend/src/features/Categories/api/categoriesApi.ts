@@ -1,14 +1,8 @@
-import type { Category } from "../types/Category";
+import { apiClient } from "../../../api/api";
+import type { GetCategoriesDto } from "../types/GetCategoriesDto";
 
-const API_URL = "http://localhost:5067/api/categories";
+const API_CATEGORIES = "api/categories";
 
-export async function getCategories(): Promise<Category[]> {
-  const response = await fetch(API_URL);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch categories");
-  }
-
-  const data = await response.json();
-  return data;
+export async function getCategories(): Promise<GetCategoriesDto[]> {
+  return apiClient.get<GetCategoriesDto[]>(`${API_CATEGORIES}`);
 }

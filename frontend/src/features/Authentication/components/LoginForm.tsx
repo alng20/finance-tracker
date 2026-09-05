@@ -62,20 +62,13 @@ function LoginForm() {
         </button>
 
         <button
-          className="login-form__logout"
+          className="login-form__register"
           type="button"
           onClick={() => {
-            async function out() {
-              try {
-                await logout();
-              } catch {
-                setError("logout is failed");
-              }
-            }
-            out();
+            navigate("/register");
           }}
         >
-          Logout
+          Register
         </button>
       </form>
     </div>

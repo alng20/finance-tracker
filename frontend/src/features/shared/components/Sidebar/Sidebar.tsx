@@ -21,13 +21,13 @@ function Sidebar() {
         <SidebarNavLink toLink="/reports" children="Reports" />
         <SidebarNavLink toLink="/group" children="Groups" />
         <SidebarNavLink toLink="/settings" children="Settings" />
+        {user?.role === "Admin" && (
+          <>
+            <SidebarNavLink toLink="/admin/shops" children="Shops" />
+            <SidebarNavLink toLink="/admin/items" children="Items" />
+          </>
+        )}
       </nav>
-      {user?.role === "Admin" && (
-        <>
-          <SidebarNavLink toLink="/admin/shops" children="Shops" />
-          <SidebarNavLink toLink="/admin/items" children="Items" />
-        </>
-      )}
 
       <button
         className="sidebar__button_logout"

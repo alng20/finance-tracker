@@ -3,6 +3,7 @@ using FinanceTracker.Application.Items.Commands.DeleteItem;
 using FinanceTracker.Application.Items.Commands.UpdateItem;
 using FinanceTracker.Application.Items.DTOs;
 using FinanceTracker.Application.Items.Queries.GetItemById;
+using FinanceTracker.Application.Items.Queries.GetItems;
 using FinanceTracker.Application.Items.Queries.SearchItem;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -23,6 +24,16 @@ public class ItemsController(IMediator mediator) : ControllerBase
     )
     {
         var item = await _mediator.Send(new GetItemByIdQuery(id), cancellationToken);
+        return Ok(item);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<ItemDto>>> Get(
+        [FromQuery] int? count = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var item = await _mediator.Send(new GetItemsQuery(count), cancellationToken);
         return Ok(item);
     }
 
@@ -47,7 +58,7 @@ public class ItemsController(IMediator mediator) : ControllerBase
         return Ok(item);
     }
 
-    [HttpGet]
+    [HttpGet("search")]
     public async Task<ActionResult<IReadOnlyList<SearchItemResultDto>>> Search(
         [FromQuery] string searchString,
         CancellationToken cancellationToken

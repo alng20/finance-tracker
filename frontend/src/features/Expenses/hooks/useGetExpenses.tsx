@@ -2,9 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 
 import type { ExpenseDto } from "../types/GetExpensesResponse";
 import * as expensesApi from "../api/expensesApi";
+import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
+import type { PageData } from "../types/PageData";
 
-function useGetExpenses() {
+function useGetExpenses(page: PageData, filters: ExpenseFiltersData | null) {
   const [expenses, setExpenses] = useState<ExpenseDto[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -13,13 +16,14 @@ function useGetExpenses() {
     setError(null);
 
     expensesApi
-      .getExpenses()
+      .getExpenses(page, filters)
       .then((response) => {
         setExpenses(response.data);
+        setTotalCount(response.totalCount);
       })
       .catch(setError)
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [filters, page]);
 
   useEffect(() => {
     refresh();
@@ -27,6 +31,7 @@ function useGetExpenses() {
 
   return {
     expenses,
+    totalCount,
     isLoading,
     error,
     refresh,

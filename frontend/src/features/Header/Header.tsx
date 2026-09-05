@@ -1,6 +1,6 @@
-import "./css/Header.css";
+import "./Header.css";
 
-import { useAuth } from "../../../Authentication/hooks/useAuth";
+import { useAuth } from "../Authentication/hooks/useAuth";
 
 type HeaderProps = {
   title: string;
@@ -8,7 +8,7 @@ type HeaderProps = {
 };
 
 function Header(header: HeaderProps) {
-  const { isAuthenticated, user } = useAuth();
+  const { user } = useAuth();
 
   const colors = ["#f49292", "#F4A6E8", "#80c8f1", "#6de59d", "#edc64f"];
 
@@ -21,7 +21,7 @@ function Header(header: HeaderProps) {
   return (
     <header className="appheader">
       <h1 className="appheader__title">
-        {header.title}, {header.date}:
+        {header.title} {header.date}
       </h1>
       <div className="appheader__user">
         <span className="appheader__user_name">
