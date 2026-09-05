@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Interfaces.Providers;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Expenses.DTOs;
+using FinanceTracker.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Providers;
@@ -15,6 +16,13 @@ public class ExpenseProvider(FinanceTrackerDbContext ctx) : IExpenseProvider
         int pageSize,
         DateOnly? fromDate,
         DateOnly? toDate,
+        IReadOnlyCollection<Guid?>? shopIds,
+        IReadOnlyCollection<Guid>? categoryIds,
+        IReadOnlyCollection<Guid>? itemIds,
+        IReadOnlyCollection<Guid?>? retailerIds,
+        Currency? currency,
+        decimal? fromAmount,
+        decimal? toAmount,
         CancellationToken cancellationToken
     )
     {
@@ -28,6 +36,43 @@ public class ExpenseProvider(FinanceTrackerDbContext ctx) : IExpenseProvider
         if (toDate.HasValue)
         {
             query = query.Where(x => x.Date <= toDate.Value);
+        }
+
+        if (shopIds?.Count > 0)
+        {
+            query = query.Where(x => shopIds.Contains(x.ShopId));
+        }
+
+        if (categoryIds?.Count > 0)
+        {
+            query = query.Where(x =>
+                x.Details.Any(detail => categoryIds.Contains(detail.Item.CategoryId))
+            );
+        }
+
+        if (itemIds?.Count > 0)
+        {
+            query = query.Where(x => x.Details.Any(detail => itemIds.Contains(detail.ItemId)));
+        }
+
+        if (retailerIds?.Count > 0)
+        {
+            query = query.Where(x => x.Shop != null && retailerIds.Contains(x.Shop.RetailerId));
+        }
+
+        if (currency.HasValue)
+        {
+            query = query.Where(x => x.TotalAmount.Currency == currency);
+        }
+
+        if (fromAmount.HasValue)
+        {
+            query = query.Where(x => x.TotalAmount.Amount >= fromAmount.Value);
+        }
+
+        if (toAmount.HasValue)
+        {
+            query = query.Where(x => x.TotalAmount.Amount <= toAmount.Value);
         }
 
         var totalCount = await query.CountAsync(cancellationToken);

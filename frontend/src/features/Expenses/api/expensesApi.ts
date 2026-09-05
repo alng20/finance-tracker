@@ -6,24 +6,60 @@ import type {
 } from "../types/CreateExpenseRequest";
 import type { Currency } from "../types/Defs";
 import type { Discount } from "../types/Discount";
+import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
 import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
 import type { GetExpensesResponse } from "../types/GetExpensesResponse";
+import type { PageData } from "../types/PageData";
 import type { UpdateExpenseParams } from "../types/UpdateExpenseParams";
 
 const API_EXPENSES = "api/expenses";
 
 export async function getExpenses(
-  page?: number,
-  pageSize?: number,
-  fromDate?: string,
-  toDate?: string,
+  page: PageData,
+  filters?: ExpenseFiltersData | null,
 ): Promise<GetExpensesResponse> {
   const params = new URLSearchParams({
-    ...(page !== undefined && { page: page.toString() }),
-    ...(pageSize !== undefined && { pageSize: pageSize.toString() }),
-    ...(fromDate && { fromDate }),
-    ...(toDate && { toDate }),
+    page: page.pageNumber.toString(),
+    pageSize: page.pageSize.toString(),
   });
+
+  if (filters) {
+    if (filters.fromDate) {
+      params.append("fromDate", filters.fromDate);
+    }
+
+    if (filters.toDate) {
+      params.append("toDate", filters.toDate);
+    }
+
+    filters.shops?.forEach((elem) => {
+      params.append("shopIds", elem.id);
+    });
+
+    filters.categories?.forEach((elem) => {
+      params.append("categoryIds", elem.id);
+    });
+
+    filters.items?.forEach((elem) => {
+      params.append("itemIds", elem.id);
+    });
+
+    filters.retailers?.forEach((elem) => {
+      params.append("retailerIds", elem.id);
+    });
+
+    if (filters.currency) {
+      params.append("currency", filters.currency);
+    }
+
+    if (filters.fromAmount !== undefined) {
+      params.append("fromAmount", filters.fromAmount.toString());
+    }
+
+    if (filters.toAmount !== undefined) {
+      params.append("toAmount", filters.toAmount.toString());
+    }
+  }
 
   const query = params.toString();
 

@@ -21,12 +21,21 @@ public class GetExpensesByUserHandler(
     {
         Guid userId = _currentUser.UserId;
 
+        // TODO: Check if Shops, Categories, Items, Retailers exists
+
         return await _expenseProvider.GetByUserAsync(
             userId,
             query.Page,
             query.PageSize,
             query.FromDate,
             query.ToDate,
+            query.ShopIds,
+            query.CategoryIds,
+            query.ItemIds,
+            query.RetailerIds,
+            query.Currency,
+            query.FromAmount,
+            query.ToAmount,
             cancellationToken
         );
     }

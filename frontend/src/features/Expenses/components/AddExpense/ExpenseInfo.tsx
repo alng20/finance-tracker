@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { defaultCurrency } from "../../../shared/common/consts";
 import { searchShops } from "../../../Shops/api/shopsApi";
-import type { Shop } from "../../../Shops/types/Shop";
+import type { SearchShopDto } from "../../../Shops/types/SearchShopDto";
 import { useSearch } from "../../hooks/useSearch";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
 import type { Currency } from "../../types/Defs";
@@ -15,8 +15,8 @@ type DateProps = {
 };
 
 type ShopProps = {
-  shop: Shop | null;
-  onShopChange: (value: Shop | null) => void;
+  shop: SearchShopDto | null;
+  onShopChange: (value: SearchShopDto | null) => void;
 };
 
 type AmountProps = {
@@ -36,7 +36,7 @@ type ExpenseInfoProps = { errors: ExpenseValidationErrors } & DateProps &
 
 function ExpenseInfo(props: ExpenseInfoProps) {
   const [searchShop, setSearchShop] = useState(props.shop?.name ?? "");
-  const { results: shops, clearResults: clearShops } = useSearch<Shop>(
+  const { results: shops, clearResults: clearShops } = useSearch<SearchShopDto>(
     searchShop,
     props.shop,
     searchShops,

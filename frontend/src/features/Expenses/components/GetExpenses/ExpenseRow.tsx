@@ -12,6 +12,7 @@ import ExpenseDetailsTable from "./ExpenseDetailsTable";
 import type { Currency } from "../../types/Defs";
 import type { ExpenseDetailsSummary } from "./data/ExpenseDetailsSummary";
 import { defaultCurrency } from "../../../shared/common/consts";
+import { formatAmount, formatDate } from "../../../shared/common/utils";
 
 type ExpenseRowProps = {
   expense: ExpenseDto;
@@ -95,7 +96,7 @@ function ExpenseRow({ expense, onEdit, onChanged }: ExpenseRowProps) {
       <div className="expense-row__info">
         <div className="expense-row__date">
           <span className="expense-row__label">Date</span>
-          <strong>{expense.expenseDate}</strong>
+          <strong>{formatDate(expense.expenseDate)}</strong>
         </div>
         <div className="expense-row__shop">
           <span className="expense-row__label">Shop</span>
@@ -104,7 +105,7 @@ function ExpenseRow({ expense, onEdit, onChanged }: ExpenseRowProps) {
         <div className="expense-row__info_button_amount">
           <div className="expense-row__amount" aria-label="Expense amount">
             <span className="expense-row__label">Amount</span>
-            {expense.totalAmount} {expense.currency}
+            {formatAmount(expense.totalAmount, expense.currency)}
           </div>
           <button
             id={expense.id}

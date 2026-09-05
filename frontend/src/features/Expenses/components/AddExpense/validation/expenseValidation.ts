@@ -1,4 +1,4 @@
-import type { Shop } from "../../../../Shops/types/Shop";
+import type { Shop } from "../../../../Shops/types/SearchShopDto";
 import type { AddExpenseDetailData } from "../../../types/AddExpenseDetailData";
 import type { Currency } from "../../../types/Defs";
 

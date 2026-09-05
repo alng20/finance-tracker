@@ -1,7 +1,11 @@
 .sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow: hidden;
   padding: 28px 16px;
   background: #e0e9ef;
 }
@@ -34,6 +38,8 @@
 
 @media (max-width: 760px) {
   .sidebar {
+    position: static;
+    height: auto;
     flex-direction: row;
     align-items: center;
     gap: 10px;

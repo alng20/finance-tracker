@@ -1,0 +1,86 @@
+.expense-results-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  border: 1px solid rgba(23, 43, 58, 0.12);
+  border-radius: 16px;
+  background: #f7fafb;
+}
+
+.expense-results-summary__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.expense-results-summary__eyebrow {
+  margin: 0 0 5px;
+  color: var(--muted-text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.expense-results-summary h2 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 20px;
+}
+
+.expense-results-summary__count {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--muted-text);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.expense-results-summary__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.expense-results-summary__metric {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  background: white;
+}
+
+.expense-results-summary__metric > span {
+  color: var(--muted-text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.expense-results-summary__metric strong {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  color: var(--text-color);
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .expense-results-summary__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .expense-results-summary__metrics {
+    grid-template-columns: 1fr;
+  }
+}

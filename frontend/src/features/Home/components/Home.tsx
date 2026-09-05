@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 function Home() {
   const navigate = useNavigate();
 
+  // TODO: Update Home page
   return (
     <main>
       <h1>Finance Tracker</h1>

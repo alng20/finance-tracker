@@ -1,14 +1,15 @@
 using FinanceTracker.Api.Requests;
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Expenses.Commands.CreateExpense;
 using FinanceTracker.Application.Expenses.Commands.DeleteExpense;
-using FinanceTracker.Application.Expenses.Queries.GetExpenseById;
-using FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 using FinanceTracker.Application.Expenses.Commands.UpdateExpense;
 using FinanceTracker.Application.Expenses.DTOs;
+using FinanceTracker.Application.Expenses.Queries.GetExpenseById;
+using FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
+
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using FinanceTracker.Application.Common.Models;
 
 namespace FinanceTracker.Api.Controllers;
 
@@ -32,17 +33,11 @@ public class ExpenseController(IMediator mediator) : ControllerBase
     [Authorize]
     [HttpGet]
     public async Task<ActionResult<PageResult<GetExpensesByUserResultDto>>> GetByUser(
-        [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 20,
-        [FromQuery] DateOnly? fromDate = null,
-        [FromQuery] DateOnly? toDate = null,
+        [FromQuery] GetExpensesByUserQuery query,
         CancellationToken cancellationToken = default
     )
     {
-        var expenses = await _mediator.Send(
-            new GetExpensesByUserQuery(page, pageSize, fromDate, toDate),
-            cancellationToken
-        );
+        var expenses = await _mediator.Send(query, cancellationToken);
         return Ok(expenses);
     }
 

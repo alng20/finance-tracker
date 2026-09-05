@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { searchItems } from "../../../../Items/api/searchItems";
-import type { Item } from "../../../../Items/types/Item";
+import type { SearchItemsDto } from "../../../../Items/types/SearchItemsDto";
+import { searchItems } from "../../../../Items/api/itemsApi";
 
-export function useSearchItems(searchName: string, selectedItem: Item | null) {
-  const [items, setItems] = useState<Item[]>([]);
+export function useSearchItems(
+  searchName: string,
+  selectedItem: SearchItemsDto | null,
+) {
+  const [items, setItems] = useState<SearchItemsDto[]>([]);
 
   useEffect(() => {
     if (selectedItem || !searchName.trim()) {

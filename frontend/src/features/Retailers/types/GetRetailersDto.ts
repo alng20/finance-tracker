@@ -1,4 +1,4 @@
-export type Category = {
+export type GetRetailersDto = {
   id: string;
   name: string;
 };

@@ -1,7 +1,6 @@
-export type Item = {
+export type SearchItemsDto = {
   id: string;
   name: string;
   categoryId: string;
-  categoryName: string;
   unit: string;
 };

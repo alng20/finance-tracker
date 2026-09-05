@@ -3,7 +3,7 @@ import "./css/AddExpenseModal.css";
 import { useState } from "react";
 
 import { defaultCurrency } from "../../../shared/common/consts";
-import type { Shop } from "../../../Shops/types/Shop";
+import type { SearchShopDto } from "../../../Shops/types/SearchShopDto";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
 import ExpenseInfo from "./ExpenseInfo";
@@ -32,7 +32,7 @@ function AddExpenseModal({
 }: AddExpenseModalProps) {
   const isEditing = initialExpense !== undefined;
   const [date, setDate] = useState(initialExpense?.expenseDate ?? "");
-  const [shop, setShop] = useState<Shop | null>(
+  const [shop, setShop] = useState<SearchShopDto | null>(
     initialExpense?.shopId && initialExpense.shopName
       ? { id: initialExpense.shopId, name: initialExpense.shopName }
       : null,

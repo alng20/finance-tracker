@@ -1,10 +1,13 @@
-function RegisterPage() {
+import { useNavigate } from "react-router-dom";
+
+function RegisterForm() {
+  const navigate = useNavigate();
   return (
-    <main>
-      <h1>Register</h1>
+    <div>
       <p>Registration will be implemented later.</p>
-    </main>
+      <button onClick={() => navigate(-1)}>Back</button>
+    </div>
   );
 }
 
-export default RegisterPage;
+export default RegisterForm;

@@ -1,4 +1,4 @@
-export type Shop = {
+export type GetShopsDto = {
   id: string;
   name: string;
 };

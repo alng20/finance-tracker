@@ -3,9 +3,9 @@ import "./css/AddExpenseDetail.css";
 import { useEffect, useState } from "react";
 
 import { getCategories } from "../../../Categories/api/categoriesApi";
-import type { Category } from "../../../Categories/types/Category";
+import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import { searchItems } from "../../../Items/api/itemsApi";
-import type { Item } from "../../../Items/types/Item";
+import type { SearchItemsDto } from "../../../Items/types/SearchItemsDto";
 import { useSearch } from "../../hooks/useSearch";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import type { ExpenseDetailValidationErrors } from "./validation/expenseValidation";
@@ -23,7 +23,7 @@ function AddExpenseDetail({
   onCancel,
 }: AddExpenseDetailProps) {
   const [name, setName] = useState(initialDetail?.itemName ?? "");
-  const [category, setCategory] = useState<Category | null>(null);
+  const [category, setCategory] = useState<GetCategoriesDto | null>(null);
   const [quantity, setQuantity] = useState(
     initialDetail ? String(initialDetail.quantity) : "",
   );
@@ -35,14 +35,11 @@ function AddExpenseDetail({
     initialDetail ? String(initialDetail.price) : "",
   );
 
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<GetCategoriesDto[]>([]);
 
-  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-  const { results: items, clearResults: clearItems } = useSearch<Item>(
-    name,
-    selectedItem,
-    searchItems,
-  );
+  const [selectedItem, setSelectedItem] = useState<SearchItemsDto | null>(null);
+  const { results: items, clearResults: clearItems } =
+    useSearch<SearchItemsDto>(name, selectedItem, searchItems);
 
   const [validationErrors, setValidationErrors] =
     useState<ExpenseDetailValidationErrors>({});
@@ -181,7 +178,7 @@ function AddExpenseDetail({
               }}
             >
               <option value="" disabled>
-                Category
+                GetCategoriesDto
               </option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>

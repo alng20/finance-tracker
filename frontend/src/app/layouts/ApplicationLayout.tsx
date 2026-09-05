@@ -2,7 +2,7 @@ import "../css/ApplicationLayout.css";
 
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../features/shared/components/Sidebar/Sidebar";
-import Header from "../../features/Expenses/components/Header/Header";
+import Header from "../../features/Header/Header";
 
 function ApplicationLayout() {
   return (
