@@ -7,18 +7,21 @@ import useGetExpenses from "../hooks/useGetExpenses";
 import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
 import ExpenseFilters from "./GetExpenses/ExpenseFilters";
 import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
-import { initialPageData, type PageData } from "../types/PageData";
-import PageSettings from "./GetExpenses/PageSettings";
+import {
+  initialPageRequest,
+  type PageRequestData,
+} from "../types/PageRequestData";
 import { ExpenseResultsSummary } from "./GetExpenses/ExpenseResultsSummary";
+import Pagination from "./GetExpenses/Pagintation";
 
 function Expenses() {
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState<boolean>(false);
   const [isExpenseEdited, setIsExpenseEdited] =
     useState<GetExpenseByIdResponse | null>(null);
 
-  const [page, setPage] = useState<PageData>(initialPageData); // TODO: Implement pagination
+  const [page, setPage] = useState<PageRequestData>(initialPageRequest); // TODO: Implement pagination
   const [filters, setFilters] = useState<ExpenseFiltersData | null>(null);
-  const { expenses, totalCount, isLoading, error, refresh } = useGetExpenses(
+  const { expenses, pagination, isLoading, error, refresh } = useGetExpenses(
     page,
     filters,
   );
@@ -53,13 +56,27 @@ function Expenses() {
         />
       )}
 
-      <PageSettings setPage={setPage} />
-
       {expenses.length > 0 && (
-        <ExpenseResultsSummary expenses={expenses} totalCount={totalCount} />
+        <ExpenseResultsSummary
+          expenses={expenses}
+          totalCount={pagination.dataTotalCount}
+        />
       )}
 
       <ExpenseFilters onApply={setFilters} />
+
+      <Pagination
+        pageNumber={page.pageNumber}
+        pagesTotalCount={pagination.pagesTotalCount}
+        hasNextPage={pagination.hasNextPage}
+        hasPreviousPage={pagination.hasPreviousPage}
+        onPageChange={(newPage) =>
+          setPage((current) => ({
+            ...current,
+            pageNumber: newPage,
+          }))
+        }
+      />
 
       <ExpensesTable
         expenses={expenses}

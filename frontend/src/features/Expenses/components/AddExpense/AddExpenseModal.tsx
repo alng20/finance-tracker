@@ -18,6 +18,7 @@ import {
 } from "../../api/expensesApi";
 import type { Currency } from "../../types/Defs";
 import type { GetExpenseByIdResponse } from "../../types/GetExpenseByIdResponse";
+import { getTodayDate } from "../../../shared/common/utils";
 
 type AddExpenseModalProps = {
   onClose: () => void;
@@ -31,7 +32,9 @@ function AddExpenseModal({
   initialExpense,
 }: AddExpenseModalProps) {
   const isEditing = initialExpense !== undefined;
-  const [date, setDate] = useState(initialExpense?.expenseDate ?? "");
+  const [date, setDate] = useState(
+    initialExpense?.expenseDate ?? getTodayDate(),
+  );
   const [shop, setShop] = useState<SearchShopDto | null>(
     initialExpense?.shopId && initialExpense.shopName
       ? { id: initialExpense.shopId, name: initialExpense.shopName }

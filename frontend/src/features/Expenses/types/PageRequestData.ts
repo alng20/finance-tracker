@@ -1,12 +1,12 @@
 const firstPage: number = 1;
 const defaultPageSize: number = 20;
 
-export type PageData = {
+export type PageRequestData = {
   pageNumber: number;
   pageSize: number;
 };
 
-export const initialPageData: PageData = {
+export const initialPageRequest: PageRequestData = {
   pageNumber: firstPage,
   pageSize: defaultPageSize,
 };
