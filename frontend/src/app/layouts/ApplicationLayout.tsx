@@ -7,10 +7,7 @@ import Header from "../../features/Header/Header";
 function ApplicationLayout() {
   return (
     <div className="application-layout">
-      <Header
-        title="Finance Tracker"
-        date={new Date().toLocaleDateString("en-GB")}
-      />
+      <Header title="Finance Tracker" />
 
       <Sidebar />
 

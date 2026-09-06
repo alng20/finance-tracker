@@ -4,7 +4,10 @@ import * as reportsApi from "../../Reports/api/reportsApi";
 import type { GetGroupedAmountResponse } from "../../Reports/types/GetGroupedAmountResponse";
 import type { Currency } from "../../Expenses/types/Defs";
 import { getTotalAmount } from "../../Reports/types/GetGroupedAmountResponse";
-import { formatAmount } from "../../shared/common/utils";
+import {
+  formatAmount,
+  getFirstDayOfCurrentMonth,
+} from "../../shared/common/utils";
 import { defaultCurrency } from "../../shared/common/consts";
 
 type MonthAmountResult = {
@@ -19,14 +22,6 @@ function useMonthAmount() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-
-  function getFirstDayOfCurrentMonth(): string {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-
-    return `${year}-${month}-01`;
-  }
 
   function setResult(response: GetGroupedAmountResponse) {
     const amount = response ? getTotalAmount(response) : 0;

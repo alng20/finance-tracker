@@ -74,6 +74,7 @@
   flex-direction: column;
   gap: 24px;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   padding: 24px 28px;
 }
 

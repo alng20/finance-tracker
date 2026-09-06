@@ -178,7 +178,7 @@ function AddExpenseDetail({
               }}
             >
               <option value="" disabled>
-                GetCategoriesDto
+                Category
               </option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>

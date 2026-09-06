@@ -6,7 +6,7 @@ import {
   mapRecentExpense,
   type RecentExpenseData,
 } from "../components/data/RecentExpenseData";
-import type { PageData } from "../../Expenses/types/PageData";
+import type { PageRequestData } from "../../Expenses/types/PageRequestData";
 
 function useRecentExpenses() {
   const [recentExpenses, setRecentExpenses] = useState<RecentExpenseData[]>([]);
@@ -23,7 +23,7 @@ function useRecentExpenses() {
     setIsLoading(true);
     setError(null);
 
-    const page: PageData = {
+    const page: PageRequestData = {
       pageNumber: 1,
       pageSize: 5,
     };

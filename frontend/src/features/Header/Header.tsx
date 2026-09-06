@@ -1,10 +1,10 @@
 import "./Header.css";
 
 import { useAuth } from "../Authentication/hooks/useAuth";
+import { formatDate, getTodayDate } from "../../features/shared/common/utils";
 
 type HeaderProps = {
   title: string;
-  date: string;
 };
 
 function Header(header: HeaderProps) {
@@ -21,7 +21,7 @@ function Header(header: HeaderProps) {
   return (
     <header className="appheader">
       <h1 className="appheader__title">
-        {header.title} {header.date}
+        {header.title}, {formatDate(getTodayDate())}
       </h1>
       <div className="appheader__user">
         <span className="appheader__user_name">

@@ -9,13 +9,13 @@ import type { Discount } from "../types/Discount";
 import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
 import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
 import type { GetExpensesResponse } from "../types/GetExpensesResponse";
-import type { PageData } from "../types/PageData";
+import type { PageRequestData } from "../types/PageRequestData";
 import type { UpdateExpenseParams } from "../types/UpdateExpenseParams";
 
 const API_EXPENSES = "api/expenses";
 
 export async function getExpenses(
-  page: PageData,
+  page: PageRequestData,
   filters?: ExpenseFiltersData | null,
 ): Promise<GetExpensesResponse> {
   const params = new URLSearchParams({

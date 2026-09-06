@@ -3,11 +3,20 @@ import { useCallback, useEffect, useState } from "react";
 import type { ExpenseDto } from "../types/GetExpensesResponse";
 import * as expensesApi from "../api/expensesApi";
 import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
-import type { PageData } from "../types/PageData";
+import type { PageRequestData } from "../types/PageRequestData";
+import type { PaginationData } from "../types/PaginationData";
 
-function useGetExpenses(page: PageData, filters: ExpenseFiltersData | null) {
+function useGetExpenses(
+  page: PageRequestData,
+  filters: ExpenseFiltersData | null,
+) {
   const [expenses, setExpenses] = useState<ExpenseDto[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
+  const [pagination, setPagination] = useState<PaginationData>({
+    pagesTotalCount: 0,
+    dataTotalCount: 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -19,7 +28,12 @@ function useGetExpenses(page: PageData, filters: ExpenseFiltersData | null) {
       .getExpenses(page, filters)
       .then((response) => {
         setExpenses(response.data);
-        setTotalCount(response.totalCount);
+        setPagination({
+          pagesTotalCount: response.totalPages,
+          dataTotalCount: response.totalCount,
+          hasNextPage: response.hasNextPage,
+          hasPreviousPage: response.hasPreviousPage,
+        });
       })
       .catch(setError)
       .finally(() => setIsLoading(false));
@@ -31,7 +45,7 @@ function useGetExpenses(page: PageData, filters: ExpenseFiltersData | null) {
 
   return {
     expenses,
-    totalCount,
+    pagination,
     isLoading,
     error,
     refresh,
