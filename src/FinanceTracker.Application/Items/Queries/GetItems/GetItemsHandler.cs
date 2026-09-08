@@ -1,20 +1,27 @@
 using FinanceTracker.Application.Common.Interfaces.Persistence;
+using FinanceTracker.Application.Common.Interfaces.Providers;
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Items.DTOs;
 using MediatR;
 
 namespace FinanceTracker.Application.Items.Queries.GetItems;
 
-public class GetItemsHandler(IItemRepository categoryRepository)
-    : IRequestHandler<GetItemsQuery, IReadOnlyList<ItemDto>>
+public class GetItemsHandler(IItemProvider itemProvider)
+    : IRequestHandler<GetItemsQuery, PagedResult<GetItemsResultDto>>
 {
-    private readonly IItemRepository _ItemRepository = categoryRepository;
+    private readonly IItemProvider _itemProvider = itemProvider;
 
-    public async Task<IReadOnlyList<ItemDto>> Handle(
+    public async Task<PagedResult<GetItemsResultDto>> Handle(
         GetItemsQuery query,
         CancellationToken cancellationToken
     )
     {
-        var Items = await _ItemRepository.GetAllAsync(query?.Count, cancellationToken);
-        return Items.Select(x => new ItemDto(x.Id, x.Name, x.CategoryId, x.Unit)).ToList();
+        return await _itemProvider.GetAsync(
+            query.Page,
+            query.PageSize,
+            query.CategoryIds,
+            query.Units,
+            cancellationToken
+        );
     }
 }

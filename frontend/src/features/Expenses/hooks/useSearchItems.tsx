@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 // import type { FilterOption } from "../components/GetExpenses/SelectFilter";
 import * as itemsApi from "../../Items/api/itemsApi";
-import type { FilterData } from "../types/ExpenseFiltersData";
+import type { FilterData } from "../../shared/types/FilterData";
 
 export function useSearchItems(search: string) {
   const [items, setItems] = useState<FilterData[]>([]);
@@ -21,18 +21,21 @@ export function useSearchItems(search: string) {
     setIsLoading(true);
     setError(null);
 
-    itemsApi
-      .searchItems(search)
-      .then((items) => {
-        const options: FilterData[] = items.map((item) => ({
-          id: item.id,
-          name: item.name,
-        }));
+    const timer = setTimeout(async () => {
+      itemsApi
+        .searchItems(search)
+        .then((items) => {
+          const options: FilterData[] = items.map((item) => ({
+            id: item.id,
+            name: item.name,
+          }));
 
-        setItems(options);
-      })
-      .catch(setError)
-      .finally(() => setIsLoading(false));
+          setItems(options);
+        })
+        .catch(setError)
+        .finally(() => setIsLoading(false));
+    }, 300);
+    return () => clearTimeout(timer);
   }, [search]);
 
   useEffect(() => {

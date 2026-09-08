@@ -12,18 +12,31 @@ import {
   type PageRequestData,
 } from "../types/PageRequestData";
 import { ExpenseResultsSummary } from "./GetExpenses/ExpenseResultsSummary";
-import Pagination from "./GetExpenses/Pagintation";
+import Pagination from "../../shared/components/Pagination/Pagintation";
+import useGetWithFilters from "../../shared/hooks/useGetWithFilters";
+import { getExpenses } from "../api/expensesApi";
+import {
+  type ExpenseDto,
+  type GetExpensesResponse,
+} from "../types/GetExpensesResponse";
 
 function Expenses() {
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState<boolean>(false);
   const [isExpenseEdited, setIsExpenseEdited] =
     useState<GetExpenseByIdResponse | null>(null);
 
-  const [page, setPage] = useState<PageRequestData>(initialPageRequest); // TODO: Implement pagination
+  const [page, setPage] = useState<PageRequestData>(initialPageRequest);
   const [filters, setFilters] = useState<ExpenseFiltersData | null>(null);
-  const { expenses, pagination, isLoading, error, refresh } = useGetExpenses(
+  const {
+    results: expenses,
+    pagination,
+    isLoading,
+    error,
+    refresh,
+  } = useGetWithFilters<GetExpensesResponse, ExpenseFiltersData, ExpenseDto>(
     page,
     filters,
+    getExpenses,
   );
 
   return (

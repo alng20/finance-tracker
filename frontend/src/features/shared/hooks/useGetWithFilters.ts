@@ -1,16 +1,23 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import type { ExpenseDto } from "../types/GetExpensesResponse";
-import * as expensesApi from "../api/expensesApi";
-import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
-import type { PageRequestData } from "../types/PageRequestData";
-import type { PaginationData } from "../types/PaginationData";
+import type { PagedResponse } from "../../Expenses/types/PagedResponse";
+import type { PageRequestData } from "../../Expenses/types/PageRequestData";
+import type { PaginationData } from "../../Expenses/types/PaginationData";
 
-function useGetExpenses(
+function useGetWithFilters<
+  ResponseType extends PagedResponse<DtoType>,
+  FiltersType,
+  DtoType,
+>(
   page: PageRequestData,
-  filters: ExpenseFiltersData | null,
+  filters: FiltersType | null,
+  getter: (
+    page: PageRequestData,
+    filters: FiltersType | null,
+    reqInit: RequestInit,
+  ) => Promise<ResponseType>,
 ) {
-  const [expenses, setExpenses] = useState<ExpenseDto[]>([]);
+  const [results, setResults] = useState<DtoType[]>([]);
   const [pagination, setPagination] = useState<PaginationData>({
     pagesTotalCount: 0,
     dataTotalCount: 0,
@@ -28,10 +35,9 @@ function useGetExpenses(
     setIsLoading(true);
     setError(null);
 
-    expensesApi
-      .getExpenses(page, filters, { signal: abortCtrlRef.current?.signal })
-      .then((response) => {
-        setExpenses(response.data);
+    getter(page, filters, { signal: abortCtrlRef.current?.signal })
+      .then((response: ResponseType) => {
+        setResults(response.data);
         setPagination({
           pagesTotalCount: response.totalPages,
           dataTotalCount: response.totalCount,
@@ -51,7 +57,7 @@ function useGetExpenses(
   }, [refresh]);
 
   return {
-    expenses,
+    results,
     pagination,
     isLoading,
     error,
@@ -59,4 +65,4 @@ function useGetExpenses(
   };
 }
 
-export default useGetExpenses;
+export default useGetWithFilters;

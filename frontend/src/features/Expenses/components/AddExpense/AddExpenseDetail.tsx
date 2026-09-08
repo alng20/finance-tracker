@@ -145,6 +145,7 @@ function AddExpenseDetail({
                       );
 
                       setCategory(selectedCategory ?? null);
+                      setUnit(item.unit);
                       clearItems();
                     }}
                   >
@@ -215,6 +216,9 @@ function AddExpenseDetail({
               name="unit"
               value={unit}
               onChange={(event) => {
+                if (unit && selectedItem) {
+                  return;
+                }
                 setUnit(event.target.value);
               }}
             >

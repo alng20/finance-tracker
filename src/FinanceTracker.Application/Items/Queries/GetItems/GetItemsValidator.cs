@@ -6,6 +6,6 @@ public class GetItemsValidator : AbstractValidator<GetItemsQuery>
 {
     public GetItemsValidator()
     {
-        RuleFor(x => x.Count).GreaterThan(0).When(x => x.Count.HasValue);
+        // TODO: Validate item filters
     }
 }

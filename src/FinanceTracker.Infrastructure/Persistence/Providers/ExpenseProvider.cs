@@ -10,7 +10,7 @@ public class ExpenseProvider(FinanceTrackerDbContext ctx) : IExpenseProvider
 {
     private readonly FinanceTrackerDbContext _ctx = ctx;
 
-    public async Task<PageResult<GetExpensesByUserResultDto>> GetByUserAsync(
+    public async Task<PagedResult<GetExpensesByUserResultDto>> GetByUserAsync(
         Guid userId,
         int page,
         int pageSize,
@@ -76,7 +76,7 @@ public class ExpenseProvider(FinanceTrackerDbContext ctx) : IExpenseProvider
         }
 
         var totalCount = await query.CountAsync(cancellationToken);
-        var items = await query
+        var result = await query
             .OrderByDescending(x => x.Date)
             .ThenByDescending(x => x.Id)
             .Skip((page - 1) * pageSize)
@@ -91,6 +91,6 @@ public class ExpenseProvider(FinanceTrackerDbContext ctx) : IExpenseProvider
             ))
             .ToListAsync(cancellationToken);
 
-        return new PageResult<GetExpensesByUserResultDto>(items, page, pageSize, totalCount);
+        return new PagedResult<GetExpensesByUserResultDto>(result, page, pageSize, totalCount);
     }
 }

@@ -49,6 +49,7 @@ public static class DependencyInjection
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
         services.AddScoped<IExpenseProvider, ExpenseProvider>();
+        services.AddScoped<IItemProvider, ItemProvider>();
 
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();

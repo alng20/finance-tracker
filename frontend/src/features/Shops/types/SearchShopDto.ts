@@ -1,4 +1,3 @@
-export type SearchShopDto = {
-  id: string;
-  name: string;
-};
+import type { ShopDto } from "./ShopDto";
+
+export type SearchShopDto = ShopDto;

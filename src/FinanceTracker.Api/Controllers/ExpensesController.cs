@@ -32,7 +32,7 @@ public class ExpenseController(IMediator mediator) : ControllerBase
 
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<PageResult<GetExpensesByUserResultDto>>> GetByUser(
+    public async Task<ActionResult<PagedResult<GetExpensesByUserResultDto>>> GetByUser(
         [FromQuery] GetExpensesByUserQuery query,
         CancellationToken cancellationToken = default
     )

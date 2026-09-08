@@ -17,6 +17,7 @@ const API_EXPENSES = "api/expenses";
 export async function getExpenses(
   page: PageRequestData,
   filters?: ExpenseFiltersData | null,
+  reqInit: RequestInit = {},
 ): Promise<GetExpensesResponse> {
   const params = new URLSearchParams({
     page: page.pageNumber.toString(),
@@ -65,6 +66,7 @@ export async function getExpenses(
 
   return apiClient.get<GetExpensesResponse>(
     `${API_EXPENSES}${query ? `?${query}` : ""}`,
+    reqInit,
   );
 }
 

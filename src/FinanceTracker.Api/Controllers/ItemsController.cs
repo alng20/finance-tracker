@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Items.Commands.CreateItem;
 using FinanceTracker.Application.Items.Commands.DeleteItem;
 using FinanceTracker.Application.Items.Commands.UpdateItem;
@@ -28,12 +29,12 @@ public class ItemsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<ItemDto>>> Get(
-        [FromQuery] int? count = null,
+    public async Task<ActionResult<PagedResult<GetItemsResultDto>>> Get(
+        [FromQuery] GetItemsQuery query,
         CancellationToken cancellationToken = default
     )
     {
-        var item = await _mediator.Send(new GetItemsQuery(count), cancellationToken);
+        var item = await _mediator.Send(query, cancellationToken);
         return Ok(item);
     }
 

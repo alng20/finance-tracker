@@ -9,12 +9,12 @@ namespace FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 public class GetExpensesByUserHandler(
     ICurrentUserService currentUser,
     IExpenseProvider expenseProvider
-) : IRequestHandler<GetExpensesByUserQuery, PageResult<GetExpensesByUserResultDto>>
+) : IRequestHandler<GetExpensesByUserQuery, PagedResult<GetExpensesByUserResultDto>>
 {
     private readonly ICurrentUserService _currentUser = currentUser;
     private readonly IExpenseProvider _expenseProvider = expenseProvider;
 
-    public async Task<PageResult<GetExpensesByUserResultDto>> Handle(
+    public async Task<PagedResult<GetExpensesByUserResultDto>> Handle(
         GetExpensesByUserQuery query,
         CancellationToken cancellationToken
     )

@@ -56,6 +56,13 @@
   font-size: 13px;
 }
 
+.expense-filters .multi-select-filter input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+}
+
 .expense-filters input:focus,
 .expense-filters select:focus {
   border-color: var(--accent-strong);
@@ -102,6 +109,7 @@
 .multi-select-filter__options {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   max-height: 210px;
   overflow-y: auto;
   gap: 2px;
@@ -110,6 +118,7 @@
 .multi-select-filter__selected {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   gap: 2px;
   padding-bottom: 6px;
   border-bottom: 1px solid var(--border);
@@ -177,11 +186,18 @@
 }
 
 .multi-select-filter__option {
-  display: flex;
-  align-items: center;
-  gap: 9px;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 9px;
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  height: auto;
   min-height: 34px;
   padding: 6px 8px;
+  white-space: normal;
   border-radius: 7px;
   color: var(--text-color);
   font-size: 13px;
@@ -193,18 +209,22 @@
 }
 
 .multi-select-filter__option input {
-  flex: 0 0 16px;
+  margin-top: 2px;
   width: 16px;
   height: 16px;
   min-width: 16px;
   min-height: 16px;
-  margin: 0;
   accent-color: var(--accent-strong);
 }
 
 .multi-select-filter__option span {
+  display: block;
   min-width: 0;
+  max-width: 100%;
+  line-height: 1.35;
+  white-space: normal;
   overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .multi-select-filter__options > div {

@@ -1,14 +1,7 @@
 import type { Currency } from "./Defs";
+import type { PagedResponse } from "./PagedResponse";
 
-export type GetExpensesResponse = {
-  page: number;
-  pageSize: number;
-  totalPages: number;
-  totalCount: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  data: ExpenseDto[];
-};
+export type GetExpensesResponse = PagedResponse<ExpenseDto>;
 
 export type ExpenseDto = {
   id: string;

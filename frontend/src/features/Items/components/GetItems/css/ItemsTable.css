@@ -1,0 +1,20 @@
+.items-table {
+  display: flex;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(23, 43, 58, 0.1);
+  border-radius: 18px;
+  background: #eadfea;
+}
+
+.items-table__data {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.items-table__no_items {
+  color: var(--muted-text);
+  font-size: 13px;
+}

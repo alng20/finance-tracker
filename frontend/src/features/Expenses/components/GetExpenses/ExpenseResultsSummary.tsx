@@ -56,6 +56,7 @@ export function ExpenseResultsSummary({
 
       <div className="expense-results-summary__metrics">
         <div className="expense-results-summary__metric">
+          {/* TODO: Show all expenses amount */}
           <span>Amount on this page</span>
           <strong>
             {currencyOrder

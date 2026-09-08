@@ -1,4 +1,4 @@
-import type { Shop } from "../../../../Shops/types/SearchShopDto";
+import type { ShopDto } from "../../../../Shops/types/ShopDto";
 import type { AddExpenseDetailData } from "../../../types/AddExpenseDetailData";
 import type { Currency } from "../../../types/Defs";
 
@@ -28,7 +28,7 @@ export function validateExpense({
   details,
 }: {
   date: string;
-  shop: Shop | null;
+  shop: ShopDto | null;
   currency: Currency;
   amount: string;
   details: AddExpenseDetailData[];

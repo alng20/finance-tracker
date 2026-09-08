@@ -19,7 +19,7 @@ export function useSearch<T>(
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [search, selected, searchFunc]);
+  }, [search, selected]);
 
   return {
     results,
