@@ -1,4 +1,4 @@
-import type { Currency } from "./Defs";
+import type { Currency } from "../../shared/types/Defs";
 
 export type GetExpenseByIdResponse = {
   id: string;

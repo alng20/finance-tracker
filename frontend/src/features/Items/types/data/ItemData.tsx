@@ -1,4 +1,4 @@
-interface ItemCommonData {
+export interface ItemCommonData {
   name: string;
   categoryId: string;
   unit: string;

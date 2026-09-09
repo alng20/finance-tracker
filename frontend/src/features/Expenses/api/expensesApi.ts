@@ -4,12 +4,12 @@ import type {
   CreateExpenseRequest,
   CreateExpenseParams,
 } from "../types/CreateExpenseRequest";
-import type { Currency } from "../types/Defs";
+import type { Currency } from "../../shared/types/Defs";
 import type { Discount } from "../types/Discount";
 import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
 import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
 import type { GetExpensesResponse } from "../types/GetExpensesResponse";
-import type { PageRequestData } from "../types/PageRequestData";
+import type { PageRequestData } from "../../shared/types/PageRequestData";
 import type { UpdateExpenseParams } from "../types/UpdateExpenseParams";
 
 const API_EXPENSES = "api/expenses";

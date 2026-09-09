@@ -16,7 +16,7 @@ import {
   updateExpense,
   updateExpenseDetail,
 } from "../../api/expensesApi";
-import type { Currency } from "../../types/Defs";
+import type { Currency } from "../../../shared/types/Defs";
 import type { GetExpenseByIdResponse } from "../../types/GetExpenseByIdResponse";
 import { getTodayDate } from "../../../shared/common/utils";
 

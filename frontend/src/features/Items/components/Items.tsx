@@ -1,12 +1,9 @@
 import { useState } from "react";
-import type {
-  GetItemsResponse,
-  ItemDto,
-} from "../../Expenses/types/GetItemsResponse";
+import type { GetItemsResponse } from "../types/responses/GetItemsResponse";
 import {
   initialPageRequest,
   type PageRequestData,
-} from "../../Expenses/types/PageRequestData";
+} from "../../shared/types/PageRequestData";
 import useGetWithFilters from "../../shared/hooks/useGetWithFilters";
 import {
   createItem,
@@ -18,74 +15,54 @@ import {
 import ItemsTable from "./GetItems/ItemsTable";
 import CreateItem from "./CreateItem/CreateItem";
 import Pagination from "../../shared/components/Pagination/Pagintation";
-import { useGet } from "../../Expenses/hooks/useGet";
-import { useSearch } from "../../Expenses/hooks/useSearch";
+import { useGet } from "../../shared/hooks/useGet";
+import { useSearch } from "../../shared/hooks/useSearch";
 import { getCategories } from "../../Categories/api/categoriesApi";
-import type { GetCategoriesDto } from "../../Categories/types/GetCategoriesDto";
-import type { SearchItemsDto } from "../types/SearchItemsDto";
-import type { ItemFormErrors } from "./GetItems/ItemRow";
+import type { SearchItemsDto } from "../types/dto/SearchItemsDto";
 import "./Items.css";
 import "./CreateItem/css/CreateItem.css";
 import "../../Expenses/components/GetExpenses/css/ExpenseFilters.css";
-import type { CreateItemData, UpdateItemData } from "../types/ItemData";
-import type { ItemFiltersData } from "../types/ItemFiltersData";
+import type { CreateItemData, UpdateItemData } from "../types/data/ItemData";
+import type { ItemFiltersData } from "../types/data/ItemFiltersData";
 import ItemFilters from "./GetItems/ItemFilters";
-
-// TODO: Implement Units or move to separate file
-const units = ["Undefined", "Piece", "G", "KG", "Milliliter", "Liter"].map(
-  (unit) => ({ id: unit, name: unit }),
-);
-
-// TODO: Move to separate file
-function validateItemForm({
-  name,
-  categoryId,
-  unit,
-}: CreateItemData | UpdateItemData): ItemFormErrors {
-  const errors: ItemFormErrors = {};
-  const trimmedName = name.trim();
-
-  if (!trimmedName) {
-    errors.name = "Name is required.";
-  } else if (trimmedName.length > 100) {
-    errors.name = "Name must be 100 characters or fewer.";
-  }
-
-  if (!categoryId) {
-    errors.category = "Category is required.";
-  }
-
-  if (!unit) {
-    errors.unit = "Unit is required.";
-  }
-
-  return errors;
-}
+import {
+  validateItem,
+  type ItemValidationErrors,
+} from "../validation/itemValidation";
+import type { ItemDto } from "../types/dto/ItemDto";
+import type { GetItemsDto } from "../types/dto/GetItemsDto";
+import { units } from "../../shared/common/units";
+import type { GetCategoriesDto } from "../../Categories/types/GetCategoriesDto";
 
 function Items() {
   const [page, setPage] = useState<PageRequestData>(initialPageRequest);
   const [filters, setFilters] = useState<ItemFiltersData | null>(null);
+  const [search, setSearch] = useState("");
 
   const [updateItemData, setUpdateItemData] = useState<UpdateItemData | null>(
     null,
   );
-  const [updateErrors, setUpdateErrors] = useState<ItemFormErrors>({});
+  const [updateErrors, setUpdateErrors] = useState<ItemValidationErrors>({});
 
   const [isCreating, setIsCreating] = useState(false);
   const [createItemData, setCreateItemData] = useState<CreateItemData | null>(
     null,
   );
-  const [createErrors, setCreateErrors] = useState<ItemFormErrors>({});
-
-  const [search, setSearch] = useState("");
+  const [createErrors, setCreateErrors] = useState<ItemValidationErrors>({});
+  const [createSubmitError, setCreateSubmitError] = useState<string | null>(
+    null,
+  );
 
   const {
     results: searchResults,
     isLoading: isSearchLoading,
     error: searchError,
+    doSearch,
   } = useSearch<SearchItemsDto>(search, null, searchItems);
 
   const { results: categories } = useGet<GetCategoriesDto>(getCategories);
+
+  const itemsUnits = units; // TODO: Get units by request
 
   function setItemData<T>(
     setter: React.Dispatch<React.SetStateAction<T | null>>,
@@ -100,40 +77,21 @@ function Items() {
   }
 
   const {
-    results: filteredItems,
+    results: items,
     pagination,
     isLoading,
     error,
     refresh,
-  } = useGetWithFilters<GetItemsResponse, ItemFiltersData, ItemDto>(
+  } = useGetWithFilters<GetItemsResponse, ItemFiltersData, GetItemsDto>(
     page,
     filters,
     getItems,
   );
 
-  // TODO: Fix category match, add categoryName to response
-  const filteredSearchResults = searchResults.filter((item) => {
-    const matchesCategory =
-      !filters?.categories?.length ||
-      filters.categories.some((category) => category.id === item.categoryId);
-    const matchesUnit =
-      !filters?.units?.length ||
-      filters.units.some((unit) => unit.id === item.unit);
-
-    return matchesCategory && matchesUnit;
-  });
-
   // TODO: Make get/search items response paged
-  const displayedItems: ItemDto[] = search.trim()
-    ? filteredSearchResults.map((item) => ({
-        ...item,
-        categoryName:
-          categories.find((category) => category.id === item.categoryId)
-            ?.name ?? "Unknown category",
-      }))
-    : filteredItems;
+  const displayedItems: ItemDto[] = search.trim() ? searchResults : items;
   const itemCount = search.trim()
-    ? filteredSearchResults.length
+    ? searchResults.length
     : pagination.dataTotalCount;
 
   const onClickUpdateItem = (item: ItemDto) => {
@@ -142,7 +100,7 @@ function Items() {
     setUpdateItemData({
       id: item.id,
       name: item.name,
-      categoryId: item.categoryId,
+      categoryId: item?.categoryId ?? "",
       unit: item.unit,
     });
   };
@@ -152,22 +110,35 @@ function Items() {
       return;
     }
 
-    const errors = validateItemForm(createItemData);
+    setCreateSubmitError(null);
+
+    const errors = validateItem(createItemData);
     setCreateErrors(errors);
 
     if (Object.keys(errors).length > 0) {
       return;
     }
 
-    await createItem({
-      name: createItemData.name.trim(),
-      categoryId: createItemData.categoryId,
-      unit: createItemData.unit,
-    });
-    setIsCreating(false);
-    setCreateItemData(null);
-    setCreateErrors({});
-    await refresh();
+    try {
+      await createItem({
+        name: createItemData.name.trim(),
+        categoryId: createItemData.categoryId,
+        unit: createItemData.unit,
+      });
+      setIsCreating(false);
+      setCreateItemData(null);
+      setCreateErrors({});
+      setCreateSubmitError(null);
+      await refresh();
+      doSearch();
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Failed to create item. Please try again.";
+
+      setCreateSubmitError(message);
+    }
   };
 
   const onClickSaveUpdatedItem = async () => {
@@ -175,7 +146,7 @@ function Items() {
       return;
     }
 
-    const errors = validateItemForm(updateItemData);
+    const errors = validateItem(updateItemData);
     setUpdateErrors(errors);
 
     if (Object.keys(errors).length > 0) {
@@ -190,6 +161,7 @@ function Items() {
     });
     setUpdateItemData(null);
     await refresh();
+    doSearch();
   };
 
   const onClickDeleteItem = async (item: ItemDto) => {
@@ -199,6 +171,7 @@ function Items() {
 
     await deleteItem(item.id);
     await refresh();
+    doSearch();
   };
 
   return (
@@ -218,6 +191,7 @@ function Items() {
               setUpdateItemData(null);
               setIsCreating(true);
               setCreateErrors({});
+              setCreateSubmitError(null);
             }}
             className="items-page__create_item_button_click"
           >
@@ -229,14 +203,18 @@ function Items() {
       {isCreating && (
         <CreateItem
           categories={categories}
-          units={units}
+          units={itemsUnits}
           createItemData={createItemData}
           errors={createErrors}
+          submitError={createSubmitError}
           onNameChange={setItemData(setCreateItemData, "name")}
           onCategoryChange={setItemData(setCreateItemData, "categoryId")}
           onUnitChange={setItemData(setCreateItemData, "unit")}
           onSubmit={onClickCreateItem}
-          onCancel={() => setIsCreating(false)}
+          onCancel={() => {
+            setIsCreating(false);
+            setCreateSubmitError(null);
+          }}
         />
       )}
 
@@ -248,7 +226,7 @@ function Items() {
       <div className="items-controls">
         <ItemFilters
           categories={categories}
-          units={units}
+          units={itemsUnits}
           filters={filters}
           onChange={setFilters}
           onPageReset={() =>
@@ -270,7 +248,7 @@ function Items() {
           {!isSearchLoading &&
             search.trim() &&
             !searchError &&
-            filteredSearchResults.length === 0 && <p>No items found.</p>}
+            searchResults.length === 0 && <p>No items found.</p>}
         </div>
       </div>
 
@@ -296,7 +274,7 @@ function Items() {
         onUpdate={onClickUpdateItem}
         onDelete={onClickDeleteItem}
         categories={categories}
-        units={units}
+        units={itemsUnits}
         updateItemData={updateItemData}
         updateErrors={updateErrors}
         onUpdateNameChange={setItemData(setUpdateItemData, "name")}

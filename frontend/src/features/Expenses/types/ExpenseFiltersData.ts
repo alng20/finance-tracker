@@ -1,5 +1,5 @@
 import type { FilterData } from "../../shared/types/FilterData";
-import type { Currency } from "./Defs";
+import type { Currency } from "../../shared/types/Defs";
 
 export type ExpenseFiltersData = {
   fromDate?: string;

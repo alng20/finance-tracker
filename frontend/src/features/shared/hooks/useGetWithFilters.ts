@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import type { PagedResponse } from "../../Expenses/types/PagedResponse";
-import type { PageRequestData } from "../../Expenses/types/PageRequestData";
-import type { PaginationData } from "../../Expenses/types/PaginationData";
+import type { PagedResponse } from "../types/PagedResponse";
+import type { PageRequestData } from "../types/PageRequestData";
+import type { PaginationData } from "../types/PaginationData";
 
 function useGetWithFilters<
   ResponseType extends PagedResponse<DtoType>,

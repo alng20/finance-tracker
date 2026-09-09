@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function useSearch<InputType, OutputType = InputType>(
   search: string,
@@ -10,10 +10,10 @@ export function useSearch<InputType, OutputType = InputType>(
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    const normalizedSearch = search.trim();
+  const doSearch = useCallback(() => {
+    const trimmedName = search.trim();
 
-    if (selected || !normalizedSearch) {
+    if (selected || !trimmedName) {
       setResults([]);
       setError(null);
       setIsLoading(false);
@@ -27,7 +27,7 @@ export function useSearch<InputType, OutputType = InputType>(
     setError(null);
 
     const timer = window.setTimeout(() => {
-      searchFunc(normalizedSearch)
+      searchFunc(trimmedName)
         .then((data) => {
           if (isActive) {
             const mappedData = mapResult
@@ -49,12 +49,16 @@ export function useSearch<InputType, OutputType = InputType>(
           }
         });
     }, 300);
-
     return () => {
       isActive = false;
       window.clearTimeout(timer);
     };
   }, [search, selected, searchFunc, mapResult]);
+
+  useEffect(() => {
+    const clear = doSearch();
+    return clear;
+  }, [doSearch]);
 
   return {
     results,
@@ -65,5 +69,6 @@ export function useSearch<InputType, OutputType = InputType>(
     },
     isLoading,
     error,
+    doSearch,
   };
 }

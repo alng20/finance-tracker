@@ -1,14 +1,10 @@
-import type { ItemDto } from "../../../Expenses/types/GetItemsResponse";
-import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import "./css/ItemRow.css";
-import type { UpdateItemData } from "../../types/ItemData";
-import type { FilterData } from "../../../shared/types/FilterData";
 
-export type ItemFormErrors = {
-  name?: string;
-  category?: string;
-  unit?: string;
-};
+import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
+import type { UpdateItemData } from "../../types/data/ItemData";
+import type { ItemValidationErrors } from "../../validation/itemValidation";
+import type { ItemDto } from "../../types/dto/ItemDto";
+import type { UnitDto } from "../../../shared/common/units";
 
 type ItemRowProps = {
   item: ItemDto;
@@ -16,9 +12,9 @@ type ItemRowProps = {
   onDelete: (item: ItemDto) => void;
   isUpdating: boolean;
   categories: GetCategoriesDto[];
-  units: FilterData[]; // TODO: fix it
+  units: UnitDto[];
   updateItemData: UpdateItemData | null;
-  updateErrors: ItemFormErrors;
+  updateErrors: ItemValidationErrors;
   onUpdateNameChange: (value: string) => void;
   onUpdateCategoryChange: (value: string) => void;
   onUpdateUnitChange: (value: string) => void;

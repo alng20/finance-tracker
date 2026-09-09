@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import AddExpenseDetail from "./AddExpenseDetail";
-import type { Currency } from "../../types/Defs";
+import type { Currency } from "../../../shared/types/Defs";
 
 type AddExpenseDetailButton = {
   isAddingExpenseDetail: boolean;

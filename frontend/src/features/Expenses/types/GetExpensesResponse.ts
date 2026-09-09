@@ -1,5 +1,5 @@
-import type { Currency } from "./Defs";
-import type { PagedResponse } from "./PagedResponse";
+import type { Currency } from "../../shared/types/Defs";
+import type { PagedResponse } from "../../shared/types/PagedResponse";
 
 export type GetExpensesResponse = PagedResponse<ExpenseDto>;
 

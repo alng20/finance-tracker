@@ -102,16 +102,53 @@ export function createApiClient(): ApiClient {
     return send(method, url, body, options);
   }
 
-  function checkResponseStatus(response: Response): void {
+  async function getErrorMessage(response: Response): Promise<string> {
+    const responseContentType = response.headers.get("content-type") ?? "";
+    const fallbackMessage =
+      response.statusText || `Request failed with status ${response.status}`;
+    const isJsonResponse =
+      responseContentType.includes("application/json") ||
+      responseContentType.includes("application/problem+") ||
+      responseContentType.includes("application/problem");
+
+    if (isJsonResponse) {
+      try {
+        const errorData = (await response.clone().json()) as {
+          detail?: string;
+          title?: string;
+          errors?: Record<string, string[]>;
+        };
+
+        if (errorData.detail) {
+          return errorData.detail;
+        }
+
+        if (errorData.title) {
+          return errorData.title;
+        }
+
+        const flattenedErrors = Object.values(errorData.errors ?? {}).flat();
+        if (flattenedErrors.length > 0) {
+          return flattenedErrors.join(" ");
+        }
+      } catch {
+        // Ignore JSON parsing errors and fall back to status-based message.
+      }
+    }
+
+    return fallbackMessage;
+  }
+
+  async function checkResponseStatus(response: Response): Promise<void> {
     if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+      throw new Error(await getErrorMessage(response));
     }
   }
 
   return {
     get: async <T>(url: string, options?: RequestInit): Promise<T> => {
       const response = await request("GET", url, undefined, options);
-      checkResponseStatus(response);
+      await checkResponseStatus(response);
       return parseResponse<T>(response);
     },
     post: async <T>(
@@ -120,7 +157,7 @@ export function createApiClient(): ApiClient {
       options?: RequestInit,
     ): Promise<T> => {
       const response = await request("POST", url, body, options);
-      checkResponseStatus(response);
+      await checkResponseStatus(response);
       return parseResponse<T>(response);
     },
     put: async <T>(
@@ -129,12 +166,12 @@ export function createApiClient(): ApiClient {
       options?: RequestInit,
     ): Promise<T> => {
       const response = await request("PUT", url, body, options);
-      checkResponseStatus(response);
+      await checkResponseStatus(response);
       return parseResponse<T>(response);
     },
     delete: async <T>(url: string, options?: RequestInit): Promise<T> => {
       const response = await request("DELETE", url, undefined, options);
-      checkResponseStatus(response);
+      await checkResponseStatus(response);
       return parseResponse<T>(response);
     },
   };

@@ -1,9 +1,10 @@
-import type { ItemDto } from "../../../Expenses/types/GetItemsResponse";
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
-import ItemRow, { type ItemFormErrors } from "./ItemRow";
 import "./css/ItemsTable.css";
-import type { UpdateItemData } from "../../types/ItemData";
-import type { FilterData } from "../../../shared/types/FilterData";
+import type { UpdateItemData } from "../../types/data/ItemData";
+import type { ItemValidationErrors } from "../../validation/itemValidation";
+import type { ItemDto } from "../../types/dto/ItemDto";
+import ItemRow from "./ItemRow";
+import type { UnitDto } from "../../../shared/common/units";
 
 export type ItemsTableProps = {
   items: ItemDto[];
@@ -12,9 +13,9 @@ export type ItemsTableProps = {
   onUpdate: (item: ItemDto) => void;
   onDelete: (item: ItemDto) => void;
   categories: GetCategoriesDto[];
-  units: FilterData[]; // TODO: fix it
+  units: UnitDto[];
   updateItemData: UpdateItemData | null;
-  updateErrors: ItemFormErrors;
+  updateErrors: ItemValidationErrors;
   onUpdateNameChange: (value: string) => void;
   onUpdateCategoryChange: (value: string) => void;
   onUpdateUnitChange: (value: string) => void;

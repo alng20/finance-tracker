@@ -1,4 +1,4 @@
-import type { Currency } from "../../Expenses/types/Defs";
+import type { Currency } from "../../shared/types/Defs";
 
 export type GetGroupedAmountResponse = {
   currency: Currency;

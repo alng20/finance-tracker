@@ -25,9 +25,6 @@ public class ItemRepository(FinanceTrackerDbContext ctx) : IItemRepository
     )
     {
         var query = _ctx.Items.AsNoTracking().Include(x => x.Category);
-
-        // TODO: Implement item filters
-
         return await query.ToListAsync(cancellationToken);
     }
 

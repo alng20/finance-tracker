@@ -9,7 +9,7 @@ import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
 import {
   initialPageRequest,
   type PageRequestData,
-} from "../types/PageRequestData";
+} from "../../shared/types/PageRequestData";
 import { ExpenseResultsSummary } from "./GetExpenses/ExpenseResultsSummary";
 import Pagination from "../../shared/components/Pagination/Pagintation";
 import useGetWithFilters from "../../shared/hooks/useGetWithFilters";

@@ -1,15 +1,16 @@
 import "./css/CreateItem.css";
 
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
-import type { ItemFormErrors } from "../GetItems/ItemRow";
-import type { CreateItemData } from "../../types/ItemData";
-import type { FilterData } from "../../../shared/types/FilterData";
+import type { CreateItemData } from "../../types/data/ItemData";
+import type { ItemValidationErrors } from "../../validation/itemValidation";
+import type { UnitDto } from "../../../shared/common/units";
 
 type CreateItemProps = {
   categories: GetCategoriesDto[];
-  units: FilterData[]; // TODO: fix it
+  units: UnitDto[];
   createItemData: CreateItemData | null;
-  errors: ItemFormErrors;
+  errors: ItemValidationErrors;
+  submitError: string | null;
   onNameChange: (value: string) => void;
   onCategoryChange: (value: string) => void;
   onUnitChange: (value: string) => void;
@@ -22,6 +23,7 @@ function CreateItem({
   units,
   createItemData,
   errors,
+  submitError,
   onNameChange,
   onCategoryChange,
   onUnitChange,
@@ -36,6 +38,7 @@ function CreateItem({
         onSubmit();
       }}
     >
+      {submitError && <p className="item-form-error">{submitError}</p>}
       <input
         autoFocus
         aria-invalid={Boolean(errors.name)}

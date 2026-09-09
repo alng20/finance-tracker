@@ -1,4 +1,4 @@
-import type { FilterData } from "../../shared/types/FilterData";
+import type { FilterData } from "../../../shared/types/FilterData";
 
 export type ItemFiltersData = {
   categories?: FilterData[];

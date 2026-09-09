@@ -1,6 +1,6 @@
 import type { ShopDto } from "../../../../Shops/types/ShopDto";
 import type { AddExpenseDetailData } from "../../../types/AddExpenseDetailData";
-import type { Currency } from "../../../types/Defs";
+import type { Currency } from "../../../../shared/types/Defs";
 
 export type ExpenseValidationErrors = {
   date?: string;

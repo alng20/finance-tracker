@@ -1,4 +1,4 @@
-import type { Currency } from "../../../types/Defs";
+import type { Currency } from "../../../../shared/types/Defs";
 
 export type ExpenseDetailRowData = {
   id: string;

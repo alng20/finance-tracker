@@ -1,4 +1,4 @@
-import type { Currency } from "../../types/Defs";
+import type { Currency } from "../../../shared/types/Defs";
 import type { ExpenseDto } from "../../types/GetExpensesResponse";
 import "./css/ExpenseResultsSummary.css";
 

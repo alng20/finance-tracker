@@ -2,10 +2,10 @@ import "./css/ExpenseFilters.css";
 
 import { useState } from "react";
 import type { ExpenseFiltersData } from "../../types/ExpenseFiltersData";
-import type { Currency } from "../../types/Defs";
-import { useSearch } from "../../hooks/useSearch";
+import type { Currency } from "../../../shared/types/Defs";
+import { useSearch } from "../../../shared/hooks/useSearch";
 import type { GetShopsDto } from "../../../Shops/types/GetShopsDto";
-import { useGet } from "../../hooks/useGet";
+import { useGet } from "../../../shared/hooks/useGet";
 import { getShops } from "../../../Shops/api/shopsApi";
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import { getCategories } from "../../../Categories/api/categoriesApi";
@@ -14,7 +14,7 @@ import type { GetRetailersDto } from "../../../Retailers/types/GetRetailersDto";
 import type { FilterData } from "../../../shared/types/FilterData";
 import { SelectFilter } from "../../../shared/components/Filters/SelectFilter";
 import { searchItems } from "../../../Items/api/itemsApi";
-import type { SearchItemsDto } from "../../../Items/types/SearchItemsDto";
+import type { SearchItemsDto } from "../../../Items/types/dto/SearchItemsDto";
 
 type ExpenseFiltersProps = {
   onApply: (filters: ExpenseFiltersData | null) => void;

@@ -1,5 +1,5 @@
 import type { AddExpenseDetailData } from "./AddExpenseDetailData";
-import type { Currency } from "./Defs";
+import type { Currency } from "../../shared/types/Defs";
 
 export type CreateExpenseRequest = {
   sharedGroupId: string | null;
