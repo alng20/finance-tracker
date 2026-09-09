@@ -1,28 +1,69 @@
 import { useEffect, useState } from "react";
 
-export function useSearch<T>(
+export function useSearch<InputType, OutputType = InputType>(
   search: string,
-  selected: T | null,
-  searchFunc: (search: string) => Promise<T[]>,
+  selected: OutputType | null,
+  searchFunc: (search: string) => Promise<InputType[]>,
+  mapResult?: (items: InputType[]) => OutputType[],
 ) {
-  const [results, setResults] = useState<T[]>([]);
+  const [results, setResults] = useState<OutputType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (selected || !search.trim()) {
+    const normalizedSearch = search.trim();
+
+    if (selected || !normalizedSearch) {
       setResults([]);
+      setError(null);
+      setIsLoading(false);
       return;
     }
 
-    const timer = setTimeout(async () => {
-      const data = await searchFunc(search);
-      setResults(data);
+    let isActive = true;
+
+    setResults([]);
+    setIsLoading(true);
+    setError(null);
+
+    const timer = window.setTimeout(() => {
+      searchFunc(normalizedSearch)
+        .then((data) => {
+          if (isActive) {
+            const mappedData = mapResult
+              ? mapResult(data)
+              : (data as unknown as OutputType[]);
+
+            setResults(mappedData);
+          }
+        })
+        .catch((err: unknown) => {
+          if (isActive) {
+            setError(err instanceof Error ? err : new Error("Search failed."));
+            setResults([]);
+          }
+        })
+        .finally(() => {
+          if (isActive) {
+            setIsLoading(false);
+          }
+        });
     }, 300);
 
-    return () => clearTimeout(timer);
-  }, [search, selected]);
+    return () => {
+      isActive = false;
+      window.clearTimeout(timer);
+    };
+  }, [search, selected, searchFunc, mapResult]);
 
   return {
     results,
-    clearResults: () => setResults([]),
+    clearResults: () => {
+      setResults([]);
+      setError(null);
+      setIsLoading(false);
+    },
+    isLoading,
+    error,
   };
 }

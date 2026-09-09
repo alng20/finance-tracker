@@ -1,5 +1,9 @@
 # Git files to ignore
 
+*.patch
+*.diff
+*.log
+
 *.env
 dotnet-tools.json
 appsettings.Development.json
@@ -12,3 +16,4 @@ logs/
 */learning/
 
 frontend/node_modules/*
+frontend/dist/*

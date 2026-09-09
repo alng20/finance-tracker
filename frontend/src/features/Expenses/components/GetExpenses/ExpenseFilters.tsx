@@ -3,7 +3,7 @@ import "./css/ExpenseFilters.css";
 import { useState } from "react";
 import type { ExpenseFiltersData } from "../../types/ExpenseFiltersData";
 import type { Currency } from "../../types/Defs";
-import { useSearchItems } from "../../hooks/useSearchItems";
+import { useSearch } from "../../hooks/useSearch";
 import type { GetShopsDto } from "../../../Shops/types/GetShopsDto";
 import { useGet } from "../../hooks/useGet";
 import { getShops } from "../../../Shops/api/shopsApi";
@@ -13,6 +13,8 @@ import { getRetailers } from "../../../Retailers/api/retailersApi";
 import type { GetRetailersDto } from "../../../Retailers/types/GetRetailersDto";
 import type { FilterData } from "../../../shared/types/FilterData";
 import { SelectFilter } from "../../../shared/components/Filters/SelectFilter";
+import { searchItems } from "../../../Items/api/itemsApi";
+import type { SearchItemsDto } from "../../../Items/types/SearchItemsDto";
 
 type ExpenseFiltersProps = {
   onApply: (filters: ExpenseFiltersData | null) => void;
@@ -25,7 +27,16 @@ export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
   const [clearAllKey, setClearAllKey] = useState(0);
 
   const [itemSearch, setItemSearch] = useState("");
-  const { items } = useSearchItems(itemSearch);
+  const { results: items } = useSearch<SearchItemsDto, FilterData>(
+    itemSearch,
+    null,
+    searchItems,
+    (searchResults) =>
+      searchResults.map((item) => ({
+        id: item.id,
+        name: item.name,
+      })),
+  );
 
   const { results: shops } = useGet<GetShopsDto>(getShops);
   const { results: categories } = useGet<GetCategoriesDto>(getCategories);

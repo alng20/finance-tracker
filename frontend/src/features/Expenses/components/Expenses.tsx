@@ -3,7 +3,6 @@ import AddExpenseButton from "./AddExpense/AddExpenseButton";
 import "./Expenses.css";
 import AddExpenseModal from "./AddExpense/AddExpenseModal";
 import ExpensesTable from "./GetExpenses/ExpensesTable";
-import useGetExpenses from "../hooks/useGetExpenses";
 import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
 import ExpenseFilters from "./GetExpenses/ExpenseFilters";
 import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type {
   GetItemsResponse,
   ItemDto,
@@ -19,6 +19,7 @@ import ItemsTable from "./GetItems/ItemsTable";
 import CreateItem from "./CreateItem/CreateItem";
 import Pagination from "../../shared/components/Pagination/Pagintation";
 import { useGet } from "../../Expenses/hooks/useGet";
+import { useSearch } from "../../Expenses/hooks/useSearch";
 import { getCategories } from "../../Categories/api/categoriesApi";
 import type { GetCategoriesDto } from "../../Categories/types/GetCategoriesDto";
 import type { SearchItemsDto } from "../types/SearchItemsDto";
@@ -76,10 +77,13 @@ function Items() {
   );
   const [createErrors, setCreateErrors] = useState<ItemFormErrors>({});
 
-  const [isSearchLoading, setIsSearchLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState<SearchItemsDto[]>([]);
-  const [searchError, setSearchError] = useState<Error | null>(null);
+
+  const {
+    results: searchResults,
+    isLoading: isSearchLoading,
+    error: searchError,
+  } = useSearch<SearchItemsDto>(search, null, searchItems);
 
   const { results: categories } = useGet<GetCategoriesDto>(getCategories);
 
@@ -94,50 +98,6 @@ function Items() {
       }));
     };
   }
-
-  // TODO: use useSearch or useSearchItems
-  useEffect(() => {
-    const searchValue = search.trim();
-
-    if (!searchValue) {
-      setSearchResults([]);
-      setSearchError(null);
-      setIsSearchLoading(false);
-      return;
-    }
-
-    let isActive = true;
-    setSearchResults([]);
-    setIsSearchLoading(true);
-    setSearchError(null);
-
-    const timer = window.setTimeout(() => {
-      searchItems(searchValue)
-        .then((results) => {
-          if (isActive) {
-            setSearchResults(results);
-          }
-        })
-        .catch((error: unknown) => {
-          if (isActive) {
-            setSearchError(
-              error instanceof Error ? error : new Error("Search failed"),
-            );
-            setSearchResults([]);
-          }
-        })
-        .finally(() => {
-          if (isActive) {
-            setIsSearchLoading(false);
-          }
-        });
-    }, 300);
-
-    return () => {
-      isActive = false;
-      window.clearTimeout(timer);
-    };
-  }, [search]);
 
   const {
     results: filteredItems,
