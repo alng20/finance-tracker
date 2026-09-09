@@ -1,5 +1,5 @@
 const firstPage: number = 1;
-const defaultPageSize: number = 20;
+const defaultPageSize: number = 5;
 
 export type PageRequestData = {
   pageNumber: number;

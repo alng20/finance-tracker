@@ -21,16 +21,10 @@ public class ItemRepository(FinanceTrackerDbContext ctx) : IItemRepository
     }
 
     public async Task<IReadOnlyList<Item>> GetAllAsync(
-        int? count,
         CancellationToken cancellationToken
     )
     {
-        var query = _ctx.Items.AsNoTracking();
-        if (count.HasValue)
-        {
-            query = query.Take(count.Value);
-        }
-
+        var query = _ctx.Items.AsNoTracking().Include(x => x.Category);
         return await query.ToListAsync(cancellationToken);
     }
 

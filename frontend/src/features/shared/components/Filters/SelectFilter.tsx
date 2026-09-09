@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
-import type { FilterData } from "../../types/ExpenseFiltersData";
+import type { FilterData } from "../../../shared/types/FilterData";
 
-const FILTER_OPEN_EVENT = "expense-filter-open";
+const FILTER_OPEN_EVENT = "filter-open";
 
 type SelectFilterProps = {
   label: string;

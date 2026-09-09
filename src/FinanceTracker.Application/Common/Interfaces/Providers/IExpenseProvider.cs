@@ -6,7 +6,7 @@ namespace FinanceTracker.Application.Common.Interfaces.Providers;
 
 public interface IExpenseProvider
 {
-    Task<PageResult<GetExpensesByUserResultDto>> GetByUserAsync(
+    Task<PagedResult<GetExpensesByUserResultDto>> GetByUserAsync(
         Guid userId,
         int page,
         int pageSize,

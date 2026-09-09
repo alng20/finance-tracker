@@ -1,48 +1,20 @@
 import "./css/ExpenseFilters.css";
-// import type { ExpenseFiltersData } from "../../types/ExpenseFiltersData";
-
-// export type ExpenseFiltersProps = {
-//   setFilters: React.Dispatch<React.SetStateAction<ExpenseFiltersData | null>>;
-// };
-
-// function ExpenseFilters({ setFilters }: ExpenseFiltersProps) {
-//   async function onClickApply() {
-//     const filters: ExpenseFiltersData = {
-//         toDate: "2026-08-31",
-//         shopIds: ["d301b84f-bd84-4768-85f7-2c6357710d02", "7017b78a-7b57-4c9d-86b2-808e9c86601e"],
-//         retailerIds: ["60d19b9a-e6eb-4114-82f4-80304ff0b720"],
-//     };
-//     setFilters(filters);
-//   }
-
-//   async function onClickClear() {
-//     setFilters(null);
-//   }
-
-//   return (
-//     <section className="expense_filters">
-//       <span>FILTERS</span>
-//       <button onClick={onClickApply}>Apply</button>
-//       <button onClick={onClickClear}>Clear</button>
-//     </section>
-//   );
-// }
 
 import { useState } from "react";
-import { SelectFilter } from "./SelectFilter";
-import type {
-  ExpenseFiltersData,
-  FilterData,
-} from "../../types/ExpenseFiltersData";
-import type { Currency } from "../../types/Defs";
-import { useSearchItems } from "../../hooks/useSearchItems";
+import type { ExpenseFiltersData } from "../../types/ExpenseFiltersData";
+import type { Currency } from "../../../shared/types/Defs";
+import { useSearch } from "../../../shared/hooks/useSearch";
 import type { GetShopsDto } from "../../../Shops/types/GetShopsDto";
-import { useGet } from "../../hooks/useGet";
+import { useGet } from "../../../shared/hooks/useGet";
 import { getShops } from "../../../Shops/api/shopsApi";
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import { getCategories } from "../../../Categories/api/categoriesApi";
 import { getRetailers } from "../../../Retailers/api/retailersApi";
 import type { GetRetailersDto } from "../../../Retailers/types/GetRetailersDto";
+import type { FilterData } from "../../../shared/types/FilterData";
+import { SelectFilter } from "../../../shared/components/Filters/SelectFilter";
+import { searchItems } from "../../../Items/api/itemsApi";
+import type { SearchItemsDto } from "../../../Items/types/dto/SearchItemsDto";
 
 type ExpenseFiltersProps = {
   onApply: (filters: ExpenseFiltersData | null) => void;
@@ -55,7 +27,16 @@ export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
   const [clearAllKey, setClearAllKey] = useState(0);
 
   const [itemSearch, setItemSearch] = useState("");
-  const { items } = useSearchItems(itemSearch);
+  const { results: items } = useSearch<SearchItemsDto, FilterData>(
+    itemSearch,
+    null,
+    searchItems,
+    (searchResults) =>
+      searchResults.map((item) => ({
+        id: item.id,
+        name: item.name,
+      })),
+  );
 
   const { results: shops } = useGet<GetShopsDto>(getShops);
   const { results: categories } = useGet<GetCategoriesDto>(getCategories);

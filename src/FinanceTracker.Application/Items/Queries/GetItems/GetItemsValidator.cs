@@ -6,6 +6,7 @@ public class GetItemsValidator : AbstractValidator<GetItemsQuery>
 {
     public GetItemsValidator()
     {
-        RuleFor(x => x.Count).GreaterThan(0).When(x => x.Count.HasValue);
+        RuleFor(x => x.Page).GreaterThanOrEqualTo(1);
+        RuleFor(x => x.PageSize).InclusiveBetween(1, 500);
     }
 }

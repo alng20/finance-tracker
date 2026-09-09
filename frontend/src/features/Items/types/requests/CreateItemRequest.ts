@@ -1,5 +1,4 @@
-export type SearchItemsDto = {
-  id: string;
+export type CreateItemRequest = {
   name: string;
   categoryId: string;
   unit: string;

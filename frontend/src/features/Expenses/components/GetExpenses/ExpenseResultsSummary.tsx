@@ -1,4 +1,4 @@
-import type { Currency } from "../../types/Defs";
+import type { Currency } from "../../../shared/types/Defs";
 import type { ExpenseDto } from "../../types/GetExpensesResponse";
 import "./css/ExpenseResultsSummary.css";
 
@@ -56,6 +56,7 @@ export function ExpenseResultsSummary({
 
       <div className="expense-results-summary__metrics">
         <div className="expense-results-summary__metric">
+          {/* TODO: Show all expenses amount */}
           <span>Amount on this page</span>
           <strong>
             {currencyOrder

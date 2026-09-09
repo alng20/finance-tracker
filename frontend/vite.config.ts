@@ -1,7 +1,8 @@
 import babel from "@rolldown/plugin-babel";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
-import basicSsl from "@vitejs/plugin-basic-ssl";
 import { defineConfig } from "vite";
+
+// import basicSsl from "@vitejs/plugin-basic-ssl";
 
 // https://vite.dev/config/
 export default defineConfig({

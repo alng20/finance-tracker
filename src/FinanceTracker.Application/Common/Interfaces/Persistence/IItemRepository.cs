@@ -4,7 +4,7 @@ namespace FinanceTracker.Application.Common.Interfaces.Persistence;
 
 public interface IItemRepository
 {
-    Task<IReadOnlyList<Item>> GetAllAsync(int? count, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Item>> GetAllAsync(CancellationToken cancellationToken);
     Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken);
     Task<Item> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     void Add(Item item);

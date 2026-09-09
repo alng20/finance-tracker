@@ -6,7 +6,7 @@ import {
   mapRecentExpense,
   type RecentExpenseData,
 } from "../components/data/RecentExpenseData";
-import type { PageRequestData } from "../../Expenses/types/PageRequestData";
+import type { PageRequestData } from "../../shared/types/PageRequestData";
 
 function useRecentExpenses() {
   const [recentExpenses, setRecentExpenses] = useState<RecentExpenseData[]>([]);

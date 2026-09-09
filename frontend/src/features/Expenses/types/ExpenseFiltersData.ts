@@ -1,21 +1,5 @@
-import type { Currency } from "./Defs";
-
-// export type ExpenseFiltersData = {
-//   fromDate?: string;
-//   toDate?: string;
-//   shopIds?: string[];
-//   categoryIds?: string[];
-//   itemIds?: string[];
-//   retailerIds?: string[];
-//   currency?: Currency;
-//   fromAmount?: number;
-//   toAmount?: number;
-// };
-
-export type FilterData = {
-  id: string;
-  name: string;
-};
+import type { FilterData } from "../../shared/types/FilterData";
+import type { Currency } from "../../shared/types/Defs";
 
 export type ExpenseFiltersData = {
   fromDate?: string;

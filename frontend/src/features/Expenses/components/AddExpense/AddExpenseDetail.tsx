@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { getCategories } from "../../../Categories/api/categoriesApi";
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import { searchItems } from "../../../Items/api/itemsApi";
-import type { SearchItemsDto } from "../../../Items/types/SearchItemsDto";
-import { useSearch } from "../../hooks/useSearch";
+import type { SearchItemsDto } from "../../../Items/types/dto/SearchItemsDto";
+import { useSearch } from "../../../shared/hooks/useSearch";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import type { ExpenseDetailValidationErrors } from "./validation/expenseValidation";
 import { validateExpenseDetail } from "./validation/expenseValidation";
@@ -145,6 +145,7 @@ function AddExpenseDetail({
                       );
 
                       setCategory(selectedCategory ?? null);
+                      setUnit(item.unit);
                       clearItems();
                     }}
                   >
@@ -215,6 +216,9 @@ function AddExpenseDetail({
               name="unit"
               value={unit}
               onChange={(event) => {
+                if (unit && selectedItem) {
+                  return;
+                }
                 setUnit(event.target.value);
               }}
             >

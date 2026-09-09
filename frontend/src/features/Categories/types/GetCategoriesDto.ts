@@ -1,4 +1,3 @@
-export type GetCategoriesDto = {
-  id: string;
-  name: string;
-};
+import type { CategoryDto } from "./CategoryDto";
+
+export type GetCategoriesDto = CategoryDto;

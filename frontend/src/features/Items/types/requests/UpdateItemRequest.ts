@@ -1,4 +1,4 @@
-export type GetItemsDto = {
+export type UpdateItemRequest = {
   id: string;
   name: string;
   categoryId: string;

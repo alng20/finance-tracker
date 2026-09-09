@@ -1,7 +1,12 @@
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Items.DTOs;
-
-using MediatR;
+using FinanceTracker.Domain.Enums;
 
 namespace FinanceTracker.Application.Items.Queries.GetItems;
 
-public record GetItemsQuery(int? Count) : IRequest<IReadOnlyList<ItemDto>>;
+public record GetItemsQuery(
+    int Page,
+    int PageSize,
+    IReadOnlyCollection<Guid>? CategoryIds,
+    IReadOnlyCollection<Unit>? Units
+) : MediatR.IRequest<PagedResult<GetItemsResultDto>>;

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function LoginForm() {
   const navigate = useNavigate();
 
-  const { login, logout } = useAuth();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

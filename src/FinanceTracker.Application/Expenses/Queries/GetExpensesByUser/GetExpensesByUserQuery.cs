@@ -18,4 +18,4 @@ public record GetExpensesByUserQuery(
     Currency? Currency,
     decimal? FromAmount,
     decimal? ToAmount
-) : IRequest<PageResult<GetExpensesByUserResultDto>>;
+) : IRequest<PagedResult<GetExpensesByUserResultDto>>;
