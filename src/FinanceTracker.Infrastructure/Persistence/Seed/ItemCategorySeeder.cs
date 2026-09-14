@@ -9,6 +9,8 @@ public class ItemCategorySeeder
     private static readonly string[] DefaultCategories =
     [
         "Food",
+        "Tech",
+        "Restaurants",
         "Transport",
         "Health",
         "Clothes",

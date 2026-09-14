@@ -9,7 +9,7 @@ import type {
 } from "../../types/GetExpenseByIdResponse";
 import type { ExpenseDetailRowData } from "./data/ExpenseDetailRowData";
 import ExpenseDetailsTable from "./ExpenseDetailsTable";
-import type { Currency } from "../../../shared/types/Defs";
+import type { Currency } from "../../../shared/types/Currency";
 import type { ExpenseDetailsSummary } from "./data/ExpenseDetailsSummary";
 import { defaultCurrency } from "../../../shared/common/consts";
 import { formatAmount, formatDate } from "../../../shared/common/utils";
@@ -27,6 +27,7 @@ export function mapExpenseDetail(
   return {
     id: dto.id,
     itemName: dto.itemName,
+    categoryId: dto.categoryId,
     categoryName: dto.categoryName,
     unit: dto.unit,
     discountPercent: dto.discountPercent,

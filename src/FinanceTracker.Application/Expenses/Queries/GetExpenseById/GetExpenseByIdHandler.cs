@@ -2,7 +2,6 @@ using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Expenses.DTOs;
-
 using MediatR;
 
 namespace FinanceTracker.Application.Expenses.Queries.GetExpenseById;
@@ -49,6 +48,7 @@ public class GetExpenseByIdHandler(
                     x.Id,
                     x.ItemId,
                     x.Item.Name,
+                    x.Item.Category.Id,
                     x.Item.Category.Name,
                     x.Item.Unit,
                     x.TotalPrice.Amount,

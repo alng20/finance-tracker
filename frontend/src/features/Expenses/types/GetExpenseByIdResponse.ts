@@ -1,4 +1,4 @@
-import type { Currency } from "../../shared/types/Defs";
+import type { Currency } from "../../shared/types/Currency";
 
 export type GetExpenseByIdResponse = {
   id: string;
@@ -18,6 +18,7 @@ export type ExpenseDetailDto = {
   id: string;
   itemId: string;
   itemName: string;
+  categoryId: string;
   categoryName: string;
   unit: string;
   totalPrice: number;

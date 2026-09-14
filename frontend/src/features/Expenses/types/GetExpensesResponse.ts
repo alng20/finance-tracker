@@ -1,7 +1,7 @@
-import type { Currency } from "../../shared/types/Defs";
+import type { Currency } from "../../shared/types/Currency";
 import type { PagedResponse } from "../../shared/types/PagedResponse";
 
-export type GetExpensesResponse = PagedResponse<ExpenseDto>;
+export type GetExpensesResponse = PagedResponse<ExpenseDto, ExpenseMetadata>;
 
 export type ExpenseDto = {
   id: string;
@@ -10,4 +10,9 @@ export type ExpenseDto = {
   totalAmount: number;
   currency: Currency;
   expenseDate: string;
+};
+
+export type ExpenseMetadata = {
+  summaryAmount: number;
+  currency: Currency;
 };

@@ -7,7 +7,7 @@ import { searchShops } from "../../../Shops/api/shopsApi";
 import type { SearchShopDto } from "../../../Shops/types/dto/SearchShopDto";
 import { useSearch } from "../../../shared/hooks/useSearch";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
-import type { Currency } from "../../../shared/types/Defs";
+import { currencies, type Currency } from "../../../shared/types/Currency";
 
 type DateProps = {
   date: string;
@@ -127,9 +127,11 @@ function ExpenseInfo(props: ExpenseInfoProps) {
             }}
           >
             {/* TODO: use GET api/currencies */}
-            <option value="NZD">NZD</option>
-            <option value="USD">USD</option>
-            <option value="RUB">RUB</option>
+            {currencies.map((currency) => (
+              <option key={currency} value={currency}>
+                {currency}
+              </option>
+            ))}
           </select>
           {props.errors.currency && (
             <span className="expense-info__field_error">

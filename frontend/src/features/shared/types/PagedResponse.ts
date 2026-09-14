@@ -1,4 +1,4 @@
-export interface PagedResponse<T> {
+export interface PagedResponse<T, MetadataType = undefined> {
   page: number;
   pageSize: number;
   totalPages: number;
@@ -6,4 +6,5 @@ export interface PagedResponse<T> {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   data: T[];
+  metadata?: MetadataType;
 }

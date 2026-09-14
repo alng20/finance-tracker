@@ -2,7 +2,7 @@ import "./css/ExpenseFilters.css";
 
 import { useState } from "react";
 import type { ExpenseFiltersData } from "../../types/ExpenseFiltersData";
-import type { Currency } from "../../../shared/types/Defs";
+import { currencies, type Currency } from "../../../shared/types/Currency";
 import { useSearch } from "../../../shared/hooks/useSearch";
 import type { GetShopsDto } from "../../../Shops/types/dto/GetShopsDto";
 import { useGet } from "../../../shared/hooks/useGet";
@@ -18,12 +18,14 @@ import type { SearchItemsDto } from "../../../Items/types/dto/SearchItemsDto";
 import useGetWithFilters from "../../../shared/hooks/useGetWithFilters";
 import type { ShopFiltersData } from "../../../Shops/types/data/ShopFiltersData";
 import type { GetShopsResponse } from "../../../Shops/types/responses/GetShopsResponse";
+import {
+  expensesSortTypes,
+  type ExpensesSortType,
+} from "../../types/ExpensesSortType";
 
 type ExpenseFiltersProps = {
   onApply: (filters: ExpenseFiltersData | null) => void;
 };
-
-const currencies: Currency[] = ["NZD", "RUB", "USD"];
 
 export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
   const [draftFilters, setDraftFilters] = useState<ExpenseFiltersData>({});
@@ -205,6 +207,27 @@ export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
           {currencies.map((currency) => (
             <option key={currency} value={currency}>
               {currency}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      {/* TODO: Add to .css */}
+      <label className="expense-filters__sort_type">
+        Sort by
+        <select
+          value={draftFilters.sortType ?? ""}
+          onChange={(event) =>
+            setDraftFilters((current) => ({
+              ...current,
+              sortType: (event.target.value || undefined) as
+                ExpensesSortType | undefined,
+            }))
+          }
+        >
+          {expensesSortTypes.map((sortType) => (
+            <option key={sortType} value={sortType}>
+              {sortType}
             </option>
           ))}
         </select>

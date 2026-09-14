@@ -1,7 +1,9 @@
 import type { FilterData } from "../../shared/types/FilterData";
-import type { Currency } from "../../shared/types/Defs";
+import type { Currency } from "../../shared/types/Currency";
+import type { ExpensesSortType } from "./ExpensesSortType";
 
 export type ExpenseFiltersData = {
+  sortType?: ExpensesSortType; // TODO: Move to pagination data as generic field?
   fromDate?: string;
   toDate?: string;
   shops?: FilterData[];

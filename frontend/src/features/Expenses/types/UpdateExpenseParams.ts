@@ -1,4 +1,4 @@
-import type { Currency } from "../../shared/types/Defs";
+import type { Currency } from "../../shared/types/Currency";
 
 export type UpdateExpenseParams = {
   sharedGroupId?: string | null;
