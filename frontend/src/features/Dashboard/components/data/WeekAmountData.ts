@@ -1,4 +1,4 @@
-import type { Currency } from "../../../shared/types/Defs";
+import type { Currency } from "../../../shared/types/Currency";
 import type { PeriodAmountReport } from "../../../Reports/types/GetGroupedAmountResponse";
 import { defaultCurrency } from "../../../shared/common/consts";
 

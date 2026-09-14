@@ -4,7 +4,7 @@ import type {
   CreateExpenseRequest,
   CreateExpenseParams,
 } from "../types/CreateExpenseRequest";
-import type { Currency } from "../../shared/types/Defs";
+import type { Currency } from "../../shared/types/Currency";
 import type { Discount } from "../types/Discount";
 import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
 import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
@@ -25,6 +25,9 @@ export async function getExpenses(
   });
 
   if (filters) {
+    if (filters.sortType) {
+      params.append("sortType", filters.sortType);
+    }
     if (filters.fromDate) {
       params.append("fromDate", filters.fromDate);
     }

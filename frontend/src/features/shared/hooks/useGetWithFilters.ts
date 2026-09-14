@@ -5,9 +5,10 @@ import type { PageRequestData } from "../types/PageRequestData";
 import type { PaginationData } from "../types/PaginationData";
 
 function useGetWithFilters<
-  ResponseType extends PagedResponse<DtoType>,
+  ResponseType extends PagedResponse<DtoType, MetadataType>,
   FiltersType,
   DtoType,
+  MetadataType = undefined,
 >(
   page: PageRequestData,
   filters: FiltersType | null,
@@ -18,6 +19,7 @@ function useGetWithFilters<
   ) => Promise<ResponseType>,
 ) {
   const [results, setResults] = useState<DtoType[]>([]);
+  const [metadata, setMetadata] = useState<MetadataType | null>(null);
   const [pagination, setPagination] = useState<PaginationData>({
     pagesTotalCount: 0,
     dataTotalCount: 0,
@@ -38,6 +40,7 @@ function useGetWithFilters<
     getter(page, filters, { signal: abortCtrlRef.current?.signal })
       .then((response: ResponseType) => {
         setResults(response.data);
+        setMetadata(response.metadata ?? null);
         setPagination({
           pagesTotalCount: response.totalPages,
           dataTotalCount: response.totalCount,
@@ -58,6 +61,7 @@ function useGetWithFilters<
 
   return {
     results,
+    metadata,
     pagination,
     isLoading,
     error,

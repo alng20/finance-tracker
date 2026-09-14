@@ -16,6 +16,7 @@ import useGetWithFilters from "../../shared/hooks/useGetWithFilters";
 import { getExpenses } from "../api/expensesApi";
 import {
   type ExpenseDto,
+  type ExpenseMetadata,
   type GetExpensesResponse,
 } from "../types/GetExpensesResponse";
 
@@ -28,15 +29,17 @@ function Expenses() {
   const [filters, setFilters] = useState<ExpenseFiltersData | null>(null);
   const {
     results: expenses,
+    metadata: expensesMetadata,
     pagination,
     isLoading,
     error,
     refresh,
-  } = useGetWithFilters<GetExpensesResponse, ExpenseFiltersData, ExpenseDto>(
-    page,
-    filters,
-    getExpenses,
-  );
+  } = useGetWithFilters<
+    GetExpensesResponse,
+    ExpenseFiltersData,
+    ExpenseDto,
+    ExpenseMetadata
+  >(page, filters, getExpenses);
 
   return (
     <div className="expenses">
@@ -71,6 +74,7 @@ function Expenses() {
       {expenses.length > 0 && (
         <ExpenseResultsSummary
           expenses={expenses}
+          expensesMetadata={expensesMetadata}
           totalCount={pagination.dataTotalCount}
         />
       )}

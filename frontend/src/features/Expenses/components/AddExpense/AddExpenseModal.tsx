@@ -15,7 +15,7 @@ import {
   updateExpense,
   updateExpenseDetail,
 } from "../../api/expensesApi";
-import type { Currency } from "../../../shared/types/Defs";
+import type { Currency } from "../../../shared/types/Currency";
 import type { GetExpenseByIdResponse } from "../../types/GetExpenseByIdResponse";
 import { getTodayDate } from "../../../shared/common/utils";
 import type { SearchShopDto } from "../../../Shops/types/dto/SearchShopDto";
@@ -58,6 +58,7 @@ function AddExpenseModal({
       id: detail.id,
       itemId: detail.itemId,
       itemName: detail.itemName,
+      categoryId: detail.categoryId,
       categoryName: detail.categoryName,
       quantity: detail.quantity,
       unit: detail.unit,

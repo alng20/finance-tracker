@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import * as reportsApi from "../../Reports/api/reportsApi";
 import type { GetGroupedAmountResponse } from "../../Reports/types/GetGroupedAmountResponse";
-import type { Currency } from "../../shared/types/Defs";
+import type { Currency } from "../../shared/types/Currency";
 import { getTotalAmount } from "../../Reports/types/GetGroupedAmountResponse";
 import {
   formatAmount,

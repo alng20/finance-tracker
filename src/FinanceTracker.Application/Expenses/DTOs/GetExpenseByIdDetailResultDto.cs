@@ -6,6 +6,7 @@ public record GetExpenseByIdDetailResultDto(
     Guid Id,
     Guid ItemId,
     string ItemName,
+    Guid CategoryId,
     string CategoryName,
     Unit Unit,
     decimal TotalPrice,

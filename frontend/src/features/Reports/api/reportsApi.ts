@@ -1,5 +1,5 @@
 import { apiClient } from "../../../api/api";
-import type { Currency } from "../../shared/types/Defs";
+import type { Currency } from "../../shared/types/Currency";
 import type {
   GetGroupedAmountResponse,
   ReportGroupingType,

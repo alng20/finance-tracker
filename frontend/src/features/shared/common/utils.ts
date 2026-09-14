@@ -1,4 +1,4 @@
-import type { Currency } from "../types/Defs";
+import type { Currency } from "../types/Currency";
 
 export function formatAmount(amount: number, currency: Currency): string {
   return (

@@ -10,6 +10,7 @@ import { useSearch } from "../../../shared/hooks/useSearch";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import type { ExpenseDetailValidationErrors } from "./validation/expenseValidation";
 import { validateExpenseDetail } from "./validation/expenseValidation";
+import { units } from "../../../shared/common/units";
 
 type AddExpenseDetailProps = {
   initialDetail?: AddExpenseDetailData;
@@ -23,11 +24,16 @@ function AddExpenseDetail({
   onCancel,
 }: AddExpenseDetailProps) {
   const [name, setName] = useState(initialDetail?.itemName ?? "");
-  const [category, setCategory] = useState<GetCategoriesDto | null>(null);
-  const [quantity, setQuantity] = useState(
-    initialDetail ? String(initialDetail.quantity) : "",
+  const [category, setCategory] = useState<GetCategoriesDto | null>(
+    initialDetail
+      ? { id: initialDetail.categoryId, name: initialDetail.categoryName }
+      : null,
   );
-  const [unit, setUnit] = useState(initialDetail?.unit ?? ""); // TODO: Set by item.unit
+
+  const [quantity, setQuantity] = useState(
+    initialDetail ? String(initialDetail.quantity) : "1",
+  );
+  const [unit, setUnit] = useState(initialDetail?.unit ?? "");
   const [discount, setDiscount] = useState(
     initialDetail ? String(initialDetail.discount) : "",
   );
@@ -36,6 +42,7 @@ function AddExpenseDetail({
   );
 
   const [categories, setCategories] = useState<GetCategoriesDto[]>([]);
+  const detailUnits = units;
 
   const [selectedItem, setSelectedItem] = useState<SearchItemsDto | null>(null);
   const { results: items, clearResults: clearItems } =
@@ -48,13 +55,6 @@ function AddExpenseDetail({
     async function loadCategories() {
       const data = await getCategories();
       setCategories(data);
-      if (initialDetail) {
-        const selectedCategory = data.find(
-          (category) => category.name === initialDetail.categoryName,
-        );
-
-        setCategory(selectedCategory ?? null);
-      }
     }
 
     loadCategories();
@@ -89,7 +89,8 @@ function AddExpenseDetail({
     const detail: AddExpenseDetailData = {
       itemId: selectedItem?.id ?? initialDetail!.itemId,
       itemName: selectedItem?.name ?? initialDetail!.itemName,
-      categoryName: category?.name ?? "Other",
+      categoryId: category?.id ?? "",
+      categoryName: category?.name ?? "",
       quantity: Number(quantity),
       unit: unit,
       discount: Number(discount),
@@ -116,7 +117,7 @@ function AddExpenseDetail({
             <input
               id="name"
               type="text"
-              placeholder="name"
+              placeholder="Name"
               value={name}
               onChange={(event) => {
                 setName(event.target.value);
@@ -165,7 +166,7 @@ function AddExpenseDetail({
           {/* TODO: move to selectCategory */}
           <div className="detail-field">
             <select
-              name="category"
+              name="Category"
               value={category?.id ?? ""}
               onChange={(event) => {
                 if (category && selectedItem) {
@@ -225,9 +226,11 @@ function AddExpenseDetail({
               <option value="" disabled>
                 Unit
               </option>
-              <option value="KG">KG</option>
-              <option value="piece">piece</option>
-              <option value="G">G</option>
+              {detailUnits.map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.name}
+                </option>
+              ))}
             </select>
             {validationErrors.unit && (
               <span className="add-expense-detail__field_error">

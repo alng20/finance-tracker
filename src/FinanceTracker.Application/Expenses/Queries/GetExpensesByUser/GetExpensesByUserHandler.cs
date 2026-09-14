@@ -10,12 +10,12 @@ namespace FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 public class GetExpensesByUserHandler(
     ICurrentUserService currentUser,
     IExpenseProvider expenseProvider
-) : IRequestHandler<GetExpensesByUserQuery, PagedResult<GetExpensesByUserResultDto>>
+) : IRequestHandler<GetExpensesByUserQuery, PagedResultWithMetadata<GetExpensesByUserResultDto, GetExpensesByUserMetadata>>
 {
     private readonly ICurrentUserService _currentUser = currentUser;
     private readonly IExpenseProvider _expenseProvider = expenseProvider;
 
-    public async Task<PagedResult<GetExpensesByUserResultDto>> Handle(
+    public async Task<PagedResultWithMetadata<GetExpensesByUserResultDto, GetExpensesByUserMetadata>> Handle(
         GetExpensesByUserQuery query,
         CancellationToken cancellationToken
     )
@@ -24,10 +24,11 @@ public class GetExpensesByUserHandler(
 
         // TODO: Check if Shops, Categories, Items, Retailers exists
 
-        return await _expenseProvider.GetByUserAsync(
+        return await _expenseProvider.GetByUserWithMetadataAsync(
             userId,
             query.Page,
             query.PageSize,
+            query.SortType,
             query.FromDate,
             query.ToDate,
             query.ShopIds,

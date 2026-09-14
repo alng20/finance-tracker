@@ -19,17 +19,17 @@ export function validateShop({
     errors.name = "Shop name is required.";
   }
 
-  // TODO: Make it not required
   if (!retailerId) {
-    errors.retailer = "Retailer is required.";
+    // TODO: Add warning
+    // errors.retailer = "Retailer is required.";
   }
 
-  // TODO: Make it not required
+  // TODO: Add warning
   if (!country) {
     errors.country = "Country is required.";
   }
 
-  // TODO: Make it not required
+  // TODO: Add warning
   if (!city) {
     errors.city = "City is required.";
   }
