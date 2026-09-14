@@ -5,7 +5,9 @@ using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Users.DTOs;
 using FinanceTracker.Domain.Entities;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Identity;
 
 namespace FinanceTracker.Application.Users.Authentication.Login;
@@ -64,7 +66,7 @@ public class LoginHandler(
         _refreshTokenRepository.Add(refreshToken.Entity);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
+
         return new LoginResultDto(
             new TokenResult(accessToken.Token, accessToken.ExpiresAt),
             new TokenResult(refreshToken.Token, refreshToken.Entity.ExpiresAt),

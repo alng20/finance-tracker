@@ -93,18 +93,18 @@ public class Expense
         );
 
         _details.Add(detail);
-        
+
         return detail;
     }
 
     public void DeleteDetail(Guid detailId)
     {
         Guard.AgainstEmpty(detailId, nameof(detailId));
-        
+
         var detail = GetDetail(detailId);
         _details.Remove(detail);
     }
-    
+
     public ExpenseDetail UpdateDetail(Guid detailId, Guid itemId, Money totalPrice, decimal quantity, decimal discountPercent)
     {
         if (totalPrice.Currency != TotalAmount.Currency)
@@ -117,7 +117,7 @@ public class Expense
         detail.UpdateTotalPrice(totalPrice);
         detail.UpdateQuantity(quantity);
         detail.UpdateDiscount(discountPercent);
-        
+
         return detail;
     }
 

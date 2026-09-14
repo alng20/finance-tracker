@@ -1,4 +1,5 @@
 using FinanceTracker.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Seed;

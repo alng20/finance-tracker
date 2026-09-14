@@ -1,6 +1,9 @@
 using FinanceTracker.Infrastructure.Persistence;
+
 using FluentAssertions;
+
 using Microsoft.EntityFrameworkCore;
+
 using Testcontainers.PostgreSql;
 
 namespace FinanceTracker.Infrastructure.Tests.IntegrationTests.Persistence;

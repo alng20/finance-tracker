@@ -4,6 +4,7 @@ using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.ExpenseDetails.DTOs;
 using FinanceTracker.Domain.ValueObjects;
+
 using MediatR;
 
 namespace FinanceTracker.Application.ExpenseDetails.Commands.UpdateExpenseDetail;

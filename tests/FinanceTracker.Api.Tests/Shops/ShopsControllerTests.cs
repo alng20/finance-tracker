@@ -1,10 +1,15 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Json;
+
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Shops.Commands.CreateShop;
 using FinanceTracker.Application.Shops.DTOs;
+using FinanceTracker.Application.Shops.Queries.GetShops;
 using FinanceTracker.Infrastructure.Persistence;
 using FinanceTracker.TestHelpers;
+
 using FluentAssertions;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,10 +42,19 @@ public class ShopControllerTests : IClassFixture<FinanceTrackerApiFactory>
         var response = await client.GetAsync("/api/shops");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var shops = await response.Content.ReadFromJsonAsync<IReadOnlyCollection<ShopDto>>();
-        shops.Should().HaveCount(2);
+        var shops = await response.Content.ReadFromJsonAsync<PagedResult<ShopDto>>();
         shops.Should().NotBeNull();
-        shops.Should().Contain(x => x.Name == "paknsave").And.Contain(x => x.Name == "newworld");
+        shops.Page.Should().Be(1);
+        shops.PageSize.Should().Be(20);
+        shops.TotalCount.Should().Be(2);
+        shops.TotalPages.Should().Be(1);
+        shops.HasNextPage.Should().Be(false);
+        shops.HasPreviousPage.Should().Be(false);
+        shops.Data.Should().HaveCount(2);
+        shops
+            .Data.Should()
+            .Contain(x => x.Name == "paknsave")
+            .And.Contain(x => x.Name == "newworld");
     }
 
     [Fact]

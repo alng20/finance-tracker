@@ -2,6 +2,7 @@ using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Authentication;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Users.Authentication.Logout;

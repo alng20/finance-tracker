@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Reports.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Reports.Queries.GetRetailerAmountForPeriod;

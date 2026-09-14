@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Interfaces.Providers;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Shops.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Shops.Queries.GetShops;

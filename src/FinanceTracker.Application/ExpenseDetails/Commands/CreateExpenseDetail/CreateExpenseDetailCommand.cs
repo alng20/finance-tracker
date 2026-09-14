@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.ExpenseDetails.DTOs;
 using FinanceTracker.Domain.Enums;
+
 using MediatR;
 
 namespace FinanceTracker.Application.ExpenseDetails.Commands.CreateExpenseDetail;

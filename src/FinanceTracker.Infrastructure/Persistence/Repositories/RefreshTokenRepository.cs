@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Interfaces.Authentication;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Infrastructure.Persistence;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;

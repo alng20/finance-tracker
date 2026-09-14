@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Reports.DTOs;
 using FinanceTracker.Domain.Enums;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Reports.Queries.GetCategoryAmountForPeriod;

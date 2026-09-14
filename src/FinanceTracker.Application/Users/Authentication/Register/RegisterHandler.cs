@@ -2,7 +2,9 @@ using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Users.DTOs;
 using FinanceTracker.Domain.Entities;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Identity;
 
 namespace FinanceTracker.Application.Users.Authentication.Register;

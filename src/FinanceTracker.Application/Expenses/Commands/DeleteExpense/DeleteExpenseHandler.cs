@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Expenses.Commands.DeleteExpense;

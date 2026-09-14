@@ -1,10 +1,12 @@
 using System.Globalization;
+
 using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Reports.DTOs;
 using FinanceTracker.Application.Reports.Enums;
 using FinanceTracker.Application.Reports.Models;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;

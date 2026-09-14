@@ -1,5 +1,6 @@
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Enums;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

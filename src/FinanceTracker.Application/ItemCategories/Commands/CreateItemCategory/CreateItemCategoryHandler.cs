@@ -2,6 +2,7 @@ using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.ItemCategories.DTOs;
 using FinanceTracker.Domain.Entities;
+
 using MediatR;
 
 namespace FinanceTracker.Application.ItemCategories.Commands.CreateItemCategory;

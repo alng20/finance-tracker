@@ -2,6 +2,7 @@ using FinanceTracker.Application.Common.Interfaces.Providers;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Expenses.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;

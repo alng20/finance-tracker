@@ -1,4 +1,5 @@
 using System.Security.Principal;
+
 using FinanceTracker.Api.Common.Options;
 using FinanceTracker.Api.Responses;
 using FinanceTracker.Application.Common.Models;
@@ -8,7 +9,9 @@ using FinanceTracker.Application.Users.Authentication.Logout;
 using FinanceTracker.Application.Users.Authentication.Refresh;
 using FinanceTracker.Application.Users.Authentication.Register;
 using FinanceTracker.Application.Users.DTOs;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

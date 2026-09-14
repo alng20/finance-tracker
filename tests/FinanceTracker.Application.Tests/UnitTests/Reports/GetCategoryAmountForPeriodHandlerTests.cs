@@ -4,7 +4,9 @@ using FinanceTracker.Application.Reports.DTOs;
 using FinanceTracker.Application.Reports.Models;
 using FinanceTracker.Application.Reports.Queries.GetCategoryAmountForPeriod;
 using FinanceTracker.Domain.Enums;
+
 using FluentAssertions;
+
 using Moq;
 
 namespace FinanceTracker.Application.Tests.UnitTests.Reports;

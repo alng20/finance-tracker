@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Shops.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Shops.Queries.SearchShop;

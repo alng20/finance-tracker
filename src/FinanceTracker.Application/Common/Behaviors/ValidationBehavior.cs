@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Exceptions;
 
 using FluentValidation;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Common.Behaviors;

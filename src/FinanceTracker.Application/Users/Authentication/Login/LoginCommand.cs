@@ -1,4 +1,5 @@
 using FinanceTracker.Application.Users.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Users.Authentication.Login;

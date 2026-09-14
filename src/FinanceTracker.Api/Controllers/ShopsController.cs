@@ -6,7 +6,9 @@ using FinanceTracker.Application.Shops.DTOs;
 using FinanceTracker.Application.Shops.Queries.GetShopById;
 using FinanceTracker.Application.Shops.Queries.GetShops;
 using FinanceTracker.Application.Shops.Queries.SearchShop;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

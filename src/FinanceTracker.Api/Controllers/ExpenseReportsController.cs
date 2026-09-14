@@ -5,7 +5,9 @@ using FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;
 using FinanceTracker.Application.Reports.Queries.GetRetailerAmountForPeriod;
 using FinanceTracker.Application.Reports.Queries.GetShopAmountForPeriod;
 using FinanceTracker.Domain.Enums;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

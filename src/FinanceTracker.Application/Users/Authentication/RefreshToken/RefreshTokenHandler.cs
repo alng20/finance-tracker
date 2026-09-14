@@ -5,6 +5,7 @@ using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Users.Authentication.Refresh;
 using FinanceTracker.Application.Users.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Users.Authentication.RefreshToken;

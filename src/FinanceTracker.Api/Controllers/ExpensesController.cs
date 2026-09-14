@@ -8,6 +8,7 @@ using FinanceTracker.Application.Expenses.Queries.GetExpenseById;
 using FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 
 using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
