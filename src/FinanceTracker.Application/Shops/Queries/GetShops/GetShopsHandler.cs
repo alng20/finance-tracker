@@ -1,29 +1,28 @@
-using FinanceTracker.Application.Common.Interfaces.Persistence;
+using FinanceTracker.Application.Common.Interfaces.Providers;
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Shops.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Shops.Queries.GetShops;
 
-public class GetShopsHandler(IShopRepository categoryRepository)
-    : IRequestHandler<GetShopsQuery, IReadOnlyList<ShopDto>>
+public class GetShopsHandler(IShopProvider shopProvider)
+    : IRequestHandler<GetShopsQuery, PagedResult<ShopDto>>
 {
-    private readonly IShopRepository _shopRepository = categoryRepository;
+    private readonly IShopProvider _shopProvider = shopProvider;
 
-    public async Task<IReadOnlyList<ShopDto>> Handle(
+    public async Task<PagedResult<ShopDto>> Handle(
         GetShopsQuery query,
         CancellationToken cancellationToken
     )
     {
-        var shops = await _shopRepository.GetAllAsync(cancellationToken);
-        return shops
-            .Select(x => new ShopDto(
-                x.Id,
-                x.Name,
-                x.Retailer?.Id,
-                x.Retailer?.Name,
-                x.Address?.Country,
-                x.Address?.City
-            ))
-            .ToList();
+        return await _shopProvider.GetAsync(
+            query.Page,
+            query.PageSize,
+            query.RetailersIds,
+            query.Countries,
+            query.Cities,
+            cancellationToken
+        );
     }
 }

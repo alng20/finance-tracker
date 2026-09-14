@@ -1,4 +1,5 @@
 using System.Security.Claims;
+
 using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Domain.Enums;

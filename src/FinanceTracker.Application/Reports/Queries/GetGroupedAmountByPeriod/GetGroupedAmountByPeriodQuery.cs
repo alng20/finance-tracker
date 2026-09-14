@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Reports.DTOs;
 using FinanceTracker.Application.Reports.Enums;
 using FinanceTracker.Domain.Enums;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;

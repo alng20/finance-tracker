@@ -1,11 +1,14 @@
 using System.Security.Claims;
 using System.Text;
+
 using FinanceTracker.Application.Common.Interfaces.Authentication;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Common.Options;
 using FinanceTracker.Domain.Entities;
+
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+
 using MicrosoftJwt = Microsoft.IdentityModel.JsonWebTokens;
 using SystemJwt = System.IdentityModel.Tokens.Jwt;
 

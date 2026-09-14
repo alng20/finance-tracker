@@ -4,6 +4,7 @@ using FinanceTracker.Application.ItemCategories.Commands.UpdateItemCategory;
 using FinanceTracker.Application.ItemCategories.DTOs;
 using FinanceTracker.Application.ItemCategories.Queries.GetItemCategories;
 using FinanceTracker.Application.ItemCategories.Queries.GetItemCategory;
+
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
@@ -36,7 +37,7 @@ public class ItemCategoriesController(IMediator mediator) : ControllerBase
         return Ok(category);
     }
 
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ItemCategoryDto>> Create(
         [FromBody] CreateItemCategoryCommand cmd,
@@ -47,7 +48,7 @@ public class ItemCategoriesController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = category.Id }, category);
     }
 
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<ItemCategoryDto>> Update(
         [FromBody] UpdateItemCategoryCommand cmd,
@@ -58,7 +59,7 @@ public class ItemCategoriesController(IMediator mediator) : ControllerBase
         return Ok(category);
     }
 
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {

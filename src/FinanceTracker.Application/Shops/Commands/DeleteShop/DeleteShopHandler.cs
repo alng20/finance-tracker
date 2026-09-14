@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Domain.Entities;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Shops.Commands.DeleteShop;

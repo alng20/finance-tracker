@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
@@ -37,14 +38,14 @@ public class ItemRepository(FinanceTrackerDbContext ctx) : IItemRepository
     }
 
     public async Task<IReadOnlyList<Item>> SearchByNameAsync(
-        string SearchString,
+        string searchString,
         CancellationToken cancellationToken
     )
     {
         return await _ctx
             .Items.AsNoTracking()
             .Include(x => x.Category)
-            .Where(x => EF.Functions.ILike(x.Name, $"%{SearchString}%"))
+            .Where(x => EF.Functions.ILike(x.Name, $"%{searchString}%"))
             .OrderBy(x => x.Name)
             .Take(10)
             .ToListAsync(cancellationToken);

@@ -1,6 +1,9 @@
 using FinanceTracker.Application.Common.Behaviors;
+
 using FluentValidation;
+
 using MediatR;
+
 using Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection

@@ -1,4 +1,5 @@
 using FinanceTracker.Application.Shops.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Shops.Commands.CreateShop;

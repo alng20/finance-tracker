@@ -2,6 +2,7 @@ using FinanceTracker.Api;
 using FinanceTracker.Api.Extensions;
 using FinanceTracker.Infrastructure;
 using FinanceTracker.Infrastructure.Persistence;
+
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -5,8 +5,8 @@ using FinanceTracker.Domain.Enums;
 namespace FinanceTracker.Application.Items.Queries.GetItems;
 
 public record GetItemsQuery(
-    int Page,
-    int PageSize,
-    IReadOnlyCollection<Guid>? CategoryIds,
-    IReadOnlyCollection<Unit>? Units
+    int Page = 1,
+    int PageSize = 20,
+    IReadOnlyCollection<Guid>? CategoryIds = null,
+    IReadOnlyCollection<Unit>? Units = null
 ) : MediatR.IRequest<PagedResult<GetItemsResultDto>>;

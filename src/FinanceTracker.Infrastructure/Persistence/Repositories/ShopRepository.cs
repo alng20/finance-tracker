@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Exceptions;
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
@@ -49,7 +50,7 @@ public class ShopRepository(FinanceTrackerDbContext ctx) : IShopRepository
     )
     {
         return await _ctx
-            .Shops.AsNoTracking()
+            .Shops.AsNoTracking().Include(x => x.Retailer)
             .Where(x => EF.Functions.ILike(x.Name, $"%{SearchString}%"))
             .OrderBy(x => x.Name)
             .Take(10)

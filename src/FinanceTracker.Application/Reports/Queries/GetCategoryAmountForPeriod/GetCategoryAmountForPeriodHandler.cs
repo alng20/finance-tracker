@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Reports.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Reports.Queries.GetCategoryAmountForPeriod;
@@ -41,7 +42,7 @@ public class GetCategoryAmountForPeriodHandler(
         var undetailedAmount = totalAmount - detailedAmount;
 
         var amounts = details
-            .GroupBy(d => new {d.CategoryId, d.CategoryName})
+            .GroupBy(d => new { d.CategoryId, d.CategoryName })
             .Select(g => new CategoryAmountDto(
                 g.Key.CategoryId,
                 g.Key.CategoryName,

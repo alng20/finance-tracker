@@ -3,6 +3,7 @@ using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Reports.Enums;
 using FinanceTracker.Application.Reports.Models;
 using FinanceTracker.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;

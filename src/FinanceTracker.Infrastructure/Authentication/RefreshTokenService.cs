@@ -1,8 +1,10 @@
 using System.Security.Cryptography;
 using System.Text;
+
 using FinanceTracker.Application.Common.Interfaces.Authentication;
 using FinanceTracker.Application.Common.Options;
 using FinanceTracker.Domain.Entities;
+
 using Microsoft.Extensions.Options;
 
 namespace FinanceTracker.Infrastructure.Authentication;
@@ -23,7 +25,7 @@ public class RefreshTokenService(IOptions<RefreshTokenOptions> options) : IRefre
             ipAddress,
             userAgent
         );
-        return new RefreshTokenCreationResultDto(refreshToken, token); 
+        return new RefreshTokenCreationResultDto(refreshToken, token);
     }
 
     public string HashToken(string token)

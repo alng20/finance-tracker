@@ -3,6 +3,7 @@ using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Shops.DTOs;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.ValueObjects;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Shops.Commands.UpdateShop;

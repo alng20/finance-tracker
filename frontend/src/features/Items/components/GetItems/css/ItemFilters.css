@@ -64,6 +64,13 @@
     transform 120ms ease;
 }
 
+.items-selected-filters__clear-all {
+  margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
 .items-selected-filters button:hover {
   border-color: var(--accent-strong);
   background: var(--accent);

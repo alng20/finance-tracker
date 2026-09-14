@@ -1,10 +1,12 @@
 using System.Text;
 using System.Text.Json.Serialization;
+
 using FinanceTracker.Api.Common.Options;
 using FinanceTracker.Api.Exceptions;
 using FinanceTracker.Api.Services;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Common.Options;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;

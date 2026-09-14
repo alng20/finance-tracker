@@ -1,5 +1,6 @@
 using FinanceTracker.Domain.Enums;
 using FinanceTracker.Infrastructure.Services;
+
 using FluentAssertions;
 
 namespace FinanceTracker.Infrastructure.Tests.UnitTests.Services;

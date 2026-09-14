@@ -1,4 +1,5 @@
 using FinanceTracker.Api.Exceptions;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Api.Middleware;

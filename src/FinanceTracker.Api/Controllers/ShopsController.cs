@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Shops.Commands.CreateShop;
 using FinanceTracker.Application.Shops.Commands.DeleteShop;
 using FinanceTracker.Application.Shops.Commands.UpdateShop;
@@ -5,7 +6,9 @@ using FinanceTracker.Application.Shops.DTOs;
 using FinanceTracker.Application.Shops.Queries.GetShopById;
 using FinanceTracker.Application.Shops.Queries.GetShops;
 using FinanceTracker.Application.Shops.Queries.SearchShop;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +21,12 @@ public class ShopsController(IMediator mediator) : ControllerBase
     private readonly IMediator _mediator = mediator;
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<ShopDto>>> GetAll(
-        // TODO: Add pages
+    public async Task<ActionResult<PagedResult<ShopDto>>> GetAll(
+        [FromQuery] GetShopsQuery query,
         CancellationToken cancellationToken
     )
     {
-        var shops = await _mediator.Send(new GetShopsQuery(), cancellationToken);
+        var shops = await _mediator.Send(query, cancellationToken);
         return Ok(shops);
     }
 

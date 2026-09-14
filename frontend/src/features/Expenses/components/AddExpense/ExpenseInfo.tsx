@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { defaultCurrency } from "../../../shared/common/consts";
 import { searchShops } from "../../../Shops/api/shopsApi";
-import type { SearchShopDto } from "../../../Shops/types/SearchShopDto";
+import type { SearchShopDto } from "../../../Shops/types/dto/SearchShopDto";
 import { useSearch } from "../../../shared/hooks/useSearch";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
 import type { Currency } from "../../../shared/types/Defs";

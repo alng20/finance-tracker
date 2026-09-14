@@ -3,7 +3,6 @@ import "./css/AddExpenseModal.css";
 import { useState } from "react";
 
 import { defaultCurrency } from "../../../shared/common/consts";
-import type { SearchShopDto } from "../../../Shops/types/SearchShopDto";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
 import ExpenseInfo from "./ExpenseInfo";
@@ -19,6 +18,7 @@ import {
 import type { Currency } from "../../../shared/types/Defs";
 import type { GetExpenseByIdResponse } from "../../types/GetExpenseByIdResponse";
 import { getTodayDate } from "../../../shared/common/utils";
+import type { SearchShopDto } from "../../../Shops/types/dto/SearchShopDto";
 
 type AddExpenseModalProps = {
   onClose: () => void;
@@ -37,7 +37,14 @@ function AddExpenseModal({
   );
   const [shop, setShop] = useState<SearchShopDto | null>(
     initialExpense?.shopId && initialExpense.shopName
-      ? { id: initialExpense.shopId, name: initialExpense.shopName }
+      ? {
+          id: initialExpense.shopId,
+          name: initialExpense.shopName,
+          retailerId: "",
+          retailerName: "",
+          country: "",
+          city: "",
+        }
       : null,
   );
   const [amount, setAmount] = useState(

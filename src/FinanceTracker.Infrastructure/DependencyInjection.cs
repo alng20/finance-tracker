@@ -10,6 +10,7 @@ using FinanceTracker.Infrastructure.Persistence.Providers;
 using FinanceTracker.Infrastructure.Persistence.Repositories;
 using FinanceTracker.Infrastructure.Persistence.Seed;
 using FinanceTracker.Infrastructure.Services;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -50,6 +51,7 @@ public static class DependencyInjection
 
         services.AddScoped<IExpenseProvider, ExpenseProvider>();
         services.AddScoped<IItemProvider, ItemProvider>();
+        services.AddScoped<IShopProvider, ShopProvider>();
 
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();

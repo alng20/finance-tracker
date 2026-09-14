@@ -1,4 +1,4 @@
-import type { ItemCommonData } from "../types/data/ItemData";
+import type { CreateItemData, UpdateItemData } from "../types/data/ItemData";
 
 export type ItemValidationErrors = {
   name?: string;
@@ -10,7 +10,7 @@ export function validateItem({
   name,
   categoryId,
   unit,
-}: ItemCommonData): ItemValidationErrors {
+}: CreateItemData | UpdateItemData): ItemValidationErrors {
   const errors: ItemValidationErrors = {};
   const trimmedName = name.trim();
 

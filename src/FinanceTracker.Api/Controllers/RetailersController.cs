@@ -4,7 +4,9 @@ using FinanceTracker.Application.Retailers.Commands.UpdateRetailer;
 using FinanceTracker.Application.Retailers.DTOs;
 using FinanceTracker.Application.Retailers.Queries.GetRetailerById;
 using FinanceTracker.Application.Retailers.Queries.GetRetailers;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

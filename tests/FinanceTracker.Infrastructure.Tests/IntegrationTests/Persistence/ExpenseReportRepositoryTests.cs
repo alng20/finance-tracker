@@ -2,8 +2,11 @@ using FinanceTracker.Domain.Enums;
 using FinanceTracker.Infrastructure.Persistence;
 using FinanceTracker.Infrastructure.Persistence.Repositories;
 using FinanceTracker.TestHelpers;
+
 using FluentAssertions;
+
 using Microsoft.EntityFrameworkCore;
+
 using Testcontainers.PostgreSql;
 
 namespace FinanceTracker.Infrastructure.Tests.IntegrationTests.Persistence;

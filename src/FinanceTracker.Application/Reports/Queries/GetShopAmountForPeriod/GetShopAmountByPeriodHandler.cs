@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Reports.DTOs;
+
 using MediatR;
 
 namespace FinanceTracker.Application.Reports.Queries.GetShopAmountForPeriod;
@@ -30,7 +31,7 @@ public class GetShopAmountForPeriodHandler(
         );
 
         var amounts = expenses
-            .GroupBy(x => new {x.ShopId, x.ShopName})
+            .GroupBy(x => new { x.ShopId, x.ShopName })
             .Select(x => new ShopAmountDto(
                 x.Key.ShopId,
                 x.Key.ShopName,

@@ -1,5 +1,6 @@
 using FinanceTracker.Infrastructure.Options;
 using FinanceTracker.Infrastructure.Persistence.Seed;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
