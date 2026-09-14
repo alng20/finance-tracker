@@ -49,7 +49,7 @@ public class ShopRepository(FinanceTrackerDbContext ctx) : IShopRepository
     )
     {
         return await _ctx
-            .Shops.AsNoTracking()
+            .Shops.AsNoTracking().Include(x => x.Retailer)
             .Where(x => EF.Functions.ILike(x.Name, $"%{SearchString}%"))
             .OrderBy(x => x.Name)
             .Take(10)

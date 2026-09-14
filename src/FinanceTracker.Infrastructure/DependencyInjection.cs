@@ -50,6 +50,7 @@ public static class DependencyInjection
 
         services.AddScoped<IExpenseProvider, ExpenseProvider>();
         services.AddScoped<IItemProvider, ItemProvider>();
+        services.AddScoped<IShopProvider, ShopProvider>();
 
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<IItemCategoryRepository, ItemCategoryRepository>();

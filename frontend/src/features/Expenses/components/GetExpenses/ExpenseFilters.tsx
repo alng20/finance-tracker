@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { ExpenseFiltersData } from "../../types/ExpenseFiltersData";
 import type { Currency } from "../../../shared/types/Defs";
 import { useSearch } from "../../../shared/hooks/useSearch";
-import type { GetShopsDto } from "../../../Shops/types/GetShopsDto";
+import type { GetShopsDto } from "../../../Shops/types/dto/GetShopsDto";
 import { useGet } from "../../../shared/hooks/useGet";
 import { getShops } from "../../../Shops/api/shopsApi";
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
@@ -15,6 +15,9 @@ import type { FilterData } from "../../../shared/types/FilterData";
 import { SelectFilter } from "../../../shared/components/Filters/SelectFilter";
 import { searchItems } from "../../../Items/api/itemsApi";
 import type { SearchItemsDto } from "../../../Items/types/dto/SearchItemsDto";
+import useGetWithFilters from "../../../shared/hooks/useGetWithFilters";
+import type { ShopFiltersData } from "../../../Shops/types/data/ShopFiltersData";
+import type { GetShopsResponse } from "../../../Shops/types/responses/GetShopsResponse";
 
 type ExpenseFiltersProps = {
   onApply: (filters: ExpenseFiltersData | null) => void;
@@ -38,7 +41,11 @@ export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
       })),
   );
 
-  const { results: shops } = useGet<GetShopsDto>(getShops);
+  const { results: shops } = useGetWithFilters<
+    GetShopsResponse,
+    ShopFiltersData,
+    GetShopsDto
+  >({ pageNumber: 1, pageSize: 50 }, null, getShops);
   const { results: categories } = useGet<GetCategoriesDto>(getCategories);
   const { results: retailers } = useGet<GetRetailersDto>(getRetailers);
 

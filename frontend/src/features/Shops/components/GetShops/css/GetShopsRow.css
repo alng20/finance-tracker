@@ -1,0 +1,112 @@
+.shops-row {
+  display: grid;
+  grid-template-columns:
+    minmax(150px, 1.4fr) minmax(150px, 1.2fr) minmax(120px, 0.9fr) minmax(
+      100px,
+      0.8fr
+    )
+    auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid rgba(23, 43, 58, 0.12);
+  border-radius: 14px;
+  background: #f7fafb;
+  color: var(--text-color);
+}
+
+.shop-row__name,
+.shop-row__retailer,
+.shop-row__country,
+.shop-row__city {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #e9eef1;
+}
+
+.shop-row__name strong,
+.shop-row__retailer strong,
+.shop-row__country strong,
+.shop-row__city strong {
+  color: var(--text-color);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.shops-row input,
+.shops-row select {
+  width: 100%;
+  min-width: 0;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid rgba(23, 43, 58, 0.2);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--text-color);
+  font-size: 12px;
+}
+
+.shops-row input:focus,
+.shops-row select:focus {
+  border-color: var(--accent-strong);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(237, 182, 235, 0.35);
+}
+
+.shops-row input[aria-invalid="true"],
+.shops-row select[aria-invalid="true"] {
+  border-color: #c45b68;
+}
+
+.shop-row__error {
+  color: #a13f4d;
+  font-size: 10px;
+}
+
+.shop-row__label {
+  color: var(--muted-text);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.shop-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.shop-row__actions button {
+  padding: 5px 9px;
+  border: 1px solid rgba(23, 43, 58, 0.2);
+  border-radius: 8px;
+  background: transparent;
+  color: #365163;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.shop-row__actions button:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .shops-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .shop-row__name {
+    grid-column: 1 / -1;
+  }
+
+  .shop-row__actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+}

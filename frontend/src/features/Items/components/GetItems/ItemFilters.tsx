@@ -20,6 +20,11 @@ function ItemFilters({
   onChange,
   onPageReset,
 }: ItemFiltersProps) {
+  const clearAllFilters = () => {
+    onPageReset();
+    onChange(null);
+  };
+
   const updateCategories = (selected: FilterData[]) => {
     onPageReset();
     onChange({ ...filters, categories: selected });
@@ -104,6 +109,13 @@ function ItemFilters({
               </span>
             </button>
           ))}
+          <button
+            type="button"
+            className="items-selected-filters__clear-all"
+            onClick={clearAllFilters}
+          >
+            Clear all
+          </button>
         </div>
       ) : null}
     </div>

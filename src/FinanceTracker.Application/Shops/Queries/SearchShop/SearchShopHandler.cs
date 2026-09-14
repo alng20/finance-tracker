@@ -15,6 +15,15 @@ public class SearchShopHandler(IShopRepository shopRepository)
     )
     {
         var shops = await _shopRepository.SearchByNameAsync(query.SearchString, cancellationToken);
-        return shops.Select(x => new SearchShopResultDto(x.Id, x.Name)).ToList();
+        return shops
+            .Select(x => new SearchShopResultDto(
+                x.Id,
+                x.Name,
+                x.RetailerId,
+                x.Retailer != null ? x.Retailer.Name : null,
+                x.Address != null ? x.Address.Country : null,
+                x.Address != null ? x.Address.City : null
+            ))
+            .ToList();
     }
 }

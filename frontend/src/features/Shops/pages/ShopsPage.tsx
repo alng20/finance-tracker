@@ -1,10 +1,7 @@
+import Shops from "../components/Shops";
+
 function ShopsPage() {
-  return (
-    <div className="page-heading">
-      <h1>Shops</h1>
-      <p>TBD</p>
-    </div>
-  );
+  return <Shops />;
 }
 
 export default ShopsPage;

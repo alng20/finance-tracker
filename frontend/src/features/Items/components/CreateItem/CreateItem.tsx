@@ -38,41 +38,51 @@ function CreateItem({
         onSubmit();
       }}
     >
-      {submitError && <p className="item-form-error">{submitError}</p>}
-      <input
-        autoFocus
-        aria-invalid={Boolean(errors.name)}
-        placeholder="Item name"
-        value={createItemData?.name}
-        onChange={(event) => onNameChange(event.target.value)}
-      />
-      {errors.name && <p className="item-form-error">{errors.name}</p>}
-      <select
-        aria-invalid={Boolean(errors.category)}
-        value={createItemData?.categoryId}
-        onChange={(event) => onCategoryChange(event.target.value)}
-      >
-        <option value="">Select category</option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </select>
-      {errors.category && <p className="item-form-error">{errors.category}</p>}
-      <select
-        aria-invalid={Boolean(errors.unit)}
-        value={createItemData?.unit}
-        onChange={(event) => onUnitChange(event.target.value)}
-      >
-        <option value="">Select unit</option>
-        {units.map((itemUnit) => (
-          <option key={itemUnit.id} value={itemUnit.id}>
-            {itemUnit.name}
-          </option>
-        ))}
-      </select>
-      {errors.unit && <p className="item-form-error">{errors.unit}</p>}
+      {submitError && (
+        <p className="item-form-error item-form-error--global">{submitError}</p>
+      )}
+      <div className="item-form-field">
+        <input
+          autoFocus
+          aria-invalid={Boolean(errors.name)}
+          placeholder="Item name"
+          value={createItemData?.name}
+          onChange={(event) => onNameChange(event.target.value)}
+        />
+        {errors.name && <p className="item-form-error">{errors.name}</p>}
+      </div>
+      <div className="item-form-field">
+        <select
+          aria-invalid={Boolean(errors.category)}
+          value={createItemData?.categoryId}
+          onChange={(event) => onCategoryChange(event.target.value)}
+        >
+          <option value="">Select category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        {errors.category && (
+          <p className="item-form-error">{errors.category}</p>
+        )}
+      </div>
+      <div className="item-form-field">
+        <select
+          aria-invalid={Boolean(errors.unit)}
+          value={createItemData?.unit}
+          onChange={(event) => onUnitChange(event.target.value)}
+        >
+          <option value="">Select unit</option>
+          {units.map((itemUnit) => (
+            <option key={itemUnit.id} value={itemUnit.id}>
+              {itemUnit.name}
+            </option>
+          ))}
+        </select>
+        {errors.unit && <p className="item-form-error">{errors.unit}</p>}
+      </div>
       <button type="submit">Create</button>
       <button type="button" onClick={onCancel}>
         Cancel

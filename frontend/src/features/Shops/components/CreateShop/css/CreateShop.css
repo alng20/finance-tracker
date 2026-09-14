@@ -1,8 +1,8 @@
-.item-create-form {
+.shop-create-form {
   display: grid;
   grid-template-columns:
     minmax(180px, 1.4fr) minmax(150px, 1fr) minmax(130px, 0.8fr)
-    auto auto;
+    minmax(130px, 0.8fr) auto auto;
   align-items: start;
   gap: 10px;
   padding: 16px;
@@ -12,7 +12,7 @@
   box-shadow: var(--shadow);
 }
 
-.item-form-field {
+.shop-form-field {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -21,8 +21,8 @@
   min-height: 56px;
 }
 
-.item-create-form input,
-.item-create-form select {
+.shop-create-form input,
+.shop-create-form select {
   width: 100%;
   min-width: 0;
   height: 38px;
@@ -34,19 +34,19 @@
   font-size: 13px;
 }
 
-.item-create-form input:focus,
-.item-create-form select:focus {
+.shop-create-form input:focus,
+.shop-create-form select:focus {
   border-color: var(--accent-strong);
   outline: none;
   box-shadow: 0 0 0 3px rgba(237, 182, 235, 0.45);
 }
 
-.item-create-form input[aria-invalid="true"],
-.item-create-form select[aria-invalid="true"] {
+.shop-create-form input[aria-invalid="true"],
+.shop-create-form select[aria-invalid="true"] {
   border-color: #c45b68;
 }
 
-.item-create-form button[type="submit"] {
+.shop-create-form button[type="submit"] {
   min-height: 38px;
   padding: 0 18px;
   border: 0;
@@ -58,11 +58,11 @@
   font-weight: 700;
 }
 
-.item-create-form button[type="submit"]:hover {
+.shop-create-form button[type="submit"]:hover {
   background: #2d4a5d;
 }
 
-.item-create-form button[type="button"] {
+.shop-create-form button[type="button"] {
   min-height: 38px;
   padding: 0 12px;
   border: 1px solid var(--border);
@@ -74,30 +74,30 @@
   font-weight: 700;
 }
 
-.item-create-form button[type="button"]:hover {
+.shop-create-form button[type="button"]:hover {
   background: var(--surface-soft);
   color: var(--text-color);
 }
 
-.item-form-error {
+.shop-form-error {
   margin: 0;
   color: #a13f4d;
   font-size: 12px;
   line-height: 1.2;
 }
 
-.item-form-error--global {
+.shop-form-error--global {
   grid-column: 1 / -1;
 }
 
 @media (max-width: 700px) {
-  .item-create-form {
+  .shop-create-form {
     grid-template-columns: 1fr 1fr;
   }
 
-  .item-create-form input,
-  .item-create-form select,
-  .item-create-form button {
+  .shop-create-form input,
+  .shop-create-form select,
+  .shop-create-form button {
     grid-column: 1 / -1;
   }
 }

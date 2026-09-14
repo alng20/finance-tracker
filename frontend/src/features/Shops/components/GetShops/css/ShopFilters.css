@@ -1,8 +1,8 @@
-.item-filters-content {
+.shop-filters-content {
   display: contents;
 }
 
-.items-filters {
+.shops-filters {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
@@ -14,11 +14,11 @@
   box-shadow: var(--shadow);
 }
 
-.items-filters .multi-select-filter {
+.shops-filters .multi-select-filter {
   flex: 1 1 180px;
 }
 
-.items-selected-filters {
+.shops-selected-filters {
   grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
@@ -32,19 +32,19 @@
   font-size: 12px;
 }
 
-.items-selected-filters > span {
+.shops-selected-filters > span {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.7px;
   text-transform: uppercase;
 }
 
-.items-selected-filters > span:first-child {
+.shops-selected-filters > span:first-child {
   margin-right: 3px;
   color: var(--text-color);
 }
 
-.items-selected-filters button {
+.shops-selected-filters button {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -64,26 +64,26 @@
     transform 120ms ease;
 }
 
-.items-selected-filters__clear-all {
+.shops-selected-filters__clear-all {
   margin-left: auto;
   padding: 4px 10px;
   border-radius: 8px;
   font-weight: 700;
 }
 
-.items-selected-filters button:hover {
+.shops-selected-filters button:hover {
   border-color: var(--accent-strong);
   background: var(--accent);
   transform: translateY(-1px);
 }
 
-.items-selected-filters button:focus-visible {
+.shops-selected-filters button:focus-visible {
   border-color: var(--accent-strong);
   outline: 3px solid rgba(237, 182, 235, 0.45);
   outline-offset: 2px;
 }
 
-.items-selected-filters__type {
+.shops-selected-filters__type {
   color: var(--muted-text);
   font-size: 10px;
   font-weight: 700;
@@ -91,7 +91,7 @@
   text-transform: uppercase;
 }
 
-.items-selected-filters__remove {
+.shops-selected-filters__remove {
   display: inline-grid;
   width: 18px;
   height: 18px;
