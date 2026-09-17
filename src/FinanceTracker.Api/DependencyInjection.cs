@@ -90,34 +90,9 @@ public static class DependencyInjection
             .AddOptions<JwtOptions>()
             .Bind(configuration.GetSection(JwtOptions.SectionName))
             .ValidateOnStart();
+        services.AddSingleton<IConfigureOptions<JwtBearerOptions>, JwtBearerConfiguration>();
 
-        services
-            .AddOptions<JwtBearerOptions>()
-            .Configure<IOptions<JwtOptions>>(
-                (options, jwtOptions) =>
-                {
-                    var jwt = jwtOptions.Value;
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = jwt.Issuer,
-
-                        ValidateAudience = true,
-                        ValidAudience = jwt.Audience,
-
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero,
-
-                        ValidateIssuerSigningKey = true,
-
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(jwt.SecretKey)
-                        ),
-                    };
-                }
-            );
-
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
         services.AddAuthorization();
 
         return services;

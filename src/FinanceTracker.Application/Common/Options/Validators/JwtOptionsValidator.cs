@@ -4,7 +4,7 @@ namespace FinanceTracker.Application.Common.Options.Validators;
 
 public class JwtOptionsValidator : IValidateOptions<JwtOptions>
 {
-    private readonly static int MinSecretKeyLength = 12;
+    private readonly static int MinSecretKeyLength = 32;
 
     public ValidateOptionsResult Validate(string? name, JwtOptions options)
     {
