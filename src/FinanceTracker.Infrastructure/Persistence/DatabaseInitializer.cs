@@ -1,9 +1,9 @@
 using FinanceTracker.Infrastructure.Options;
 using FinanceTracker.Infrastructure.Persistence.Seed;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace FinanceTracker.Infrastructure.Persistence;
 
@@ -17,14 +17,8 @@ public static class DatabaseInitializer
 
         await context.Database.MigrateAsync();
 
-        var configuration = services.GetRequiredService<IConfiguration>();
-        bool IsEnabled =
-            configuration
-                .GetSection(DatabaseSeederOptions.SectionName)
-                .Get<DatabaseSeederOptions>()
-                ?.IsEnabled
-            ?? false;
-        if (IsEnabled)
+        var options = services.GetRequiredService<IOptions<DatabaseSeederOptions>>().Value;
+        if (options.IsEnabled)
         {
             var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
 

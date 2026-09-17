@@ -1,13 +1,16 @@
 using System.Text;
 using System.Text.Json.Serialization;
-
+using FinanceTracker.Api.Common.Configuration;
 using FinanceTracker.Api.Common.Options;
+using FinanceTracker.Api.Common.Options.Validators;
 using FinanceTracker.Api.Exceptions;
 using FinanceTracker.Api.Services;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Common.Options;
-
+using FinanceTracker.Application.Common.Options.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 
@@ -20,9 +23,6 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        var loggerFactory = services.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
-        var logger = loggerFactory.CreateLogger("FinanceTracker.Api");
-
         services.AddOpenApi(options =>
         {
             options.AddDocumentTransformer(
@@ -52,74 +52,71 @@ public static class DependencyInjection
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
-        CorsOptions? frontendOptions = configuration
-            .GetSection(CorsOptions.SectionName)
-            .Get<CorsOptions>();
-        if (frontendOptions == null)
-        {
-            logger.LogWarning("CORS options is absent");
-        }
+        services.AddSingleton<IValidateOptions<CorsPolicyOptions>, CorsPolicyOptionsValidator>();
+        services
+            .AddOptions<CorsPolicyOptions>()
+            .Bind(configuration.GetSection(CorsPolicyOptions.SectionName))
+            .ValidateOnStart();
+        services.AddSingleton<IConfigureOptions<CorsOptions>, CorsPolicyConfiguration>();
 
-        RefreshTokenCookieOptions refreshTokenCookieOptions =
-            configuration
-                .GetSection(RefreshTokenCookieOptions.SectionName)
-                .Get<RefreshTokenCookieOptions>()
-            ?? throw new InvalidOperationException(
-                "Refresh token cookies configuration is absent."
-            );
+        services.AddSingleton<
+            IValidateOptions<RefreshTokenCookieOptions>,
+            RefreshTokenCookieOptionsValidator
+        >();
+        services
+            .AddOptions<RefreshTokenCookieOptions>()
+            .Bind(configuration.GetSection(RefreshTokenCookieOptions.SectionName))
+            .ValidateOnStart();
 
-        services.AddCors(options =>
-        {
-            options.AddPolicy(
-                "Frontend",
-                policy =>
-                {
-                    policy
-                        .WithOrigins(frontendOptions!.AllowedHosts.ToArray())
-                        .AllowCredentials()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                }
-            );
-        });
+        services.AddCors();
 
         services.AddHttpContextAccessor();
 
+        services.AddSingleton<IValidateOptions<JwtOptions>, JwtOptionsValidator>();
+        services.AddSingleton<
+            IValidateOptions<RefreshTokenOptions>,
+            RefreshTokenOptionsValidator
+        >();
         services.AddSingleton<IExceptionResponseMapper, ExceptionResponseMapper>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<ICurrentRequestService, CurrentRequestService>();
 
-        services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
-        services.Configure<RefreshTokenOptions>(
-            configuration.GetSection(RefreshTokenOptions.SectionName)
-        );
-
-        JwtOptions jwtOptions =
-            configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
-            ?? throw new InvalidOperationException("JWT configuration is absent.");
+        services
+            .AddOptions<RefreshTokenOptions>()
+            .Bind(configuration.GetSection(RefreshTokenOptions.SectionName))
+            .ValidateOnStart();
 
         services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
+            .AddOptions<JwtOptions>()
+            .Bind(configuration.GetSection(JwtOptions.SectionName))
+            .ValidateOnStart();
+
+        services
+            .AddOptions<JwtBearerOptions>()
+            .Configure<IOptions<JwtOptions>>(
+                (options, jwtOptions) =>
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtOptions.Issuer,
+                    var jwt = jwtOptions.Value;
 
-                    ValidateAudience = true,
-                    ValidAudience = jwtOptions.Audience,
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jwt.Issuer,
 
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero,
+                        ValidateAudience = true,
+                        ValidAudience = jwt.Audience,
 
-                    ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero,
 
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwtOptions.SecretKey)
-                    ),
-                };
-            });
+                        ValidateIssuerSigningKey = true,
+
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(jwt.SecretKey)
+                        ),
+                    };
+                }
+            );
 
         services.AddAuthorization();
 

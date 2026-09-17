@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <PreserveCompilationContext>true</PreserveCompilationContext>
+    <UserSecretsId>FinanceTrackerApi</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

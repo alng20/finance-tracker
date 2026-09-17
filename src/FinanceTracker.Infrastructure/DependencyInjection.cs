@@ -10,7 +10,6 @@ using FinanceTracker.Infrastructure.Persistence.Providers;
 using FinanceTracker.Infrastructure.Persistence.Repositories;
 using FinanceTracker.Infrastructure.Persistence.Seed;
 using FinanceTracker.Infrastructure.Services;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,12 +33,12 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString);
         });
 
-        services.Configure<UserAdminOptions>(
-            configuration.GetSection(UserAdminOptions.SectionName)
-        );
-        services.Configure<DatabaseSeederOptions>(
-            configuration.GetSection(DatabaseSeederOptions.SectionName)
-        );
+        services
+            .AddOptions<UserAdminOptions>()
+            .Bind(configuration.GetSection(UserAdminOptions.SectionName));
+        services
+            .AddOptions<DatabaseSeederOptions>()
+            .Bind(configuration.GetSection(DatabaseSeederOptions.SectionName));
 
         services.AddScoped<UserAdminSeeder>();
         services.AddScoped<ItemCategorySeeder>();
