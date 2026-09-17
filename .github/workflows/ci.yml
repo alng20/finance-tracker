@@ -40,6 +40,37 @@ jobs:
       - name: Test
         run: dotnet test --no-build --configuration ${{ matrix.configuration }}
 
+  docker-build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -f docker/Dockerfile \
+            -t ghcr.io/${{ github.repository_owner }}/finance-tracker-api:latest \
+            -t ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ github.sha }} \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-api:latest
+          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ github.sha }}
+
   frontend-check:
     runs-on: ubuntu-latest
 
