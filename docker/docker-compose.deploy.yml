@@ -2,7 +2,7 @@ services:
   api:
     image: ghcr.io/alng20/finance-tracker-api:latest
     ports:
-      - "5067:8080"
+      - "5067:8080" # TODO: Fix it due to nginx
     environment:
       ASPNETCORE_HTTP_PORTS: 8080
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"

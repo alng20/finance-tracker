@@ -61,7 +61,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build \
-            -f docker/Dockerfile \
+            -f docker/api.Dockerfile \
             -t ghcr.io/${{ github.repository_owner }}/finance-tracker-api:latest \
             -t ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ github.sha }} \
             .

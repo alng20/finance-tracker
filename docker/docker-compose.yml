@@ -2,9 +2,7 @@ services:
   api:
     build:
       context: ..
-      dockerfile: docker/Dockerfile
-    ports:
-      - "5067:8080"
+      dockerfile: docker/api.Dockerfile
     environment:
       ASPNETCORE_HTTP_PORTS: 8080
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
@@ -13,7 +11,15 @@ services:
       postgres:
         condition: service_healthy
 
-  # TODO: frontend image
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      api:
+        condition: service_started
 
   postgres:
     image: postgres:18
