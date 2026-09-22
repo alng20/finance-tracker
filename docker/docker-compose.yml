@@ -5,8 +5,10 @@ services:
       dockerfile: docker/api.Dockerfile
     environment:
       ASPNETCORE_HTTP_PORTS: 8080
-      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
       Jwt__SecretKey: ${JWT_SECRET_KEY}
+    networks:
+      - finance_tracker
     depends_on:
       postgres:
         condition: service_healthy
@@ -17,6 +19,9 @@ services:
       dockerfile: docker/frontend.Dockerfile
     ports:
       - "5173:80"
+      - "5443:443"
+    networks:
+      - finance_tracker
     depends_on:
       api:
         condition: service_started
@@ -29,8 +34,13 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql
+      # TODO: Use env vars instead of local paths
+      - ./certs/localhost.crt:/etc/nginx/certs/localhost.crt:ro
+      - ./certs/localhost.key:/etc/nginx/certs/localhost.key:ro
+    networks:
+      - finance_tracker
     ports:
-      - "6000:5432"
+      - "6000:${POSTGRES_PORT}"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d FinanceTracker"]
       interval: 5s
@@ -39,3 +49,9 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  finance_tracker:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

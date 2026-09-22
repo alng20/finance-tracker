@@ -12,7 +12,13 @@ export default defineConfig({
     // basicSsl()
   ],
   server: {
-    host: "0.0.0.0",
+    // Used only for local run, not for docker container
     port: 5173,
+
+    proxy: {
+      "/api": {
+        target: "http://localhost:5067",
+      },
+    },
   },
 });
