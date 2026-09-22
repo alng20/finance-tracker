@@ -1,7 +1,7 @@
 import { getAccessToken, setAccessToken } from "./apiToken";
 
 // TODO: Move to env
-const API_URL = "http://localhost:5067";
+const API_URL = "";
 
 function buildUrl(url: string): string {
   return `${API_URL.replace(/\/$/, "")}/${url.replace(/^\//, "")}`;

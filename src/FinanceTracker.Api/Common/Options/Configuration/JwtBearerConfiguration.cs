@@ -6,14 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace FinanceTracker.Api.Common.Configuration;
 
-public sealed class JwtBearerConfiguration : IConfigureNamedOptions<JwtBearerOptions>
+public sealed class JwtBearerConfiguration(IOptions<JwtOptions> jwtOptions)
+    : IConfigureNamedOptions<JwtBearerOptions>
 {
-    private readonly IOptions<JwtOptions> _jwtOptions;
-
-    public JwtBearerConfiguration(IOptions<JwtOptions> jwtOptions)
-    {
-        _jwtOptions = jwtOptions;
-    }
+    private readonly IOptions<JwtOptions> _jwtOptions = jwtOptions;
 
     public void Configure(string? name, JwtBearerOptions options)
     {

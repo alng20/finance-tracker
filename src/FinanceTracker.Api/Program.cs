@@ -16,7 +16,10 @@ builder.Services.AddApi(builder.Configuration);
 var app = builder.Build();
 
 app.UseExceptionMiddleware();
-app.UseHttpsRedirection();
+app.UseForwardedHeaders();
+
+// Both protocols are supported, check docker/nginx.conf
+// app.UseHttpsRedirection();
 
 await DatabaseInitializer.InitializeAsync(app.Services);
 

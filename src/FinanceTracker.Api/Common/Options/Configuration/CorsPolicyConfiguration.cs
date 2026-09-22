@@ -5,10 +5,10 @@ using Microsoft.Extensions.Options;
 
 namespace FinanceTracker.Api.Common.Configuration;
 
-public sealed class CorsPolicyConfiguration(IOptions<CorsPolicyOptions> CorsPolicyOptions)
+public sealed class CorsPolicyConfiguration(IOptions<CorsPolicyOptions> corsPolicyOptions)
     : IConfigureOptions<CorsOptions>
 {
-    private readonly CorsPolicyOptions _corsPolicyOptions = CorsPolicyOptions.Value;
+    private readonly CorsPolicyOptions _corsPolicyOptions = corsPolicyOptions.Value;
 
     public void Configure(CorsOptions options)
     {

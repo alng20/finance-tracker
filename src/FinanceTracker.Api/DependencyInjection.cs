@@ -92,6 +92,19 @@ public static class DependencyInjection
             .ValidateOnStart();
         services.AddSingleton<IConfigureOptions<JwtBearerOptions>, JwtBearerConfiguration>();
 
+        services.AddSingleton<
+            IValidateOptions<AppFrwdHeadersOptions>,
+            AppFrwdHeadersOptionsValidator
+        >();
+        services
+            .AddOptions<AppFrwdHeadersOptions>()
+            .Bind(configuration.GetSection(AppFrwdHeadersOptions.SectionName))
+            .ValidateOnStart();
+        services.AddSingleton<
+            IConfigureOptions<ForwardedHeadersOptions>,
+            ForwardedHeadersConfiguration
+        >();
+
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
         services.AddAuthorization();
 
