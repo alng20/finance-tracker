@@ -18,6 +18,10 @@ services:
       - "5443:443"
     networks:
       - finance_tracker
+    volumes:
+      # TODO: Use env vars instead of local paths
+      - ./certs/localhost.crt:/etc/nginx/certs/localhost.crt:ro
+      - ./certs/localhost.key:/etc/nginx/certs/localhost.key:ro
     depends_on:
       api:
         condition: service_started
@@ -34,8 +38,6 @@ services:
       - "6000:${POSTGRES_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql
-      - ./certs/localhost.crt:/etc/nginx/certs/localhost.crt:ro
-      - ./certs/localhost.key:/etc/nginx/certs/localhost.key:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d FinanceTracker"]
       interval: 5s
