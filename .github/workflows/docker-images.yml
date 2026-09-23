@@ -1,0 +1,122 @@
+name: Docker Images
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "Git ref to build"
+        required: true
+        type: string
+
+      push:
+        description: "Push images to GHCR"
+        required: true
+        type: boolean
+
+jobs:
+  build-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Set image variables
+        id: vars
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          FULL_SHA=$(git rev-parse HEAD)
+          SHORT_SHA=$(git rev-parse --short=7 HEAD)
+
+          echo "full_sha=$FULL_SHA" >> "$GITHUB_OUTPUT"
+          echo "short_sha=$SHORT_SHA" >> "$GITHUB_OUTPUT"
+
+          if [ "${{ inputs.push }}" = "true" ]; then
+            if [ "${{ github.event_name }}" = "push" ]; then
+              echo "tag=$SHORT_SHA" >> "$GITHUB_OUTPUT"
+
+            elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              PR_NUMBER=$(gh api \
+                "repos/${GITHUB_REPOSITORY}/commits/${FULL_SHA}/pulls" \
+                --jq '.[0].number')
+
+              if [ -z "$PR_NUMBER" ]; then
+                echo "No pull request found for commit $FULL_SHA"
+                exit 1
+              fi
+
+              echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+              echo "tag=pr-$PR_NUMBER-$SHORT_SHA" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Log in to GHCR
+        if: inputs.push
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build API image
+        run: |
+          docker build \
+            -f docker/api.Dockerfile \
+            -t ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ steps.vars.outputs.short_sha }} \
+            .
+
+      - name: Build frontend image
+        run: |
+          docker build \
+            -f docker/frontend.Dockerfile \
+            -t ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ steps.vars.outputs.short_sha }} \
+            .
+
+      - name: Tag main images
+        if: inputs.push && github.event_name == 'push'
+        run: |
+          docker tag \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ steps.vars.outputs.short_sha }} \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:latest
+
+          docker tag \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ steps.vars.outputs.short_sha }} \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:latest
+
+      - name: Tag PR images
+        if: inputs.push && github.event_name == 'workflow_dispatch'
+        run: |
+          docker tag \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ steps.vars.outputs.short_sha }} \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ steps.vars.outputs.tag }}
+
+          docker tag \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ steps.vars.outputs.short_sha }} \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ steps.vars.outputs.tag }}
+
+      - name: Push main images
+        if: inputs.push && github.event_name == 'push'
+        run: |
+          docker push \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ steps.vars.outputs.short_sha }}
+
+          docker push \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:latest
+
+          docker push \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ steps.vars.outputs.short_sha }}
+
+          docker push \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:latest
+
+      - name: Push PR images
+        if: inputs.push && github.event_name == 'workflow_dispatch'
+        run: |
+          docker push \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ steps.vars.outputs.tag }}
+
+          docker push \
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ steps.vars.outputs.tag }}
