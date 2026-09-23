@@ -1,26 +1,27 @@
 import "./css/ExpenseFilters.css";
 
 import { useState } from "react";
-import type { ExpenseFiltersData } from "../../types/ExpenseFiltersData";
-import { currencies, type Currency } from "../../../shared/types/Currency";
-import { useSearch } from "../../../shared/hooks/useSearch";
-import type { GetShopsDto } from "../../../Shops/types/dto/GetShopsDto";
-import { useGet } from "../../../shared/hooks/useGet";
-import { getShops } from "../../../Shops/api/shopsApi";
-import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
+
 import { getCategories } from "../../../Categories/api/categoriesApi";
-import { getRetailers } from "../../../Retailers/api/retailersApi";
-import type { GetRetailersDto } from "../../../Retailers/types/GetRetailersDto";
-import type { FilterData } from "../../../shared/types/FilterData";
-import { SelectFilter } from "../../../shared/components/Filters/SelectFilter";
+import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import { searchItems } from "../../../Items/api/itemsApi";
 import type { SearchItemsDto } from "../../../Items/types/dto/SearchItemsDto";
+import { getRetailers } from "../../../Retailers/api/retailersApi";
+import type { GetRetailersDto } from "../../../Retailers/types/GetRetailersDto";
+import { SelectFilter } from "../../../shared/components/Filters/SelectFilter";
+import { useGet } from "../../../shared/hooks/useGet";
 import useGetWithFilters from "../../../shared/hooks/useGetWithFilters";
+import { useSearch } from "../../../shared/hooks/useSearch";
+import { currencies, type Currency } from "../../../shared/types/Currency";
+import type { FilterData } from "../../../shared/types/FilterData";
+import { getShops } from "../../../Shops/api/shopsApi";
 import type { ShopFiltersData } from "../../../Shops/types/data/ShopFiltersData";
+import type { GetShopsDto } from "../../../Shops/types/dto/GetShopsDto";
 import type { GetShopsResponse } from "../../../Shops/types/responses/GetShopsResponse";
+import type { ExpenseFiltersData } from "../../types/ExpenseFiltersData";
 import {
-  expensesSortTypes,
   type ExpensesSortType,
+  expensesSortTypes,
 } from "../../types/ExpensesSortType";
 
 type ExpenseFiltersProps = {
@@ -98,14 +99,13 @@ export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
   };
 
   return (
-    <div className="expense-filters">
+    <div className="expense-filters" key={clearAllKey}>
       <SelectFilter
         label="Shop"
         options={shops}
         selected={draftFilters.shops ?? []}
         onChange={createFilterChangeHandler("shops")}
         onClear={createFilterClearHandler("shops")}
-        resetKey={clearAllKey}
       />
 
       <SelectFilter
@@ -114,7 +114,6 @@ export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
         selected={draftFilters.categories ?? []}
         onChange={createFilterChangeHandler("categories")}
         onClear={createFilterClearHandler("categories")}
-        resetKey={clearAllKey}
       />
 
       <SelectFilter
@@ -125,7 +124,6 @@ export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
         searchable
         onSearch={setItemSearch}
         onClear={createFilterClearHandler("items")}
-        resetKey={clearAllKey}
       />
 
       <SelectFilter
@@ -134,7 +132,6 @@ export function ExpenseFilters({ onApply }: ExpenseFiltersProps) {
         selected={draftFilters.retailers ?? []}
         onChange={createFilterChangeHandler("retailers")}
         onClear={createFilterClearHandler("retailers")}
-        resetKey={clearAllKey}
       />
 
       <fieldset className="expense-filters__group">

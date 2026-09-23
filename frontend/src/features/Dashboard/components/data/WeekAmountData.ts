@@ -1,6 +1,6 @@
-import type { Currency } from "../../../shared/types/Currency";
 import type { PeriodAmountReport } from "../../../Reports/types/GetGroupedAmountResponse";
 import { defaultCurrency } from "../../../shared/common/consts";
+import type { Currency } from "../../../shared/types/Currency";
 
 export type WeekAmountData = {
   fromDate: string;

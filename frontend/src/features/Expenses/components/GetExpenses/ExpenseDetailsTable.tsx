@@ -1,4 +1,5 @@
 import "./css/ExpenseDetailsTable.css";
+
 import type { ExpenseDetailRowData } from "./data/ExpenseDetailRowData";
 import type { ExpenseDetailsSummary } from "./data/ExpenseDetailsSummary";
 

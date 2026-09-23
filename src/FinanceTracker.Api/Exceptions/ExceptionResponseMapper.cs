@@ -57,7 +57,7 @@ public class ExceptionResponseMapper : IExceptionResponseMapper
             {
                 Status = StatusCodes.Status500InternalServerError,
                 Title = "Internal server error",
-                Detail = $"An unexpected error occurred: {exception.Message}",
+                Detail = $"An unexpected error occurred",
                 Instance = context.Request.Path,
             },
         };

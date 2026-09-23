@@ -1,4 +1,5 @@
 import "./css/MonthAmountCard.css";
+
 import useMonthAmount from "../hooks/useMonthAmount";
 
 function MonthAmountCard() {

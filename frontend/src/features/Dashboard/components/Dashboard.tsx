@@ -1,4 +1,5 @@
 import "./css/Dashboard.css";
+
 import MonthAmountCard from "./MonthAmountCard";
 import MonthWeeklyAmountCard from "./MonthWeeklyAmount";
 import RecentExpenses from "./RecentExpenses";

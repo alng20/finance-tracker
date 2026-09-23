@@ -1,5 +1,5 @@
-import type { CreateExpenseDetailRequest } from "../types/CreateExpenseRequest";
 import type { AddExpenseDetailData } from "../types/AddExpenseDetailData";
+import type { CreateExpenseDetailRequest } from "../types/CreateExpenseRequest";
 
 // TODO: Make changeable
 const discountType = "Amount";

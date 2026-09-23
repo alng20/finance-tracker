@@ -1,9 +1,10 @@
+import "./css/ExpenseResultsSummary.css";
+
+import { formatAmount } from "../../../shared/common/utils";
 import type {
   ExpenseDto,
   ExpenseMetadata,
 } from "../../types/GetExpensesResponse";
-import "./css/ExpenseResultsSummary.css";
-import { formatAmount } from "../../../shared/common/utils";
 
 type ExpenseResultsSummaryProps = {
   expenses: ExpenseDto[];

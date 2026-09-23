@@ -1,5 +1,6 @@
-import { useEffect, useState, type SubmitEventHandler } from "react";
 import "./css/Pagination.css";
+
+import { type SubmitEventHandler } from "react";
 
 type PaginationProps = {
   pageNumber: number;
@@ -15,21 +16,15 @@ function Pagination({
   hasPreviousPage,
   onPageChange,
 }: PaginationProps) {
-  const [pageInput, setPageInput] = useState(String(pageNumber));
-
-  useEffect(() => {
-    setPageInput(String(pageNumber));
-  }, [pageNumber]);
-
   const handlePageSubmit: SubmitEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    const requestedPage = Number(pageInput);
+    const formData = new FormData(event.currentTarget);
+    const requestedPage = Number(formData.get("page-input"));
     const targetPage = Number.isFinite(requestedPage)
       ? Math.min(Math.max(Math.trunc(requestedPage), 1), pagesTotalCount)
       : pageNumber;
 
-    setPageInput(String(targetPage));
     if (targetPage !== pageNumber) {
       onPageChange(targetPage);
     }
@@ -62,11 +57,12 @@ function Pagination({
         <input
           id="pagination-page"
           type="number"
+          name="page-input"
           min={1}
           max={pagesTotalCount}
-          value={pageInput}
+          key={pageNumber}
+          defaultValue={pageNumber}
           aria-label="Page number"
-          onChange={(event) => setPageInput(event.target.value)}
         />
         <span>of {pagesTotalCount}</span>
       </form>

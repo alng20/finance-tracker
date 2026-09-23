@@ -1,5 +1,5 @@
-import type { Currency } from "../../../shared/types/Currency";
 import type { ExpenseDto } from "../../../Expenses/types/GetExpensesResponse";
+import type { Currency } from "../../../shared/types/Currency";
 
 export type RecentExpenseData = {
   id: string;

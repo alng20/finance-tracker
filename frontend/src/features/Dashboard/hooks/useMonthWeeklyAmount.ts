@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 import * as reportsApi from "../../Reports/api/reportsApi";
 import type { GetGroupedAmountResponse } from "../../Reports/types/GetGroupedAmountResponse";
+import { defaultCurrency } from "../../shared/common/consts";
 import {
   getFirstDayOfCurrentMonth,
   getLastDayOfCurrentMonth,
 } from "../../shared/common/utils";
-import { defaultCurrency } from "../../shared/common/consts";
 import {
   mapWeekAmount,
   type WeekAmountData,
@@ -19,17 +19,15 @@ function useMonthWeeklyAmount() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  function setResult(response: GetGroupedAmountResponse) {
-    setMonthWeeklyAmount(
-      response.amountByPeriod.map((amount) => mapWeekAmount(amount)),
-    );
-  }
-
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-
     const groupingType = "Week";
+
+    function setResult(response: GetGroupedAmountResponse) {
+      setMonthWeeklyAmount(
+        response.amountByPeriod.map((amount) => mapWeekAmount(amount)),
+      );
+      setIsLoading(false);
+    }
 
     reportsApi
       .getGroupedAmount(
@@ -39,8 +37,10 @@ function useMonthWeeklyAmount() {
         getLastDayOfCurrentMonth(),
       )
       .then(setResult)
-      .catch(setError)
-      .finally(() => setIsLoading(false));
+      .catch((err) => {
+        setError(err);
+        setIsLoading(false);
+      });
   }, []);
 
   return {

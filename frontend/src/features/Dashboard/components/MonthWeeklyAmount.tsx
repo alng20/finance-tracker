@@ -1,6 +1,7 @@
+import "./css/MonthWeeklyAmount.css";
+
 import { formatAmount, formatDate } from "../../shared/common/utils";
 import useMonthWeeklyAmount from "../hooks/useMonthWeeklyAmount";
-import "./css/MonthWeeklyAmount.css";
 
 function MonthWeeklyAmountCard() {
   const {

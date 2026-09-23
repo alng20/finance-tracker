@@ -3,11 +3,9 @@ import "./css/AddExpenseModal.css";
 import { useState } from "react";
 
 import { defaultCurrency } from "../../../shared/common/consts";
-import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
-import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
-import ExpenseInfo from "./ExpenseInfo";
-import type { ExpenseValidationErrors } from "./validation/expenseValidation";
-import { validateExpense } from "./validation/expenseValidation";
+import { getTodayDate } from "../../../shared/common/utils";
+import type { Currency } from "../../../shared/types/Currency";
+import type { SearchShopDto } from "../../../Shops/types/dto/SearchShopDto";
 import {
   createExpense,
   createExpenseDetail,
@@ -15,10 +13,12 @@ import {
   updateExpense,
   updateExpenseDetail,
 } from "../../api/expensesApi";
-import type { Currency } from "../../../shared/types/Currency";
+import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import type { GetExpenseByIdResponse } from "../../types/GetExpenseByIdResponse";
-import { getTodayDate } from "../../../shared/common/utils";
-import type { SearchShopDto } from "../../../Shops/types/dto/SearchShopDto";
+import ExpenseDetailsInfo from "./ExpenseDetailsInfo";
+import ExpenseInfo from "./ExpenseInfo";
+import type { ExpenseValidationErrors } from "./validation/expenseValidation";
+import { validateExpense } from "./validation/expenseValidation";
 
 type AddExpenseModalProps = {
   onClose: () => void;

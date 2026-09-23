@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 import * as reportsApi from "../../Reports/api/reportsApi";
 import type { GetGroupedAmountResponse } from "../../Reports/types/GetGroupedAmountResponse";
-import type { Currency } from "../../shared/types/Currency";
 import { getTotalAmount } from "../../Reports/types/GetGroupedAmountResponse";
+import { defaultCurrency } from "../../shared/common/consts";
 import {
   formatAmount,
   getFirstDayOfCurrentMonth,
 } from "../../shared/common/utils";
-import { defaultCurrency } from "../../shared/common/consts";
+import type { Currency } from "../../shared/types/Currency";
 
 type MonthAmountResult = {
   currency: Currency;
@@ -23,22 +23,20 @@ function useMonthAmount() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  function setResult(response: GetGroupedAmountResponse) {
-    const amount = response ? getTotalAmount(response) : 0;
-    const currency = response?.currency ?? "NZD";
-    const result: MonthAmountResult = {
-      currency: response?.currency ?? "NZD",
-      amount: amount,
-      amountFormatted: formatAmount(amount, currency),
-    };
-    setMonthAmount(result);
-  }
-
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-
     const groupingType = "Month";
+
+    function setResult(response: GetGroupedAmountResponse) {
+      const amount = response ? getTotalAmount(response) : 0;
+      const currency = response?.currency ?? "NZD";
+      const result: MonthAmountResult = {
+        currency: currency,
+        amount: amount,
+        amountFormatted: formatAmount(amount, currency),
+      };
+      setMonthAmount(result);
+      setIsLoading(false);
+    }
 
     reportsApi
       .getGroupedAmount(
@@ -47,8 +45,10 @@ function useMonthAmount() {
         getFirstDayOfCurrentMonth(),
       )
       .then(setResult)
-      .catch(setError)
-      .finally(() => setIsLoading(false));
+      .catch((err) => {
+        setError(err);
+        setIsLoading(false);
+      });
   }, []);
 
   return {

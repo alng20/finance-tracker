@@ -1,24 +1,26 @@
-import { useState } from "react";
-import AddExpenseButton from "./AddExpense/AddExpenseButton";
 import "./Expenses.css";
-import AddExpenseModal from "./AddExpense/AddExpenseModal";
-import ExpensesTable from "./GetExpenses/ExpensesTable";
-import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
-import ExpenseFilters from "./GetExpenses/ExpenseFilters";
-import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
+
+import { useState } from "react";
+
+import Pagination from "../../shared/components/Pagination/Pagintation";
+import useGetWithFilters from "../../shared/hooks/useGetWithFilters";
 import {
   initialPageRequest,
   type PageRequestData,
 } from "../../shared/types/PageRequestData";
-import { ExpenseResultsSummary } from "./GetExpenses/ExpenseResultsSummary";
-import Pagination from "../../shared/components/Pagination/Pagintation";
-import useGetWithFilters from "../../shared/hooks/useGetWithFilters";
 import { getExpenses } from "../api/expensesApi";
+import type { ExpenseFiltersData } from "../types/ExpenseFiltersData";
+import type { GetExpenseByIdResponse } from "../types/GetExpenseByIdResponse";
 import {
   type ExpenseDto,
   type ExpenseMetadata,
   type GetExpensesResponse,
 } from "../types/GetExpensesResponse";
+import AddExpenseButton from "./AddExpense/AddExpenseButton";
+import AddExpenseModal from "./AddExpense/AddExpenseModal";
+import ExpenseFilters from "./GetExpenses/ExpenseFilters";
+import { ExpenseResultsSummary } from "./GetExpenses/ExpenseResultsSummary";
+import ExpensesTable from "./GetExpenses/ExpensesTable";
 
 function Expenses() {
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState<boolean>(false);

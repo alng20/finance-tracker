@@ -3,11 +3,11 @@ import "./css/ExpenseInfo.css";
 import { useState } from "react";
 
 import { defaultCurrency } from "../../../shared/common/consts";
+import { useSearch } from "../../../shared/hooks/useSearch";
+import { currencies, type Currency } from "../../../shared/types/Currency";
 import { searchShops } from "../../../Shops/api/shopsApi";
 import type { SearchShopDto } from "../../../Shops/types/dto/SearchShopDto";
-import { useSearch } from "../../../shared/hooks/useSearch";
 import type { ExpenseValidationErrors } from "./validation/expenseValidation";
-import { currencies, type Currency } from "../../../shared/types/Currency";
 
 type DateProps = {
   date: string;

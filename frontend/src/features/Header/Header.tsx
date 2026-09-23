@@ -1,7 +1,7 @@
 import "./Header.css";
 
-import { useAuth } from "../Authentication/hooks/useAuth";
 import { formatDate, getTodayDate } from "../../features/shared/common/utils";
+import { useAuth } from "../Authentication/hooks/useAuth";
 
 type HeaderProps = {
   title: string;

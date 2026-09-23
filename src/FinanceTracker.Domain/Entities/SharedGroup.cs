@@ -31,13 +31,7 @@ public class SharedGroup
 
     private void AddOwner()
     {
-        _members.Add(
-            new SharedGroupMember(
-                Id,
-                OwnerId,
-                SharedGroupMember.GetOwnerPermission()
-            )
-        );
+        _members.Add(new SharedGroupMember(Id, OwnerId, SharedGroupMember.GetOwnerPermission()));
     }
 
     public void Rename(string name)
@@ -54,11 +48,7 @@ public class SharedGroup
             throw new DomainException("User already exists in group");
         }
 
-        SharedGroupMember member = new SharedGroupMember(
-            Id,
-            userId,
-            permission
-        );
+        SharedGroupMember member = new SharedGroupMember(Id, userId, permission);
         _members.Add(member);
     }
 
@@ -73,9 +63,7 @@ public class SharedGroup
                 DeletedAt = DateTimeOffset.UtcNow;
                 return;
             }
-            throw new DomainException(
-                "Transfere ownership before removing the owner"
-            );
+            throw new DomainException("Transfere ownership before removing the owner");
         }
 
         SharedGroupMember? member = _members.Find(x => x.UserId == userId);
@@ -93,14 +81,16 @@ public class SharedGroup
         {
             throw new DomainException("New owner must be a group member");
         }
-        OwnerId = newOwnerId;
-        newOnwer.UpdatePermission(SharedGroupMember.GetOwnerPermission());
 
-        SharedGroupMember? oldOwner = _members.Find(x => x.UserId == OwnerId);
+        var oldOwnerId = newOwnerId;
+        SharedGroupMember? oldOwner = _members.Find(x => x.UserId == oldOwnerId);
         if (oldOwner == null)
         {
             throw new DomainException("Old owner doesn't exist in group");
         }
+
+        OwnerId = newOwnerId;
+        newOnwer.UpdatePermission(SharedGroupMember.GetOwnerPermission());
         oldOwner.UpdatePermission(Permission.Read | Permission.Write);
     }
 

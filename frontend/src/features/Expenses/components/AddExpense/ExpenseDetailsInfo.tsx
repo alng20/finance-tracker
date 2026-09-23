@@ -1,10 +1,10 @@
 import "./css/ExpenseDetailsInfo.css";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
+import type { Currency } from "../../../shared/types/Currency";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import AddExpenseDetail from "./AddExpenseDetail";
-import type { Currency } from "../../../shared/types/Currency";
 
 type AddExpenseDetailButton = {
   isAddingExpenseDetail: boolean;
@@ -26,35 +26,23 @@ type ExpenseDetailsInfoProps = {
 } & AddExpenseDetailButton &
   ExpenseDetailRowDataButtons;
 
-type ExpenseDetailsSummary = {
-  number: number;
-  detailed: number;
-  undetailed: number;
-};
-
 function round(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
 function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
-  const [summary, setSummary] = useState<ExpenseDetailsSummary | null>(null);
-
-  function calculateSummary() {
+  const summary = useMemo(() => {
     const detailed = props.details.reduce(
       (sum, detail) => sum + detail.price,
       0,
     );
     const undetailed = Number(props.expenseAmount) - detailed;
-    const summary: ExpenseDetailsSummary = {
+
+    return {
       number: props.details.length,
       detailed: round(detailed),
       undetailed: round(undetailed),
     };
-    setSummary(summary);
-  }
-
-  useEffect(() => {
-    calculateSummary();
   }, [props.details, props.expenseAmount]);
 
   return (

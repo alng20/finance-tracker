@@ -1,19 +1,19 @@
 import { Route, Routes } from "react-router-dom";
 
+import RegisterPage from "../../features/Authentication/components/RegisterForm";
 import LoginPage from "../../features/Authentication/pages/LoginPage";
 import DashboardPage from "../../features/Dashboard/pages/DashboardPage";
 import ExpensesPage from "../../features/Expenses/pages/ExpensesPage";
 import GroupPage from "../../features/Groups/pages/GroupsPage";
+import HomePage from "../../features/Home/pages/HomePage";
+import ItemsPage from "../../features/Items/pages/ItemsPage";
 import ReportsPage from "../../features/Reports/pages/ReportsPage";
 import SettingsPage from "../../features/Settings/pages/SettingsPage";
+import ShopsPage from "../../features/Shops/pages/ShopsPage";
 import ApplicationLayout from "../layouts/ApplicationLayout";
+import AdminRoute from "./AdminRoute";
 import ProtectedRoute from "./ProtectedRoutes";
 import PublicRoute from "./PublicRoute";
-import RegisterPage from "../../features/Authentication/components/RegisterForm";
-import HomePage from "../../features/Home/pages/HomePage";
-import AdminRoute from "./AdminRoute";
-import ItemsPage from "../../features/Items/pages/ItemsPage";
-import ShopsPage from "../../features/Shops/pages/ShopsPage";
 
 function AppRoutes() {
   return (

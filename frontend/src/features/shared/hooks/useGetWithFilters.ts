@@ -34,11 +34,14 @@ function useGetWithFilters<
   const refresh = useCallback(async () => {
     abortCtrlRef.current?.abort();
 
-    setIsLoading(true);
-    setError(null);
+    const controller = new AbortController();
+    abortCtrlRef.current = controller;
 
-    getter(page, filters, { signal: abortCtrlRef.current?.signal })
+    getter(page, filters, { signal: controller.signal })
       .then((response: ResponseType) => {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
         setResults(response.data);
         setMetadata(response.metadata ?? null);
         setPagination({
@@ -48,14 +51,21 @@ function useGetWithFilters<
           hasPreviousPage: response.hasPreviousPage,
         });
       })
-      .catch(setError)
-      .finally(() => setIsLoading(false));
-  }, [filters, page]);
+      .catch((err) => {
+        if (err.name !== "AbortError") {
+          setError(err);
+        }
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      });
+  }, [filters, page, getter]);
 
   useEffect(() => {
     refresh();
+    const currentAbortCtrl = abortCtrlRef.current;
     return () => {
-      abortCtrlRef.current?.abort();
+      currentAbortCtrl?.abort();
     };
   }, [refresh]);
 

@@ -1,8 +1,9 @@
+import "./css/ShopFilters.css";
+
 import type { GetRetailersDto } from "../../../Retailers/types/GetRetailersDto";
 import { SelectFilter } from "../../../shared/components/Filters/SelectFilter";
 import type { FilterData } from "../../../shared/types/FilterData";
 import type { ShopFiltersData } from "../../types/data/ShopFiltersData";
-import "./css/ShopFilters.css";
 
 type ShopFiltersProps = {
   retailers: GetRetailersDto[];
