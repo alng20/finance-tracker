@@ -1,0 +1,25 @@
+name: Main
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci-checks.yml
+    with:
+      ref: ${{ github.sha }}
+    secrets: inherit
+
+  docker:
+    needs: ci
+    uses: ./.github/workflows/docker-images.yml
+    with:
+      ref: ${{ github.sha }}
+      push: true
+    secrets: inherit
