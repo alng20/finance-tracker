@@ -1,9 +1,10 @@
+import "./css/ItemFilters.css";
+
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import type { UnitDto } from "../../../shared/common/units";
 import { SelectFilter } from "../../../shared/components/Filters/SelectFilter";
 import type { FilterData } from "../../../shared/types/FilterData";
 import type { ItemFiltersData } from "../../types/data/ItemFiltersData";
-import "./css/ItemFilters.css";
 
 type ItemFiltersProps = {
   categories: GetCategoriesDto[];

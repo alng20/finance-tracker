@@ -1,18 +1,19 @@
 import "./css/ExpenseRow.css";
 
 import { useState } from "react";
-import type { ExpenseDto } from "../../types/GetExpensesResponse";
+
+import { defaultCurrency } from "../../../shared/common/consts";
+import { formatAmount, formatDate } from "../../../shared/common/utils";
+import type { Currency } from "../../../shared/types/Currency";
 import { deleteExpense, getExpenseById } from "../../api/expensesApi";
 import type {
   ExpenseDetailDto,
   GetExpenseByIdResponse,
 } from "../../types/GetExpenseByIdResponse";
+import type { ExpenseDto } from "../../types/GetExpensesResponse";
 import type { ExpenseDetailRowData } from "./data/ExpenseDetailRowData";
-import ExpenseDetailsTable from "./ExpenseDetailsTable";
-import type { Currency } from "../../../shared/types/Currency";
 import type { ExpenseDetailsSummary } from "./data/ExpenseDetailsSummary";
-import { defaultCurrency } from "../../../shared/common/consts";
-import { formatAmount, formatDate } from "../../../shared/common/utils";
+import ExpenseDetailsTable from "./ExpenseDetailsTable";
 
 type ExpenseRowProps = {
   expense: ExpenseDto;
@@ -20,7 +21,7 @@ type ExpenseRowProps = {
   onChanged: () => void;
 };
 
-export function mapExpenseDetail(
+function mapExpenseDetail(
   currency: Currency,
   dto: ExpenseDetailDto,
 ): ExpenseDetailRowData {

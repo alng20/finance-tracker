@@ -1,7 +1,7 @@
 import "./css/RecentExpensesRow.css";
 
-import type { RecentExpenseData } from "./data/RecentExpenseData";
 import { formatAmount, formatDate } from "../../shared/common/utils";
+import type { RecentExpenseData } from "./data/RecentExpenseData";
 
 type RecentExpenseRowProps = {
   expense: RecentExpenseData;

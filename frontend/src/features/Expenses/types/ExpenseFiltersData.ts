@@ -1,5 +1,5 @@
-import type { FilterData } from "../../shared/types/FilterData";
 import type { Currency } from "../../shared/types/Currency";
+import type { FilterData } from "../../shared/types/FilterData";
 import type { ExpensesSortType } from "./ExpensesSortType";
 
 export type ExpenseFiltersData = {

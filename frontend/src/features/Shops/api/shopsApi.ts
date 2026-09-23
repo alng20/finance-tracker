@@ -1,10 +1,10 @@
 import { apiClient } from "../../../api/api";
 import type { PageRequestData } from "../../shared/types/PageRequestData";
-import type { CreateShopRequest } from "../types/requests/CreateShopRequest";
-import type { GetShopsResponse } from "../types/responses/GetShopsResponse";
 import type { ShopFiltersData } from "../types/data/ShopFiltersData";
-import type { UpdateShopRequest } from "../types/requests/UpdateShopRequest";
 import type { SearchShopDto } from "../types/dto/SearchShopDto";
+import type { CreateShopRequest } from "../types/requests/CreateShopRequest";
+import type { UpdateShopRequest } from "../types/requests/UpdateShopRequest";
+import type { GetShopsResponse } from "../types/responses/GetShopsResponse";
 
 const API_SHOPS = "api/shops";
 

@@ -1,9 +1,9 @@
 import "./css/CreateItem.css";
 
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
+import type { UnitDto } from "../../../shared/common/units";
 import type { CreateItemData } from "../../types/data/ItemData";
 import type { ItemValidationErrors } from "../../validation/itemValidation";
-import type { UnitDto } from "../../../shared/common/units";
 
 type CreateItemProps = {
   categories: GetCategoriesDto[];

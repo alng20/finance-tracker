@@ -1,7 +1,8 @@
 import "./css/ExpensesTable.css";
-import ExpenseRow from "./ExpenseRow";
-import type { ExpenseDto } from "../../types/GetExpensesResponse";
+
 import type { GetExpenseByIdResponse } from "../../types/GetExpenseByIdResponse";
+import type { ExpenseDto } from "../../types/GetExpensesResponse";
+import ExpenseRow from "./ExpenseRow";
 
 export type ExpensesTableProps = {
   expenses: ExpenseDto[];

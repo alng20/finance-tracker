@@ -1,8 +1,9 @@
 import "../css/ApplicationLayout.css";
 
 import { Outlet } from "react-router-dom";
-import Sidebar from "../../features/shared/components/Sidebar/Sidebar";
+
 import Header from "../../features/Header/Header";
+import Sidebar from "../../features/shared/components/Sidebar/Sidebar";
 
 function ApplicationLayout() {
   return (

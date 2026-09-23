@@ -1,10 +1,11 @@
-import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import "./css/ItemsTable.css";
-import type { UpdateItemData } from "../../types/data/ItemData";
-import type { ItemValidationErrors } from "../../validation/itemValidation";
-import type { ItemDto } from "../../types/dto/ItemDto";
-import ItemRow from "./ItemRow";
+
+import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import type { UnitDto } from "../../../shared/common/units";
+import type { UpdateItemData } from "../../types/data/ItemData";
+import type { ItemDto } from "../../types/dto/ItemDto";
+import type { ItemValidationErrors } from "../../validation/itemValidation";
+import ItemRow from "./ItemRow";
 
 export type ItemsTableProps = {
   items: ItemDto[];

@@ -1,7 +1,11 @@
+import "./Shops.css";
+import "../../Expenses/components/GetExpenses/css/ExpenseFilters.css";
+
 import { useState } from "react";
 
 import { getRetailers } from "../../Retailers/api/retailersApi";
 import type { GetRetailersDto } from "../../Retailers/types/GetRetailersDto";
+import Pagination from "../../shared/components/Pagination/Pagintation";
 import { useGet } from "../../shared/hooks/useGet";
 import useGetWithFilters from "../../shared/hooks/useGetWithFilters";
 import { useSearch } from "../../shared/hooks/useSearch";
@@ -9,9 +13,6 @@ import {
   initialPageRequest,
   type PageRequestData,
 } from "../../shared/types/PageRequestData";
-import type { GetShopsDto } from "../types/dto/GetShopsDto";
-import type { GetShopsResponse } from "../types/responses/GetShopsResponse";
-import type { ShopFiltersData } from "../types/data/ShopFiltersData";
 import {
   createShop,
   deleteShop,
@@ -19,19 +20,19 @@ import {
   searchShops,
   updateShop,
 } from "../api/shopsApi";
-import CreateShop from "./CreateShop/CreateShop";
-import GetShopsTable from "./GetShops/GetShopsTable";
-import Pagination from "../../shared/components/Pagination/Pagintation";
 import type { CreateShopData, UpdateShopData } from "../types/data/ShopData";
-import {
-  validateShop,
-  type ShopValidationErrors,
-} from "../validation/shopValidation";
-import "./Shops.css";
-import "../../Expenses/components/GetExpenses/css/ExpenseFilters.css";
-import ShopFilters from "./GetShops/ShopFilters";
+import type { ShopFiltersData } from "../types/data/ShopFiltersData";
+import type { GetShopsDto } from "../types/dto/GetShopsDto";
 import type { SearchShopDto } from "../types/dto/SearchShopDto";
 import type { ShopDto } from "../types/dto/ShopDto";
+import type { GetShopsResponse } from "../types/responses/GetShopsResponse";
+import {
+  type ShopValidationErrors,
+  validateShop,
+} from "../validation/shopValidation";
+import CreateShop from "./CreateShop/CreateShop";
+import GetShopsTable from "./GetShops/GetShopsTable";
+import ShopFilters from "./GetShops/ShopFilters";
 
 function Shops() {
   const [page, setPage] = useState<PageRequestData>(initialPageRequest);

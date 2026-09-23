@@ -9,7 +9,7 @@ export function useGet<T>(getter: () => Promise<T[]>) {
       setResults(data);
     }
     get();
-  }, []);
+  }, [getter]);
 
   useEffect(() => {
     getResults();

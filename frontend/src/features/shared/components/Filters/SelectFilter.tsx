@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
+
 import type { FilterData } from "../../../shared/types/FilterData";
 
 const FILTER_OPEN_EVENT = "filter-open";
@@ -12,7 +13,6 @@ type SelectFilterProps = {
   searchable?: boolean;
   onSearch?: (search: string) => void;
   onClear: () => void;
-  resetKey?: number;
 };
 
 export function SelectFilter({
@@ -23,17 +23,11 @@ export function SelectFilter({
   searchable = false,
   onSearch,
   onClear,
-  resetKey,
 }: SelectFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const filterId = useId();
   const filterRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setSearch("");
-    setIsOpen(false);
-  }, [resetKey]);
 
   useEffect(() => {
     const handleOutsidePointer = (event: PointerEvent) => {

@@ -6,11 +6,11 @@ import { getCategories } from "../../../Categories/api/categoriesApi";
 import type { GetCategoriesDto } from "../../../Categories/types/GetCategoriesDto";
 import { searchItems } from "../../../Items/api/itemsApi";
 import type { SearchItemsDto } from "../../../Items/types/dto/SearchItemsDto";
+import { units } from "../../../shared/common/units";
 import { useSearch } from "../../../shared/hooks/useSearch";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import type { ExpenseDetailValidationErrors } from "./validation/expenseValidation";
 import { validateExpenseDetail } from "./validation/expenseValidation";
-import { units } from "../../../shared/common/units";
 
 type AddExpenseDetailProps = {
   initialDetail?: AddExpenseDetailData;
@@ -60,9 +60,6 @@ function AddExpenseDetail({
     loadCategories();
   }, []);
 
-  {
-    /* TODO: move to showEditedItem */
-  }
   useEffect(() => {
     if (!initialDetail) {
       return;

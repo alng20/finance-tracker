@@ -1,7 +1,8 @@
-import { useAuth } from "../../../Authentication/hooks/useAuth";
 import "./css/Sidebar.css";
 
 import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../../Authentication/hooks/useAuth";
 import SidebarNavLink from "./SidebarNavLink";
 
 function Sidebar() {
