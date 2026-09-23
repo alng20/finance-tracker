@@ -1,10 +1,14 @@
-name: Push PR Images
+name: Custom docker images
 
 on:
   workflow_dispatch:
     inputs:
       ref:
         description: "Branch or commit SHA to build and push"
+        required: true
+        type: string
+      prefix:
+        description: "Docker image tag prefix"
         required: true
         type: string
 
@@ -19,3 +23,4 @@ jobs:
     with:
       ref: ${{ inputs.ref }}
       push: true
+      prefix: ${{ inputs.prefix }}
