@@ -13,6 +13,11 @@ on:
         required: true
         type: boolean
 
+      prefix:
+        description: "Docker image prefix"
+        required: false
+        type: string
+
 jobs:
   build-images:
     runs-on: ubuntu-latest
@@ -35,7 +40,11 @@ jobs:
           echo "short_sha=$SHORT_SHA" >> "$GITHUB_OUTPUT"
 
           if [ "${{ inputs.push }}" = "true" ]; then
-            if [ "${{ github.event_name }}" = "push" ]; then
+
+            if [ -n "${{ inputs.prefix }}" ]; then
+              echo "tag=${{ inputs.prefix }}-$SHORT_SHA" >> "$GITHUB_OUTPUT"
+
+            elif [ "${{ github.event_name }}" = "push" ]; then
               echo "tag=$SHORT_SHA" >> "$GITHUB_OUTPUT"
 
             elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
@@ -86,8 +95,8 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ steps.vars.outputs.short_sha }} \
             ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:latest
 
-      - name: Tag PR images
-        if: inputs.push && github.event_name == 'workflow_dispatch'
+      - name: Tag custom/PR images
+        if: inputs.push && (inputs.prefix != '' || github.event_name == 'workflow_dispatch')
         run: |
           docker tag \
             ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ steps.vars.outputs.short_sha }} \
@@ -112,8 +121,8 @@ jobs:
           docker push \
             ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:latest
 
-      - name: Push PR images
-        if: inputs.push && github.event_name == 'workflow_dispatch'
+      - name: Push custom/PR images
+        if: inputs.push && (inputs.prefix != '' || github.event_name == 'workflow_dispatch')
         run: |
           docker push \
             ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ steps.vars.outputs.tag }}
