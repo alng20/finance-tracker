@@ -12,7 +12,11 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: "Docker image postfix name"
+        description: "Commit SHA or Branch"
+        required: true
+        type: string
+      postfix:
+        description: "Postfix for docker image"
         required: true
         type: string
 
@@ -124,7 +128,7 @@ jobs:
         run: |
           docker tag \
             ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ github.sha }} \
-            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:pr-${SHORT_SHA}
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:pr-${postfix}-${SHORT_SHA}
 
       - name: Push main image
         if: github.event_name == 'push'
@@ -135,7 +139,7 @@ jobs:
       - name: Push PR image
         if: github.event_name == 'workflow_dispatch'
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-api:pr-${SHORT_SHA}
+          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-api:pr-${postfix}-${SHORT_SHA}
 
   frontend-docker-image:
     needs: frontend-build
@@ -178,7 +182,7 @@ jobs:
         run: |
           docker tag \
             ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ github.sha }} \
-            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:pr-${SHORT_SHA}
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:pr-${postfix}-${SHORT_SHA}
 
       - name: Push main image
         if: github.event_name == 'push'
@@ -189,4 +193,4 @@ jobs:
       - name: Push PR image
         if: github.event_name == 'workflow_dispatch'
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:pr-${SHORT_SHA}
+          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:pr-${postfix}-${SHORT_SHA}
