@@ -43,7 +43,7 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Set short SHA
-        run: echo "SHORT_SHA=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+        run: echo "SHORT_SHA=$(git rev-parse --short=7 HEAD)" >> $GITHUB_ENV
 
       - name: Restore
         run: dotnet restore
@@ -128,7 +128,7 @@ jobs:
         run: |
           docker tag \
             ghcr.io/${{ github.repository_owner }}/finance-tracker-api:${{ github.sha }} \
-            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:pr-${postfix}-${SHORT_SHA}
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-api:pr-${{inputs.postfix}}-${{ env.SHORT_SHA }}
 
       - name: Push main image
         if: github.event_name == 'push'
@@ -139,7 +139,7 @@ jobs:
       - name: Push PR image
         if: github.event_name == 'workflow_dispatch'
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-api:pr-${postfix}-${SHORT_SHA}
+          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-api:pr-${{inputs.postfix}}-${{ env.SHORT_SHA }}
 
   frontend-docker-image:
     needs: frontend-build
@@ -182,7 +182,7 @@ jobs:
         run: |
           docker tag \
             ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:${{ github.sha }} \
-            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:pr-${postfix}-${SHORT_SHA}
+            ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:pr-${{inputs.postfix}}-${{ env.SHORT_SHA }}
 
       - name: Push main image
         if: github.event_name == 'push'
@@ -193,4 +193,4 @@ jobs:
       - name: Push PR image
         if: github.event_name == 'workflow_dispatch'
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:pr-${postfix}-${SHORT_SHA}
+          docker push ghcr.io/${{ github.repository_owner }}/finance-tracker-frontend:pr-${{inputs.postfix}}-${{ env.SHORT_SHA }}
