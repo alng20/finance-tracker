@@ -23,9 +23,7 @@ services:
     networks:
       - finance_tracker
     volumes:
-      # TODO: Use env vars instead of local paths
-      - ./certs/localhost.crt:/etc/nginx/certs/localhost.crt:ro
-      - ./certs/localhost.key:/etc/nginx/certs/localhost.key:ro
+      - ${TLS_CERTS_PATH:-./out/certs}:/etc/nginx/certs/
     depends_on:
       api:
         condition: service_started

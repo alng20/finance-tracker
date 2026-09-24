@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+if [ "$#" -lt 2 ] || [ "$#" -gt 4 ]; then
+    echo "Usage: $0 <docker-compose file> <env file> [pull] [recreate]"
+    exit 1
+fi
+
+DOCKER_COMPOSE_FILE="$1"
+ENV_FILE="$2"
+
+if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
+    echo "Error: docker compose file $DOCKER_COMPOSE_FILE doesn't exist"
+    exit 1
+fi
+
+if [ ! -f "$ENV_FILE" ]; then
+    echo "Error: env file $ENV_FILE doesn't exist"
+    exit 1
+fi
+
+PULL_FLAG=""
+RECREATE_FLAG=""
+
+if [ "$3" = "pull" ] || [ "$4" = "pull" ]; then
+    PULL_FLAG="--pull always"
+fi
+if [ "$3" = "recreate" ] || [ "$4" = "recreate" ]; then
+    RECREATE_FLAG="--force-recreate"
+fi
+
+docker compose --env-file $ENV_FILE -f $DOCKER_COMPOSE_FILE up -d $PULL_FLAG $RECREATE_FLAG
+
