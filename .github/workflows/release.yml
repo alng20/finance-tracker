@@ -55,7 +55,7 @@ jobs:
           cp deploy/stop_app release/
           cp deploy/.env.example release/
 
-          sed -i "s/^IMAGE_TAG=.*/IMAGE_TAG=${{ steps.version.outputs.version }}/" release/.env.example
+          sed -i "s/^# IMAGE_TAG=.*/IMAGE_TAG=${{ steps.version.outputs.version }}/" release/.env.example
 
           cd release
           zip -r ../finance-tracker-release-${{ github.ref_name }}.zip .
