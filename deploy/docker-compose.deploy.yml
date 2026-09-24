@@ -1,9 +1,9 @@
 services:
   api:
-    image: ghcr.io/alng20/finance-tracker-api:latest
+    image: ghcr.io/alng20/finance-tracker-api:${IMAGE_TAG:-latest}
     environment:
       ASPNETCORE_HTTP_PORTS: 8080
-      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
       Jwt__SecretKey: ${JWT_SECRET_KEY}
     networks:
       - finance_tracker
@@ -12,16 +12,14 @@ services:
         condition: service_healthy
 
   frontend:
-    image: ghcr.io/alng20/finance-tracker-frontend:latest
+    image: ghcr.io/alng20/finance-tracker-frontend:${IMAGE_TAG:-latest}
     ports:
       - "5173:80"
       - "5443:443"
     networks:
       - finance_tracker
     volumes:
-      # TODO: Use env vars instead of local paths
-      - ./certs/localhost.crt:/etc/nginx/certs/localhost.crt:ro
-      - ./certs/localhost.key:/etc/nginx/certs/localhost.key:ro
+      - ${TLS_CERTS_PATH:-./out/certs}:/etc/nginx/certs/
     depends_on:
       api:
         condition: service_started

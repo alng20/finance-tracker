@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
+    echo "Usage: $0 <docker-compose file> <env file> [rmi]"
+    exit 1
+fi
+
+DOCKER_COMPOSE_FILE="$1"
+ENV_FILE="$2"
+
+if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
+    echo "Error: docker compose file $DOCKER_COMPOSE_FILE doesn't exist"
+    exit 1
+fi
+
+if [ ! -f "$ENV_FILE" ]; then
+    echo "Error: env file $ENV_FILE doesn't exist"
+    exit 1
+fi
+
+REMOVE_IMAGES_FLAG=""
+
+if [ "$3" = "rmi" ]; then
+    REMOVE_IMAGES_FLAG="--rmi all"
+fi
+
+docker compose --env-file $ENV_FILE -f $DOCKER_COMPOSE_FILE down $REMOVE_IMAGES_FLAG
