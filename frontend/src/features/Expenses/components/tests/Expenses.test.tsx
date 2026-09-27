@@ -19,7 +19,7 @@ describe("Expenses", () => {
 
   it("Show error state by GET API", async () => {
     server.use(
-      http.get("*/api/expenses", () => {
+      http.get("api/expenses", () => {
         return new HttpResponse(null, { status: 500 });
       }),
     );
@@ -33,7 +33,7 @@ describe("Expenses", () => {
 
   it("Show empty state by GET API", async () => {
     server.use(
-      http.get("*/api/expenses", () => {
+      http.get("api/expenses", () => {
         return HttpResponse.json({
           page: 1,
           pageSize: 10,
@@ -59,7 +59,7 @@ describe("Expenses", () => {
 
   it("Show loading state by GET API", async () => {
     server.use(
-      http.get("*/api/expenses", async () => {
+      http.get("api/expenses", async () => {
         await new Promise((resolve) => setTimeout(resolve, 100));
 
         return HttpResponse.json({

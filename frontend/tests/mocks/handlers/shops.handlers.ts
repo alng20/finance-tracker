@@ -9,7 +9,16 @@ export const shopsHandlers = [
       totalCount: 0,
       hasNextPage: false,
       hasPreviousPage: false,
-      data: [],
+      data: [
+        {
+          id: "shop-1",
+          name: "PAKnSAVE",
+          retailerId: "retailer-1",
+          retailerName: "PAKnSAVE",
+          country: "New Zealand",
+          city: "Wellington",
+        },
+      ],
     });
   }),
 ];
