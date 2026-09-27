@@ -14,8 +14,8 @@ services:
   frontend:
     image: ghcr.io/alng20/finance-tracker-frontend:${IMAGE_TAG:-latest}
     ports:
-      - "5173:80"
-      - "5443:443"
+      - "${HTTP_PORT:-5173}:80"
+      - "${HTTPS_PORT:-5443}:443"
     networks:
       - finance_tracker
     volumes:
@@ -32,8 +32,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     networks:
       - finance_tracker
-    ports:
-      - "6000:${POSTGRES_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql
     healthcheck:

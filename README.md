@@ -66,3 +66,4 @@ Application is available at `http://localhost:5173` by default
 
 Application is available at `https://localhost:5443` if local TLS certificates are configured
 
+Use your ports if you change `HTTP_PORT`/`HTTS_PORT` environment variables
