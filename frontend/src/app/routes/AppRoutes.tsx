@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
-import RegisterPage from "../../features/Authentication/components/RegisterForm";
 import LoginPage from "../../features/Authentication/pages/LoginPage";
+import RegisterPage from "../../features/Authentication/pages/RegisterPage";
 import DashboardPage from "../../features/Dashboard/pages/DashboardPage";
 import ExpensesPage from "../../features/Expenses/pages/ExpensesPage";
 import GroupPage from "../../features/Groups/pages/GroupsPage";

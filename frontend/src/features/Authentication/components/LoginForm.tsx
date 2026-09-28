@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../hooks/useAuth";
+import { type LoginRequest } from "../types/LoginRequest";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function LoginForm() {
     setError("");
 
     try {
-      await login(email, password);
+      await login({ email, password } as LoginRequest);
       navigate("/dashboard", { replace: true });
     } catch {
       setError("Invalid email or password");
