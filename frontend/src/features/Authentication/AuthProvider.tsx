@@ -4,6 +4,7 @@ import { setAccessToken } from "../../api/apiToken";
 import * as authApi from "./api/authApi";
 import { AuthContext, type AuthState, type UserData } from "./AuthContext";
 import type { GetProfileResponse, UserRole } from "./types/GetProfileResponse";
+import type { LoginRequest } from "./types/LoginRequest";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -36,8 +37,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [profile]);
 
   const login = useCallback(
-    async (email: string, password: string) => {
-      const result = await authApi.login(email, password);
+    async (request: LoginRequest) => {
+      const result = await authApi.login(request);
       setAccessToken(result.accessToken);
       await profile();
     },

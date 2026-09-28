@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
 import type { UserRole } from "./types/GetProfileResponse";
+import type { LoginRequest } from "./types/LoginRequest";
 
 export type AuthState = "Authenticated" | "Unauthenticated" | "Unknown";
 
@@ -13,7 +14,7 @@ export type UserData = {
 type AuthContextValue = {
   authState: AuthState;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (request: LoginRequest) => Promise<void>;
   refresh: () => Promise<void>;
   logout: () => Promise<void>;
   user: UserData | null;

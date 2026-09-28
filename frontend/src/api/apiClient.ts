@@ -1,6 +1,7 @@
+import { StatusCodes } from "http-status-codes";
+
 import { getAccessToken, setAccessToken } from "./apiToken";
 
-// TODO: Move to env
 const API_URL = "";
 
 function buildUrl(url: string): string {
@@ -141,6 +142,9 @@ export function createApiClient(): ApiClient {
 
   async function checkResponseStatus(response: Response): Promise<void> {
     if (!response.ok) {
+      if (response.status == StatusCodes.BAD_GATEWAY) {
+        throw new Error("Server is unavailable");
+      }
       throw new Error(await getErrorMessage(response));
     }
   }
