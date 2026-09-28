@@ -41,7 +41,7 @@ jobs:
       - name: Test
         run: dotnet test --no-build --configuration ${{ matrix.configuration }}
 
-  frontend-build:
+  frontend-build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -72,3 +72,7 @@ jobs:
       - name: Build frontend
         working-directory: frontend
         run: npm run build
+
+      - name: Test frontend
+        working-directory: frontend
+        run: npm run test:run
