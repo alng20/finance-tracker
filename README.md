@@ -17,6 +17,10 @@ Backend:
 Frontend:
 - React
 - TypeScript
+- Vertical Slice Architecture
+- Vitest
+- Jest
+- Docker
 
 Database:
 - PostgreSQL
