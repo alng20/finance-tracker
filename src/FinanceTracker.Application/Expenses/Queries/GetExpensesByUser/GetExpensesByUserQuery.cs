@@ -7,7 +7,6 @@ using MediatR;
 
 namespace FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 
-// TODO: Add sort type
 public record GetExpensesByUserQuery(
     int Page = 1,
     int PageSize = 20,

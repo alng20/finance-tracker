@@ -39,9 +39,11 @@ function useGetWithFilters<
 
     getter(page, filters, { signal: controller.signal })
       .then((response: ResponseType) => {
-        if (!controller.signal.aborted) {
-          setIsLoading(false);
+        if (controller.signal.aborted) {
+          return;
         }
+
+        setIsLoading(false);
         setResults(response.data);
         setMetadata(response.metadata ?? null);
         setPagination({
