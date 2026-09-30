@@ -29,6 +29,7 @@ function useReportAmount<T>(
           return;
         }
         setResult(response);
+        setError(null);
         setIsLoading(false);
       })
       .catch((err) => {

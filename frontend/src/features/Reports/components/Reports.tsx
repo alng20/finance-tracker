@@ -16,7 +16,7 @@ function Reports() {
   const [filters, setFilters] = useState<ReportFiltersData>({
     currency: defaultCurrency,
   });
-  const [groupingType, setGroupingType] = useState<ReportGroupingType>("Day");
+  const [groupingType, setGroupingType] = useState<ReportGroupingType>("Week");
 
   return (
     <div className="reports">

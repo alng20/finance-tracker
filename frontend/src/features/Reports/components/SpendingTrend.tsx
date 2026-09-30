@@ -20,10 +20,28 @@ type SpendingTrendProps = {
   onGroupingTypeChange: (groupingType: ReportGroupingType) => void;
 };
 
-function formatPeriodLabel(fromDate: string, toDate: string): string {
+function formatPeriodLabel(
+  fromDate: string,
+  toDate: string,
+  groupingType: ReportGroupingType = "Undefined",
+): string {
   if (fromDate === toDate) {
     return formatDate(fromDate);
   }
+
+  if (groupingType == "Month") {
+    return `${formatDate(fromDate, {
+      month: "short",
+      year: "numeric",
+    })}`;
+  }
+
+  if (groupingType == "Year") {
+    return `${formatDate(fromDate, {
+      year: "numeric",
+    })}`;
+  }
+
   return `${formatDate(fromDate)} \u2013 ${formatDate(toDate)}`;
 }
 
@@ -62,11 +80,10 @@ function getEffectiveTrendFilters(
   pageOffset: number,
 ): {
   filters: ReportFiltersData;
-  isClamped: boolean;
   hasEarlierFilterRoom: boolean;
 } {
   if (groupingType !== "Day") {
-    return { filters, isClamped: false, hasEarlierFilterRoom: false };
+    return { filters, hasEarlierFilterRoom: false };
   }
 
   const anchorDate = filters.toDate ?? getTodayDate();
@@ -82,14 +99,12 @@ function getEffectiveTrendFilters(
       ? filters.fromDate
       : monthStart;
 
-  const isClamped = filters.toDate !== toDate || filters.fromDate !== fromDate;
   const dayBeforeWindow = addDays(fromDate, -1);
   const hasEarlierFilterRoom =
     !filters.fromDate || dayBeforeWindow >= filters.fromDate;
 
   return {
     filters: { ...filters, fromDate, toDate },
-    isClamped,
     hasEarlierFilterRoom,
   };
 }
@@ -101,8 +116,6 @@ function SpendingTrend({
 }: SpendingTrendProps) {
   const [pageOffset, setPageOffset] = useState(0);
 
-  // Reset paging back to the most recent window whenever the shared
-  // filters or grouping type change, without a separate reset effect.
   const filtersKey = `${filters.currency}|${filters.fromDate ?? ""}|${filters.toDate ?? ""}|${groupingType}`;
   const [lastFiltersKey, setLastFiltersKey] = useState(filtersKey);
   if (filtersKey !== lastFiltersKey) {
@@ -110,11 +123,8 @@ function SpendingTrend({
     setPageOffset(0);
   }
 
-  const {
-    filters: effectiveFilters,
-    isClamped,
-    hasEarlierFilterRoom,
-  } = getEffectiveTrendFilters(filters, groupingType, pageOffset);
+  const { filters: effectiveFilters, hasEarlierFilterRoom } =
+    getEffectiveTrendFilters(filters, groupingType, pageOffset);
   const { groupedAmount, isLoading, error } = useGroupedAmount(
     effectiveFilters,
     groupingType,
@@ -140,6 +150,7 @@ function SpendingTrend({
     label: formatPeriodLabel(
       period.reportPeriod.fromDate,
       period.reportPeriod.toDate,
+      groupingType,
     ),
     amount: period.amount,
   }));
@@ -168,11 +179,11 @@ function SpendingTrend({
       {groupingType === "Day" && (
         <div className="spending-trend__pager">
           <p className="spending-trend__note">
-            Day view shows one calendar month at a time
-            {isClamped
-              ? ` (${formatPeriodLabel(effectiveFilters.fromDate ?? "", effectiveFilters.toDate ?? "")} shown)`
-              : ""}
-            .
+            {formatPeriodLabel(
+              effectiveFilters.fromDate ?? "",
+              effectiveFilters.toDate ?? "",
+              groupingType,
+            )}
           </p>
           <div className="spending-trend__pager-buttons">
             {canGoOlder && (

@@ -47,7 +47,41 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
 
   return (
     <section className="expense-details-info">
-      <h2>Details</h2>
+      <div className="expense-details-header_and_add">
+        <h2>Details</h2>
+        <button
+          onClick={props.onClickAddDetail}
+          type="button"
+          className="expense-details-add-button"
+        >
+          + Add detail
+        </button>
+      </div>
+
+      {(props.isAddingExpenseDetail || props.editingDetailIdx != null) && (
+        <AddExpenseDetail
+          key={props.editingDetailIdx ?? "new"}
+          initialDetail={
+            props.editingDetailIdx !== null
+              ? props.details[props.editingDetailIdx]
+              : undefined
+          }
+          onSave={props.onClickSaveDetail}
+          onCancel={props.onClickCancelDetail}
+        />
+      )}
+
+      <div className="expense-details-summary">
+        <span>number: {summary?.number ?? "0"} </span>
+        <span>•</span>
+        <span>
+          detailed: {summary?.detailed ?? "0"} {props.currency}
+        </span>
+        <span>•</span>
+        <span>
+          undetailed: {summary?.undetailed ?? "0"} {props.currency}
+        </span>
+      </div>
 
       <table className="expense-details-info__table">
         <thead>
@@ -98,39 +132,6 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
           ))}
         </tbody>
       </table>
-
-      <div className="expense-details-summary">
-        <span>number: {summary?.number ?? "0"} </span>
-        <span>•</span>
-        <span>
-          detailed: {summary?.detailed ?? "0"} {props.currency}
-        </span>
-        <span>•</span>
-        <span>
-          undetailed: {summary?.undetailed ?? "0"} {props.currency}
-        </span>
-      </div>
-
-      <button
-        onClick={props.onClickAddDetail}
-        type="button"
-        className="expense-details-add-button"
-      >
-        + Add detail
-      </button>
-
-      {(props.isAddingExpenseDetail || props.editingDetailIdx != null) && (
-        <AddExpenseDetail
-          key={props.editingDetailIdx ?? "new"}
-          initialDetail={
-            props.editingDetailIdx !== null
-              ? props.details[props.editingDetailIdx]
-              : undefined
-          }
-          onSave={props.onClickSaveDetail}
-          onCancel={props.onClickCancelDetail}
-        />
-      )}
     </section>
   );
 }

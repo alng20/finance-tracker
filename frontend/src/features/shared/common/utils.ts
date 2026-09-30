@@ -9,12 +9,15 @@ export function formatAmount(amount: number, currency: Currency): string {
   );
 }
 
-export function formatDate(date: string | Date): string {
-  return new Intl.DateTimeFormat("en-NZ", {
+export function formatDate(
+  date: string | Date,
+  options: Intl.DateTimeFormatOptions = {
     day: "numeric",
     month: "short",
     year: "numeric",
-  }).format(new Date(date));
+  },
+): string {
+  return new Intl.DateTimeFormat("en-NZ", options).format(new Date(date));
 }
 
 export function getTodayDate() {

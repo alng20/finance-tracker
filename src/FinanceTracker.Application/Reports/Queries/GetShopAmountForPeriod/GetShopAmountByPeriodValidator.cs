@@ -6,7 +6,10 @@ public class GetShopAmountForPeriodValidator : AbstractValidator<GetShopAmountFo
 {
     public GetShopAmountForPeriodValidator()
     {
-        RuleFor(x => x.ToDate).GreaterThan(x => x.FromDate);
+        RuleFor(x => x.ToDate)
+            .GreaterThan(x => x.FromDate)
+            .When(x => x.FromDate.HasValue && x.ToDate.HasValue);
+        ;
         RuleFor(x => x.Currency).IsInEnum();
     }
 }

@@ -103,6 +103,19 @@ function Expenses() {
         onEdit={(expense) => setIsExpenseEdited(expense)}
         onChanged={refresh}
       />
+
+      <Pagination
+        pageNumber={page.pageNumber}
+        pagesTotalCount={pagination.pagesTotalCount}
+        hasNextPage={pagination.hasNextPage}
+        hasPreviousPage={pagination.hasPreviousPage}
+        onPageChange={(newPage) =>
+          setPage((current) => ({
+            ...current,
+            pageNumber: newPage,
+          }))
+        }
+      />
     </div>
   );
 }

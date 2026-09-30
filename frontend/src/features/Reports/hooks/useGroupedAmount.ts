@@ -30,6 +30,7 @@ function useGroupedAmount(
           return;
         }
         setGroupedAmount(response);
+        setError(null);
         setIsLoading(false);
       })
       .catch((err) => {
