@@ -1,8 +1,9 @@
+import Reports from "../components/Reports";
+
 function ReportsPage() {
   return (
-    <div className="page-heading">
-      <h1>Reports</h1>
-      <p>TBD</p>
+    <div className="reports_page">
+      <Reports />
     </div>
   );
 }

@@ -1,0 +1,93 @@
+.spending-trend {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.spending-trend__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.spending-trend__header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.spending-trend__grouping {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted-text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.spending-trend__grouping select {
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid rgba(23, 43, 58, 0.2);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-color);
+  font-size: 13px;
+  text-transform: none;
+}
+
+.spending-trend__note {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: 13px;
+}
+
+.spending-trend__pager {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.spending-trend__pager-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.spending-trend__pager-buttons button {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba(23, 43, 58, 0.2);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-color);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.spending-trend__pager-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+  .spending-trend__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -9,5 +9,5 @@ public record PagedResultWithMetadata<DataType, MetadataType>(IReadOnlyList<Data
     public bool HasPreviousPage => Page > 1;
 }
 
-public record PagedResult<DataType>(IReadOnlyList<DataType> Data, int Page, int PageSize, int TotalCount): PagedResultWithMetadata<DataType, None>(Data, default, Page, PageSize, TotalCount);
+public record PagedResult<DataType>(IReadOnlyList<DataType> Data, int Page, int PageSize, int TotalCount) : PagedResultWithMetadata<DataType, None>(Data, default, Page, PageSize, TotalCount);
 

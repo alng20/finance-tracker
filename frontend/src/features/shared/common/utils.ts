@@ -1,11 +1,11 @@
-import type { Currency } from "../types/Currency";
+import { CurrenciesDict, type Currency } from "../types/Currency";
 
 export function formatAmount(amount: number, currency: Currency): string {
   return (
     new Intl.NumberFormat("en-NZ", {
       style: "currency",
       currency: currency,
-    }).format(amount) + ` ${currency}`
+    }).format(amount) + (currency == CurrenciesDict.NZD ? ` ${currency}` : ``)
   );
 }
 

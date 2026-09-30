@@ -1,0 +1,24 @@
+.category-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.category-breakdown h2 {
+  margin: 0 0 8px;
+  padding-bottom: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.category-breakdown__callout {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: 13px;
+}

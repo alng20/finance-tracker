@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace FinanceTracker.Application.Reports.Models;
 
-public record ReportPeriod(DateOnly FromDate, DateOnly ToDate)
+public record ReportPeriod(DateOnly? FromDate, DateOnly? ToDate)
 {
     public static ReportPeriod GetWeekPeriod(int year, int week)
     {

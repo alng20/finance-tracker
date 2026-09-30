@@ -3,6 +3,7 @@ using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Reports.Enums;
 using FinanceTracker.Application.Reports.Models;
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Enums;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,25 @@ namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseReportRepository
 {
     private readonly FinanceTrackerDbContext _ctx = ctx;
+
+    public async Task<IReadOnlyCollection<ExpenseAmountByDateData>> GetTotalAmountAsync(
+        Guid userId,
+        DateOnly? fromDate,
+        DateOnly? toDate,
+        CancellationToken cancellationToken
+    )
+    {
+        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
+
+        return await query
+            .Select(x => new ExpenseAmountByDateData(
+                x.Date,
+                x.TotalAmount.Amount,
+                x.TotalAmount.Currency
+            ))
+            .ToListAsync(cancellationToken);
+        ;
+    }
 
     public async Task<
         IReadOnlyCollection<ExpensesTotalWithDetailsData>
@@ -21,17 +41,7 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = _ctx.Expenses.AsNoTracking().Where(x => x.UserId == userId);
-
-        if (fromDate.HasValue)
-        {
-            query = query.Where(x => x.Date >= fromDate.Value);
-        }
-
-        if (toDate.HasValue)
-        {
-            query = query.Where(x => x.Date <= toDate.Value);
-        }
+        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
 
         var result = await query
             .Select(x => new ExpensesTotalWithDetailsData(
@@ -57,17 +67,7 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = _ctx.Expenses.AsNoTracking().Where(x => x.UserId == userId);
-
-        if (fromDate.HasValue)
-        {
-            query = query.Where(x => x.Date >= fromDate.Value);
-        }
-
-        if (toDate.HasValue)
-        {
-            query = query.Where(x => x.Date <= toDate.Value);
-        }
+        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
 
         var result = await query
             .Select(x => new ExpenseAmountByDateData(
@@ -87,17 +87,7 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = _ctx.Expenses.AsNoTracking().Where(x => x.UserId == userId);
-
-        if (fromDate.HasValue)
-        {
-            query = query.Where(x => x.Date >= fromDate.Value);
-        }
-
-        if (toDate.HasValue)
-        {
-            query = query.Where(x => x.Date <= toDate.Value);
-        }
+        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
 
         var result = await query
             .GroupBy(x => new
@@ -126,17 +116,7 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = _ctx.Expenses.AsNoTracking().Where(x => x.UserId == userId);
-
-        if (fromDate.HasValue)
-        {
-            query = query.Where(x => x.Date >= fromDate.Value);
-        }
-
-        if (toDate.HasValue)
-        {
-            query = query.Where(x => x.Date <= toDate.Value);
-        }
+        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
 
         var result = await query
             .GroupBy(x => new
@@ -158,12 +138,30 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         return result;
     }
 
-    public async Task<IReadOnlyCollection<GroupedTotalByPeriodData>> GetGroupedAmountByPeriodAsync(
+    public async Task<IReadOnlyCollection<TotalAmountByPeriodData>> GetGroupedAmountByPeriodAsync(
         Guid userId,
         DateOnly? fromDate,
         DateOnly? toDate,
         ReportGroupingType groupingType,
         CancellationToken cancellationToken
+    )
+    {
+        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
+
+        return groupingType switch
+        {
+            ReportGroupingType.Day => await GetDayAmounts(query, cancellationToken),
+            ReportGroupingType.Month => await GetMonthAmounts(query, cancellationToken),
+            ReportGroupingType.Year => await GetYearAmounts(query, cancellationToken),
+
+            _ => throw new NotFoundException("Report grouping type is unsupported"),
+        };
+    }
+
+    private IQueryable<Expense> GetUserExpensesForPeriod(
+        Guid userId,
+        DateOnly? fromDate,
+        DateOnly? toDate
     )
     {
         var query = _ctx.Expenses.AsNoTracking().Where(x => x.UserId == userId);
@@ -178,24 +176,20 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
             query = query.Where(x => x.Date <= toDate.Value);
         }
 
-        return groupingType switch
-        {
-            ReportGroupingType.Day => await GetDayAmounts(query, cancellationToken),
-            ReportGroupingType.Month => await GetMonthAmounts(query, cancellationToken),
-            ReportGroupingType.Year => await GetYearAmounts(query, cancellationToken),
-
-            _ => throw new NotFoundException("Report grouping type is unsupported"),
-        };
+        return query;
     }
 
-    private async Task<IReadOnlyCollection<GroupedTotalByPeriodData>> GetDayAmounts(
+    private async Task<IReadOnlyCollection<TotalAmountByPeriodData>> GetDayAmounts(
         IQueryable<Expense> query,
         CancellationToken cancellationToken
     )
     {
+        // TODO: Return total amount for periods
+
         return await query
             .GroupBy(x => new { x.Date, x.TotalAmount.Currency })
-            .Select(g => new GroupedTotalByPeriodData(
+            .OrderByDescending(x => x.Key.Date)
+            .Select(g => new TotalAmountByPeriodData(
                 new ReportPeriod(g.Key.Date, g.Key.Date),
                 g.Sum(x => x.TotalAmount.Amount),
                 g.Key.Currency
@@ -203,7 +197,7 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
             .ToListAsync(cancellationToken);
     }
 
-    private async Task<IReadOnlyCollection<GroupedTotalByPeriodData>> GetMonthAmounts(
+    private async Task<IReadOnlyCollection<TotalAmountByPeriodData>> GetMonthAmounts(
         IQueryable<Expense> query,
         CancellationToken cancellationToken
     )
@@ -215,7 +209,9 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
                 x.Date.Year,
                 x.TotalAmount.Currency,
             })
-            .Select(g => new GroupedTotalByPeriodData(
+            .OrderByDescending(x => x.Key.Year)
+            .ThenByDescending(x => x.Key.Month)
+            .Select(g => new TotalAmountByPeriodData(
                 ReportPeriod.GetMonthPeriod(g.Key.Year, g.Key.Month),
                 g.Sum(x => x.TotalAmount.Amount),
                 g.Key.Currency
@@ -223,14 +219,15 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
             .ToListAsync(cancellationToken);
     }
 
-    private async Task<IReadOnlyCollection<GroupedTotalByPeriodData>> GetYearAmounts(
+    private async Task<IReadOnlyCollection<TotalAmountByPeriodData>> GetYearAmounts(
         IQueryable<Expense> query,
         CancellationToken cancellationToken
     )
     {
         return await query
             .GroupBy(x => new { x.Date.Year, x.TotalAmount.Currency })
-            .Select(g => new GroupedTotalByPeriodData(
+            .OrderByDescending(x => x.Key.Year)
+            .Select(g => new TotalAmountByPeriodData(
                 ReportPeriod.GetYearPeriod(g.Key.Year),
                 g.Sum(x => x.TotalAmount.Amount),
                 g.Key.Currency

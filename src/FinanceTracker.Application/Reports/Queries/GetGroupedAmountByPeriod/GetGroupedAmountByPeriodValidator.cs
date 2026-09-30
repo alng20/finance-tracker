@@ -1,8 +1,6 @@
-using FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;
-
 using FluentValidation;
 
-namespace FinanceTracker.Application.Expenses.Commands.CreateExpense;
+namespace FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;
 
 public class GetGroupedAmountByPeriodValidator : AbstractValidator<GetGroupedAmountByPeriodQuery>
 {

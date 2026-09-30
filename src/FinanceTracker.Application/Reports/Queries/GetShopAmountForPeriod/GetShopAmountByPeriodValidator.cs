@@ -1,8 +1,6 @@
-using FinanceTracker.Application.Reports.Queries.GetShopAmountForPeriod;
-
 using FluentValidation;
 
-namespace FinanceTracker.Application.Expenses.Commands.CreateExpense;
+namespace FinanceTracker.Application.Reports.Queries.GetShopAmountForPeriod;
 
 public class GetShopAmountForPeriodValidator : AbstractValidator<GetShopAmountForPeriodQuery>
 {

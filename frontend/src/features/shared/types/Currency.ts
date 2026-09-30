@@ -1,3 +1,9 @@
-export const currencies = ["NZD", "RUB", "USD"] as const;
+export const CurrenciesDict = {
+  NZD: "NZD",
+  RUB: "RUB",
+  USD: "USD",
+} as const;
 
-export type Currency = (typeof currencies)[number];
+export type Currency = (typeof CurrenciesDict)[keyof typeof CurrenciesDict];
+
+export const currencies = Object.values(CurrenciesDict);

@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Sockets;
+
 using Microsoft.Extensions.Options;
 
 namespace FinanceTracker.Api.Common.Options.Validators;

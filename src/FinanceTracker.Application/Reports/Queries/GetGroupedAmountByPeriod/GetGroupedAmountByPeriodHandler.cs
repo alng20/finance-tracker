@@ -51,7 +51,11 @@ public class GetGroupedAmountByPeriodHandler(
                     g.Sum(x => _currencyConverter.Convert(x.Amount, x.Currency, query.Currency))
                 ))
                 .ToList();
-            return new GetGroupedAmountByPeriodResultDto(query.Currency, query.GroupingType, groupedAmount);
+            return new GetGroupedAmountByPeriodResultDto(
+                query.Currency,
+                query.GroupingType,
+                groupedAmount
+            );
         }
         else if (query.GroupingType is ReportGroupingType.Week)
         {
@@ -68,6 +72,8 @@ public class GetGroupedAmountByPeriodHandler(
                     Week = ISOWeek.GetWeekOfYear(x.Date),
                     Currency = x.Currency,
                 })
+                .OrderByDescending(x => x.Key.Year)
+                .ThenByDescending(x => x.Key.Week)
                 .Select(g => new PeriodAmountReportDto(
                     ReportPeriod.GetWeekPeriod(g.Key.Year, g.Key.Week),
                     g.Sum(x => _currencyConverter.Convert(x.Amount, x.Currency, query.Currency))
