@@ -2,6 +2,7 @@ import "./css/ExpenseDetailsInfo.css";
 
 import { useMemo } from "react";
 
+import { formatAmount } from "../../../shared/common/utils";
 import type { Currency } from "../../../shared/types/Currency";
 import type { AddExpenseDetailData } from "../../types/AddExpenseDetailData";
 import AddExpenseDetail from "./AddExpenseDetail";
@@ -58,6 +59,19 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
         </button>
       </div>
 
+      <div className="expense-details-summary">
+        <span>number: {summary?.number ?? "0"} </span>
+        <span>•</span>
+        <span>
+          detailed: {formatAmount(summary?.detailed ?? +0.0, props.currency)}
+        </span>
+        <span>•</span>
+        <span>
+          undetailed:{" "}
+          {formatAmount(summary?.undetailed ?? +0.0, props.currency)}
+        </span>
+      </div>
+
       {(props.isAddingExpenseDetail || props.editingDetailIdx != null) && (
         <AddExpenseDetail
           key={props.editingDetailIdx ?? "new"}
@@ -71,67 +85,57 @@ function ExpenseDetailsInfo(props: ExpenseDetailsInfoProps) {
         />
       )}
 
-      <div className="expense-details-summary">
-        <span>number: {summary?.number ?? "0"} </span>
-        <span>•</span>
-        <span>
-          detailed: {summary?.detailed ?? "0"} {props.currency}
-        </span>
-        <span>•</span>
-        <span>
-          undetailed: {summary?.undetailed ?? "0"} {props.currency}
-        </span>
-      </div>
-
-      <table className="expense-details-info__table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Quantity</th>
-            <th>Unit</th>
-            <th>Discount</th>
-            <th>Price</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {props.details.map((detail, index) => (
-            <tr key={detail.id ?? `${detail.itemId}-${index}`}>
-              <td>{detail.itemName}</td>
-              <td>{detail.categoryName}</td>
-              <td>{detail.quantity}</td>
-              <td>{detail.unit}</td>
-              <td>{detail.discount}</td>
-              <td>{detail.price}</td>
-              <td>
-                <button
-                  type="button"
-                  className="expense-details-edit-button"
-                  onClick={() => {
-                    props.onClickEditDetail(index);
-                  }}
-                >
-                  Edit
-                </button>
-              </td>
-              <td>
-                <button
-                  type="button"
-                  className="expense-details-delete-button"
-                  onClick={() => {
-                    props.onClickDeleteDetail(index);
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
+      {props.details.length > 0 && (
+        <table className="expense-details-info__table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Unit</th>
+              <th>Discount</th>
+              <th>Price</th>
+              <th></th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {props.details.map((detail, index) => (
+              <tr key={detail.id ?? `${detail.itemId}-${index}`}>
+                <td>{detail.itemName}</td>
+                <td>{detail.categoryName}</td>
+                <td>{detail.quantity}</td>
+                <td>{detail.unit}</td>
+                <td>{detail.discount}</td>
+                <td>{formatAmount(detail.price, props.currency)}</td>
+                <td>
+                  <button
+                    type="button"
+                    className="expense-details-edit-button"
+                    onClick={() => {
+                      props.onClickEditDetail(index);
+                    }}
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    className="expense-details-delete-button"
+                    onClick={() => {
+                      props.onClickDeleteDetail(index);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </section>
   );
 }

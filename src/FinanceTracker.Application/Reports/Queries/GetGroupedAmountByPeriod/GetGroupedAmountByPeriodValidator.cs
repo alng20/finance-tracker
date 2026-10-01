@@ -7,7 +7,7 @@ public class GetGroupedAmountByPeriodValidator : AbstractValidator<GetGroupedAmo
     public GetGroupedAmountByPeriodValidator()
     {
         RuleFor(x => x.ToDate)
-            .GreaterThan(x => x.FromDate)
+            .GreaterThanOrEqualTo(x => x.FromDate)
             .When(x => x.FromDate.HasValue && x.ToDate.HasValue);
         ;
         RuleFor(x => x.Currency).IsInEnum();
