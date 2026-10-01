@@ -11,6 +11,24 @@ type ExpenseDetailsTableProps = {
 function ExpenseDetailsTable({ details, summary }: ExpenseDetailsTableProps) {
   return (
     <div className="expense-details-table">
+      <div className="expense-details-table__summary">
+        <div>
+          <span>Total items</span>
+          <strong>{summary.number}</strong>
+        </div>
+        <div>
+          <span>Detailed</span>
+          <strong>
+            {summary.detailed} {summary.currency}
+          </strong>
+        </div>
+        <div>
+          <span>Undetailed</span>
+          <strong>
+            {summary.undetailed} {summary.currency}
+          </strong>
+        </div>
+      </div>
       <div className="expense-details-table__header">
         <div>Item</div>
         <div>Category</div>
@@ -39,24 +57,6 @@ function ExpenseDetailsTable({ details, summary }: ExpenseDetailsTableProps) {
           </div>
         </div>
       ))}
-      <div className="expense-details-table__summary">
-        <div>
-          <span>Total items</span>
-          <strong>{summary.number}</strong>
-        </div>
-        <div>
-          <span>Detailed</span>
-          <strong>
-            {summary.detailed} {summary.currency}
-          </strong>
-        </div>
-        <div>
-          <span>Undetailed</span>
-          <strong>
-            {summary.undetailed} {summary.currency}
-          </strong>
-        </div>
-      </div>
     </div>
   );
 }

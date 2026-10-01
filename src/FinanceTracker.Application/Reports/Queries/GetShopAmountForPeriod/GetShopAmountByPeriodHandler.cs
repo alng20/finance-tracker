@@ -35,10 +35,10 @@ public class GetShopAmountForPeriodHandler(
             .Select(x => new ShopAmountDto(
                 x.Key.ShopId,
                 x.Key.ShopName,
-                x.Sum(x =>
-                    _currencyConverter.Convert(x.TotalAmount, x.Currency, query.Currency)
-                )
-            )).ToList();
+                x.Sum(x => _currencyConverter.Convert(x.TotalAmount, x.Currency, query.Currency))
+            ))
+            .OrderByDescending(x => x.TotalAmount)
+            .ToList();
 
         var totalAmount = amounts.Sum(x => x.TotalAmount);
 

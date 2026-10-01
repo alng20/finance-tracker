@@ -37,6 +37,7 @@ public class GetRetailerAmountForPeriodHandler(
                 x.Key.RetailerName,
                 x.Sum(x => _currencyConverter.Convert(x.TotalAmount, x.Currency, query.Currency))
             ))
+            .OrderByDescending(x => x.TotalAmount)
             .ToList();
 
         var totalAmount = amounts.Sum(x => x.TotalAmount);

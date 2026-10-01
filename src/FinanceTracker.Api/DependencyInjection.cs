@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+
 using FinanceTracker.Api.Common.Configuration;
 using FinanceTracker.Api.Common.Options;
 using FinanceTracker.Api.Common.Options.Validators;
@@ -8,6 +9,7 @@ using FinanceTracker.Api.Services;
 using FinanceTracker.Application.Common.Interfaces.Services;
 using FinanceTracker.Application.Common.Options;
 using FinanceTracker.Application.Common.Options.Validators;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.Options;

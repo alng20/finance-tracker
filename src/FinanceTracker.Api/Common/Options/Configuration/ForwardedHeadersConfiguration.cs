@@ -1,6 +1,8 @@
 using FinanceTracker.Api.Common.Options;
+
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
+
 using SysNet = System.Net;
 
 namespace FinanceTracker.Api.Common.Configuration;

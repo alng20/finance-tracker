@@ -4,6 +4,7 @@ using FinanceTracker.Application.Reports.Queries.GetCategoryAmountForPeriod;
 using FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;
 using FinanceTracker.Application.Reports.Queries.GetRetailerAmountForPeriod;
 using FinanceTracker.Application.Reports.Queries.GetShopAmountForPeriod;
+using FinanceTracker.Application.Reports.Queries.GetTotalAmountForPeriod;
 using FinanceTracker.Domain.Enums;
 
 using MediatR;
@@ -19,6 +20,22 @@ public class ExpenseReportController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
+    [HttpGet("total")]
+    public async Task<ActionResult<GetTotalAmountForPeriodResultDto>> GetTotalAmount(
+        [FromQuery] Currency currency,
+        [FromQuery] DateOnly? fromDate = null,
+        [FromQuery] DateOnly? toDate = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var report = await _mediator.Send(
+            new GetTotalAmountForPeriodQuery(fromDate, toDate, currency),
+            cancellationToken
+        );
+        return Ok(report);
+    }
+
+    // TODO: Add category filters
     [Authorize]
     [HttpGet("by_category")]
     public async Task<ActionResult<GetCategoryAmountForPeriodResultDto>> GetAmountByCategory(
@@ -52,6 +69,7 @@ public class ExpenseReportController(IMediator mediator) : ControllerBase
         return Ok(report);
     }
 
+    // TODO: Add shop filters
     [Authorize]
     [HttpGet("by_shop")]
     public async Task<ActionResult<GetShopAmountForPeriodResultDto>> GetAmountByShop(
@@ -68,6 +86,7 @@ public class ExpenseReportController(IMediator mediator) : ControllerBase
         return Ok(report);
     }
 
+    // TODO: Add retailer filters
     [Authorize]
     [HttpGet("by_retailer")]
     public async Task<ActionResult<GetRetailerAmountForPeriodResultDto>> GetAmountByRetailer(

@@ -1,14 +1,16 @@
-using FinanceTracker.Application.Reports.Queries.GetRetailerAmountForPeriod;
-
 using FluentValidation;
 
-namespace FinanceTracker.Application.Expenses.Commands.CreateExpense;
+namespace FinanceTracker.Application.Reports.Queries.GetRetailerAmountForPeriod;
 
-public class GetRetailerAmountForPeriodValidator : AbstractValidator<GetRetailerAmountForPeriodQuery>
+public class GetRetailerAmountForPeriodValidator
+    : AbstractValidator<GetRetailerAmountForPeriodQuery>
 {
     public GetRetailerAmountForPeriodValidator()
     {
-        RuleFor(x => x.ToDate).GreaterThan(x => x.FromDate);
+        RuleFor(x => x.ToDate)
+            .GreaterThan(x => x.FromDate)
+            .When(x => x.FromDate.HasValue && x.ToDate.HasValue);
+        ;
         RuleFor(x => x.Currency).IsInEnum();
     }
 }

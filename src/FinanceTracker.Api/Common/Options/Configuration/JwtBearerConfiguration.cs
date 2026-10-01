@@ -1,5 +1,7 @@
 using System.Text;
+
 using FinanceTracker.Application.Common.Options;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

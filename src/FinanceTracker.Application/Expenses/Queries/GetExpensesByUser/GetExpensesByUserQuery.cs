@@ -10,7 +10,7 @@ namespace FinanceTracker.Application.Expenses.Queries.GetExpensesByUser;
 public record GetExpensesByUserQuery(
     int Page = 1,
     int PageSize = 20,
-    ExpensesSortType? SortType = ExpensesSortType.Date, 
+    ExpensesSortType? SortType = ExpensesSortType.Date,
     DateOnly? FromDate = null,
     DateOnly? ToDate = null,
     IReadOnlyCollection<Guid?>? ShopIds = null,

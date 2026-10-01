@@ -9,11 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Providers;
 
-public class ExpenseProvider(FinanceTrackerDbContext ctx, ICurrencyConverter currencyConverter)
-    : IExpenseProvider
+public class ExpenseProvider(FinanceTrackerDbContext ctx) : IExpenseProvider
 {
     private readonly FinanceTrackerDbContext _ctx = ctx;
-    private readonly ICurrencyConverter _currencyConverter = currencyConverter;
 
     public async Task<PagedResult<GetExpensesByUserResultDto>> GetByUserAsync(
         Guid userId,

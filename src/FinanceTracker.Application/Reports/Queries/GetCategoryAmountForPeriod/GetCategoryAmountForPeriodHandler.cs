@@ -47,7 +47,9 @@ public class GetCategoryAmountForPeriodHandler(
                 g.Key.CategoryId,
                 g.Key.CategoryName,
                 g.Sum(x => _currencyConverter.Convert(x.TotalPrice, x.Currency, query.Currency))
-            )).ToList();
+            ))
+            .OrderByDescending(x => x.TotalAmount)
+            .ToList();
 
         return new GetCategoryAmountForPeriodResultDto(
             query.FromDate,

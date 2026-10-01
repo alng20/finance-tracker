@@ -1,14 +1,15 @@
-using FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;
-
 using FluentValidation;
 
-namespace FinanceTracker.Application.Expenses.Commands.CreateExpense;
+namespace FinanceTracker.Application.Reports.Queries.GetGroupedAmountByPeriod;
 
 public class GetGroupedAmountByPeriodValidator : AbstractValidator<GetGroupedAmountByPeriodQuery>
 {
     public GetGroupedAmountByPeriodValidator()
     {
-        RuleFor(x => x.ToDate).GreaterThan(x => x.FromDate);
+        RuleFor(x => x.ToDate)
+            .GreaterThanOrEqualTo(x => x.FromDate)
+            .When(x => x.FromDate.HasValue && x.ToDate.HasValue);
+        ;
         RuleFor(x => x.Currency).IsInEnum();
         RuleFor(x => x.GroupingType).IsInEnum();
     }

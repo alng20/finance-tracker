@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import * as reportsApi from "../../Reports/api/reportsApi";
 import type { GetGroupedAmountResponse } from "../../Reports/types/GetGroupedAmountResponse";
-import { getTotalAmount } from "../../Reports/types/GetGroupedAmountResponse";
+import { getGroupedTotalAmount } from "../../Reports/types/GetGroupedAmountResponse";
 import { defaultCurrency } from "../../shared/common/consts";
 import {
   formatAmount,
@@ -27,7 +27,7 @@ function useMonthAmount() {
     const groupingType = "Month";
 
     function setResult(response: GetGroupedAmountResponse) {
-      const amount = response ? getTotalAmount(response) : 0;
+      const amount = response ? getGroupedTotalAmount(response) : 0;
       const currency = response?.currency ?? "NZD";
       const result: MonthAmountResult = {
         currency: currency,

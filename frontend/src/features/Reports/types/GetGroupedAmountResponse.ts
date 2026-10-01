@@ -19,7 +19,9 @@ export type ReportPeriod = {
 export type ReportGroupingType =
   "Undefined" | "Day" | "Week" | "Month" | "Year";
 
-export function getTotalAmount(response: GetGroupedAmountResponse): number {
+export function getGroupedTotalAmount(
+  response: GetGroupedAmountResponse,
+): number {
   return response.amountByPeriod.reduce(
     (total, period) => total + period.amount,
     0,
