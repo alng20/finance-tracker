@@ -11,5 +11,6 @@ public record GetItemPurchasesQuery(
     int PageSize = PageConsts.DefaultPageSize,
     DateOnly? FromDate = null,
     DateOnly? ToDate = null,
-    IReadOnlyCollection<Guid>? CategoryIds = null
+    IReadOnlyCollection<Guid>? CategoryIds = null,
+    string? SearchString = null
 ) : MediatR.IRequest<PagedResult<GetItemPurchasesResultDto>>;

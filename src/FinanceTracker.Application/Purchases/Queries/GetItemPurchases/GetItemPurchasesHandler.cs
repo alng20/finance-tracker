@@ -32,6 +32,7 @@ public class GetItemPurchasesHandler(
             query.FromDate,
             query.ToDate,
             query.CategoryIds,
+            query.SearchString,
             cancellationToken
         );
 

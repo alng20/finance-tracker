@@ -19,6 +19,7 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
         DateOnly? fromDate,
         DateOnly? toDate,
         IReadOnlyCollection<Guid>? categoryIds,
+        string? searchString,
         CancellationToken cancellationToken
     )
     {
@@ -40,6 +41,7 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
                 ItemId = d.ItemId,
                 ItemName = d.Item.Name,
                 CategoryId = d.Item.CategoryId,
+                CategoryName = d.Item.Category.Name,
                 Unit = d.Item.Unit,
                 ShopId = x.ShopId,
                 ShopName = x.Shop != null ? x.Shop.Name : "Unknown",
@@ -53,10 +55,24 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
             priceHistory = priceHistory.Where(x => categoryIds.Contains(x.CategoryId));
         }
 
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            priceHistory = priceHistory.Where(x =>
+                EF.Functions.ILike(x.ItemName, $"%{searchString}%")
+            );
+        }
+
         // TODO: Support different currencies (convert or get for query.currency?)
         priceHistory = priceHistory.Where(x => x.UnitPrice.Currency == Currency.NZD);
 
-        var grouped = priceHistory.GroupBy(x => new { x.ItemId, x.ItemName, x.Unit });
+        var grouped = priceHistory.GroupBy(x => new
+        {
+            x.ItemId,
+            x.ItemName,
+            x.CategoryId,
+            x.CategoryName,
+            x.Unit,
+        });
         var totalCount = await grouped.CountAsync();
 
         var result = await grouped
@@ -66,6 +82,8 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
             .Select(g => new GetItemPurchasesResultDto(
                 g.Key.ItemId,
                 g.Key.ItemName,
+                g.Key.CategoryId,
+                g.Key.CategoryName,
                 g.Key.Unit,
                 g.OrderBy(x => x.UnitPrice.Amount)
                     .ThenBy(x => x.Date)

@@ -12,6 +12,7 @@ public interface IPurchaseProvider
         DateOnly? fromDate,
         DateOnly? toDate,
         IReadOnlyCollection<Guid>? categoryIds,
+        string? searchString,
         CancellationToken cancellationToken
     );
 
