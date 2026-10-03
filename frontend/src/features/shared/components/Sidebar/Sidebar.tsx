@@ -20,6 +20,7 @@ function Sidebar() {
         <SidebarNavLink toLink="/dashboard" children="Dashboard" />
         <SidebarNavLink toLink="/expenses" children="Expenses" />
         <SidebarNavLink toLink="/reports" children="Reports" />
+        <SidebarNavLink toLink="/purchases" children="Purchases" />
         {user?.role === "Admin" && (
           <>
             <SidebarNavLink toLink="/admin/shops" children="Shops" />

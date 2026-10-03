@@ -40,6 +40,7 @@ public class ItemsController(IMediator mediator) : ControllerBase
         return Ok(item);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ItemDto>> Create(
         CreateItemCommand cmd,
@@ -50,7 +51,7 @@ public class ItemsController(IMediator mediator) : ControllerBase
         return Ok(item);
     }
 
-    // [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<ItemDto>> Update(
         [FromBody] UpdateItemCommand cmd,

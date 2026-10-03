@@ -40,7 +40,7 @@ public class ShopsController(IMediator mediator) : ControllerBase
         return Ok(shop);
     }
 
-    // [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ShopDto>> Create(
         [FromBody] CreateShopCommand cmd,
@@ -51,7 +51,7 @@ public class ShopsController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = shop.Id }, shop);
     }
 
-    // [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<ShopDto>> Update(
         [FromBody] UpdateShopCommand cmd,

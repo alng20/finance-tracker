@@ -7,6 +7,7 @@ import ExpensesPage from "../../features/Expenses/pages/ExpensesPage";
 import GroupPage from "../../features/Groups/pages/GroupsPage";
 import HomePage from "../../features/Home/pages/HomePage";
 import ItemsPage from "../../features/Items/pages/ItemsPage";
+import PurchasesPage from "../../features/Purchases/pages/PurchasesPage";
 import ReportsPage from "../../features/Reports/pages/ReportsPage";
 import SettingsPage from "../../features/Settings/pages/SettingsPage";
 import ShopsPage from "../../features/Shops/pages/ShopsPage";
@@ -29,6 +30,7 @@ function AppRoutes() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/expenses" element={<ExpensesPage />} />
           <Route path="/reports" element={<ReportsPage />} />
+          <Route path="/purchases" element={<PurchasesPage />} />
           <Route path="/group" element={<GroupPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route element={<AdminRoute />}>

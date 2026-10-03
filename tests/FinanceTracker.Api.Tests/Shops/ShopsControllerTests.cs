@@ -4,7 +4,6 @@ using System.Net.Http.Json;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Shops.Commands.CreateShop;
 using FinanceTracker.Application.Shops.DTOs;
-using FinanceTracker.Application.Shops.Queries.GetShops;
 using FinanceTracker.Infrastructure.Persistence;
 using FinanceTracker.TestHelpers;
 
@@ -58,11 +57,11 @@ public class ShopControllerTests : IClassFixture<FinanceTrackerApiFactory>
     }
 
     [Fact]
-    public async Task PostShop_ReturnsOk()
+    public async Task PostShop_Admin_ReturnsOk()
     {
         await _factory.ClearShopsAsync();
 
-        using var client = _factory.CreateUserClient();
+        using var client = _factory.CreateAdminClient();
         var cmd = new CreateShopCommand("paknsave", null, "New Zealand", "Wellington");
         var response = await client.PostAsJsonAsync("/api/shops", cmd);
         response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -88,7 +87,7 @@ public class ShopControllerTests : IClassFixture<FinanceTrackerApiFactory>
         using var scope = _factory.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<FinanceTrackerDbContext>();
 
-        var shop = TestDataFactory.CreateShop("Countdown", null, null);
+        var shop = TestDataFactory.CreateShop("woolworths", null, null);
         context.Shops.Add(shop);
         await context.SaveChangesAsync();
 
@@ -105,7 +104,7 @@ public class ShopControllerTests : IClassFixture<FinanceTrackerApiFactory>
         using var scope = _factory.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<FinanceTrackerDbContext>();
 
-        var shop = TestDataFactory.CreateShop("Countdown", null, null);
+        var shop = TestDataFactory.CreateShop("woolworths", null, null);
         context.Shops.Add(shop);
         await context.SaveChangesAsync();
 

@@ -3,12 +3,12 @@ using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Reports.Enums;
 using FinanceTracker.Application.Reports.Models;
 using FinanceTracker.Domain.Entities;
-using FinanceTracker.Domain.Enums;
 
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
+// TODO: Move to ExpenseProvider? 
 public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseReportRepository
 {
     private readonly FinanceTrackerDbContext _ctx = ctx;
