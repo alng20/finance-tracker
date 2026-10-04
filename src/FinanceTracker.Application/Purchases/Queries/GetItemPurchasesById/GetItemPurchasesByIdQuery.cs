@@ -1,0 +1,15 @@
+using FinanceTracker.Application.Common.Consts;
+using FinanceTracker.Application.Common.Models;
+using FinanceTracker.Application.Purchases.DTOs;
+using FinanceTracker.Domain.Enums;
+
+namespace FinanceTracker.Application.Purchases.Queries.GetItemPurchasesById;
+
+public record GetItemPurchasesByIdQuery(
+    Guid Id,
+    Currency Currency,
+    int Page = PageConsts.DefaultPage,
+    int PageSize = PageConsts.DefaultPageSize,
+    DateOnly? FromDate = null,
+    DateOnly? ToDate = null
+) : MediatR.IRequest<PagedResult<GetItemPurchasesByIdResultDto>>;

@@ -2,8 +2,8 @@ using FinanceTracker.Application.Common.Interfaces.Providers;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Purchases.DTOs;
 using FinanceTracker.Application.Purchases.Models;
+using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Enums;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Providers;
@@ -23,7 +23,8 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
         CancellationToken cancellationToken
     )
     {
-        var query = _ctx.Expenses.AsNoTracking().Where(x => x.UserId == userId);
+        var query = _ctx.Expenses.AsNoTracking();
+        query = GetUserExpensesForPeriod(query, userId, fromDate, toDate);
 
         if (fromDate.HasValue)
         {
@@ -73,7 +74,7 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
             x.CategoryName,
             x.Unit,
         });
-        var totalCount = await grouped.CountAsync();
+        var totalCount = await grouped.CountAsync(cancellationToken);
 
         var result = await grouped
             .OrderBy(g => g.Key.ItemName)
@@ -106,8 +107,85 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
                     ))
                     .First()
             ))
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         return new PagedResult<GetItemPurchasesResultDto>(result, page, pageSize, totalCount);
+    }
+
+    public async Task<PagedResult<GetItemPurchasesByIdResultDto>> GetPricesByIdAsync(
+        Guid itemId,
+        Guid userId,
+        int page,
+        int pageSize,
+        DateOnly? fromDate,
+        DateOnly? toDate,
+        CancellationToken cancellationToken
+    )
+    {
+        var query = _ctx.Expenses.AsNoTracking();
+        query = GetUserExpensesForPeriod(query, userId, fromDate, toDate);
+
+        if (fromDate.HasValue)
+        {
+            query = query.Where(x => x.Date >= fromDate.Value);
+        }
+
+        if (toDate.HasValue)
+        {
+            query = query.Where(x => x.Date <= toDate.Value);
+        }
+        // TODO: Support different currencies (convert or get for query.currency?)
+        query = query.Where(x => x.TotalAmount.Currency == Currency.NZD);
+
+        var priceHistory = query
+            .SelectMany(x =>
+                x.Details.Where(d => d.ItemId == itemId)
+                    .Select(d => new
+                    {
+                        Price = d.UnitPrice.Amount,
+                        Currency = d.UnitPrice.Currency,
+                        Date = x.Date,
+                        ShopId = x.ShopId,
+                        ShopName = x.Shop != null ? x.Shop.Name : "Unknown",
+                    })
+            )
+            .OrderByDescending(x => x.Date);
+
+        var totalCount = await priceHistory.CountAsync(cancellationToken);
+        var result = await priceHistory
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(x => new GetItemPurchasesByIdResultDto(
+                x.Price,
+                x.Currency,
+                x.Date,
+                x.ShopId,
+                x.ShopName
+            ))
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<GetItemPurchasesByIdResultDto>(result, page, pageSize, totalCount);
+    }
+
+    private IQueryable<Expense> GetUserExpensesForPeriod(
+        IQueryable<Expense> query,
+        Guid userId,
+        DateOnly? fromDate,
+        DateOnly? toDate
+    )
+    {
+        query = query.Where(x => x.UserId == userId);
+
+        if (fromDate.HasValue)
+        {
+            query = query.Where(x => x.Date >= fromDate.Value);
+        }
+
+        if (toDate.HasValue)
+        {
+            query = query.Where(x => x.Date <= toDate.Value);
+        }
+
+        return query;
     }
 }

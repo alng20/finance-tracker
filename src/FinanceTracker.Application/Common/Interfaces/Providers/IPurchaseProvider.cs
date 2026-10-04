@@ -16,13 +16,13 @@ public interface IPurchaseProvider
         CancellationToken cancellationToken
     );
 
-    // Task<PagedResult<GetPurchaseHistoryByIdResultDto>> GetByItemIdAsync(
-    //     Guid userId,
-    //     Guid itemId,
-    //     int page,
-    //     int pageSize,
-    //     DateOnly? fromDate,
-    //     DateOnly? toDate,
-    //     CancellationToken cancellationToken
-    // );
+    Task<PagedResult<GetItemPurchasesByIdResultDto>> GetPricesByIdAsync(
+        Guid itemId,
+        Guid userId,
+        int page,
+        int pageSize,
+        DateOnly? fromDate,
+        DateOnly? toDate,
+        CancellationToken cancellationToken
+    );
 }

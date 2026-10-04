@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Purchases.DTOs;
 using FinanceTracker.Application.Purchases.Queries.GetItemPurchases;
+using FinanceTracker.Application.Purchases.Queries.GetItemPurchasesById;
 
 using MediatR;
 
@@ -22,6 +23,20 @@ public class PurchasesController(IMediator mediator) : ControllerBase
         CancellationToken cancellationToken
     )
     {
+        var purchases = await _mediator.Send(query, cancellationToken);
+        return Ok(purchases);
+    }
+
+
+    [Authorize]
+    [HttpGet("{id}")]
+    public async Task<ActionResult<PagedResult<GetItemPurchasesByIdResultDto>>> GetPricesById(
+        [FromRoute] Guid id,
+        [FromQuery] GetItemPurchasesByIdQuery query,
+        CancellationToken cancellationToken
+    )
+    {
+        query = query with { Id = id };
         var purchases = await _mediator.Send(query, cancellationToken);
         return Ok(purchases);
     }
