@@ -51,4 +51,14 @@ public static class TestDataFactory
     {
         return Shop.Create(name, retailerId, address);
     }
+
+    public static ItemCategory CreateItemCategory(string name)
+    {
+        return ItemCategory.Create(name);
+    }
+
+    public static Item CreateItem(string name, Guid categoryId, Unit unit = Unit.Piece)
+    {
+        return Item.Create(name, categoryId, unit);
+    }
 }

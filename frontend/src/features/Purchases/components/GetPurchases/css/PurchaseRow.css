@@ -1,0 +1,122 @@
+.purchase-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(23, 43, 58, 0.12);
+  border-radius: 14px;
+  background-color: #f7fafb;
+}
+
+.purchase-row__line {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 3fr) minmax(0, 0.8fr) minmax(0, 1fr)
+    400px auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background-color: #e9eef1;
+}
+
+.purchase-row__line > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+  overflow-wrap: anywhere;
+}
+
+.purchase-row__line > div > strong {
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.purchase-row__line > div:first-child > strong {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.purchase-row__line > .purchase-row__prices {
+  gap: 2px;
+}
+
+.purchase-row__price {
+  display: grid;
+  grid-template-columns: 60px 72px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.purchase-row__price--min {
+  background-color: #dcefe3;
+}
+
+.purchase-row__price--max {
+  background-color: #f5dede;
+}
+
+.purchase-row__price span:nth-child(3) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.purchase-row__price strong {
+  text-align: right;
+}
+
+.purchase-row__label {
+  color: var(--muted-text);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.purchase-row__history_button {
+  justify-self: end;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(23, 43, 58, 0.24);
+  border-radius: 8px;
+  background-color: #edb6eb;
+  color: #172b3a;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.purchase-row__history_button:hover {
+  background-color: #e29fe0;
+}
+
+@media (max-width: 600px) {
+  .purchase-row__line {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .purchase-row__line > div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .purchase-row__line > .purchase-row__prices {
+    grid-column: 1 / -1;
+  }
+
+  .purchase-row__history_button {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+}

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+
 export function useSearch<InputType, OutputType = InputType>(
   search: string,
   selected: OutputType | null,

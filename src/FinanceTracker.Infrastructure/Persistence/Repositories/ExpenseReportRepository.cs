@@ -3,12 +3,11 @@ using FinanceTracker.Application.Common.Interfaces.Persistence;
 using FinanceTracker.Application.Reports.Enums;
 using FinanceTracker.Application.Reports.Models;
 using FinanceTracker.Domain.Entities;
-using FinanceTracker.Domain.Enums;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
+// TODO: Move to ExpenseProvider?
 public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseReportRepository
 {
     private readonly FinanceTrackerDbContext _ctx = ctx;
@@ -20,7 +19,8 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
+        var query = _ctx.Expenses.AsNoTracking();
+        query = GetUserExpensesForPeriod(query, userId, fromDate, toDate);
 
         return await query
             .Select(x => new ExpenseAmountByDateData(
@@ -41,7 +41,8 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
+        var query = _ctx.Expenses.AsNoTracking();
+        query = GetUserExpensesForPeriod(query, userId, fromDate, toDate);
 
         var result = await query
             .Select(x => new ExpensesTotalWithDetailsData(
@@ -67,7 +68,8 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
+        var query = _ctx.Expenses.AsNoTracking();
+        query = GetUserExpensesForPeriod(query, userId, fromDate, toDate);
 
         var result = await query
             .Select(x => new ExpenseAmountByDateData(
@@ -87,7 +89,8 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
+        var query = _ctx.Expenses.AsNoTracking();
+        query = GetUserExpensesForPeriod(query, userId, fromDate, toDate);
 
         var result = await query
             .GroupBy(x => new
@@ -116,7 +119,8 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
+        var query = _ctx.Expenses.AsNoTracking();
+        query = GetUserExpensesForPeriod(query, userId, fromDate, toDate);
 
         var result = await query
             .GroupBy(x => new
@@ -146,7 +150,8 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
         CancellationToken cancellationToken
     )
     {
-        var query = GetUserExpensesForPeriod(userId, fromDate, toDate);
+        var query = _ctx.Expenses.AsNoTracking();
+        query = GetUserExpensesForPeriod(query, userId, fromDate, toDate);
 
         return groupingType switch
         {
@@ -159,12 +164,13 @@ public class ExpenseReportRepository(FinanceTrackerDbContext ctx) : IExpenseRepo
     }
 
     private IQueryable<Expense> GetUserExpensesForPeriod(
+        IQueryable<Expense> query,
         Guid userId,
         DateOnly? fromDate,
         DateOnly? toDate
     )
     {
-        var query = _ctx.Expenses.AsNoTracking().Where(x => x.UserId == userId);
+        query = query.Where(x => x.UserId == userId);
 
         if (fromDate.HasValue)
         {
