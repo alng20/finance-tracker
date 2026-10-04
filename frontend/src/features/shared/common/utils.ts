@@ -46,3 +46,26 @@ export function getLastDayOfCurrentMonth(): string {
 
   return `${year}-${month}-${day}`;
 }
+
+function getDayOfCurrentWeek(offset: number): string {
+  const today = new Date();
+  const day = today.getDay();
+  const diff = (day === 0 ? -6 : 1 - day) + offset;
+
+  const date = new Date(today);
+  date.setDate(today.getDate() + diff);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const dayOfMonth = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${dayOfMonth}`;
+}
+
+export function getFirstDayOfCurrentWeek(): string {
+  return getDayOfCurrentWeek(0);
+}
+
+export function getLastDayOfCurrentWeek(): string {
+  return getDayOfCurrentWeek(6);
+}

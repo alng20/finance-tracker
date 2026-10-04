@@ -31,6 +31,7 @@ public class GetItemPurchasesByIdHandler(
             query.PageSize,
             query.FromDate,
             query.ToDate,
+            query.SortType,
             cancellationToken
         );
 

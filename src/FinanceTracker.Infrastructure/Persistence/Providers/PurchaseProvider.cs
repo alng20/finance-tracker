@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Common.Interfaces.Providers;
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Purchases.DTOs;
+using FinanceTracker.Application.Purchases.Enums;
 using FinanceTracker.Application.Purchases.Models;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Enums;
@@ -77,7 +78,7 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
         var totalCount = await grouped.CountAsync(cancellationToken);
 
         var result = await grouped
-            .OrderBy(g => g.Key.ItemName)
+            .OrderByDescending(g => g.Count())
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .Select(g => new GetItemPurchasesResultDto(
@@ -119,6 +120,7 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
         int pageSize,
         DateOnly? fromDate,
         DateOnly? toDate,
+        PricesSortType sortType,
         CancellationToken cancellationToken
     )
     {
@@ -148,8 +150,19 @@ public class PurchaseProvider(FinanceTrackerDbContext ctx) : IPurchaseProvider
                         ShopId = x.ShopId,
                         ShopName = x.Shop != null ? x.Shop.Name : "Unknown",
                     })
-            )
-            .OrderByDescending(x => x.Date);
+            );
+
+        priceHistory = sortType switch
+        {
+            PricesSortType.DateAsc => priceHistory.OrderBy(x => x.Date).ThenBy(x => x.Price),
+            PricesSortType.PriceAsc => priceHistory
+                .OrderBy(x => x.Price)
+                .ThenByDescending(x => x.Date),
+            PricesSortType.PriceDesc => priceHistory
+                .OrderByDescending(x => x.Price)
+                .ThenByDescending(x => x.Date),
+            _ => priceHistory.OrderByDescending(x => x.Date).ThenByDescending(x => x.Price),
+        };
 
         var totalCount = await priceHistory.CountAsync(cancellationToken);
         var result = await priceHistory

@@ -13,6 +13,7 @@ public class GetItemPurchasesByIdValidator : AbstractValidator<GetItemPurchasesB
             .When(x => x.FromDate.HasValue && x.ToDate.HasValue);
         ;
         RuleFor(x => x.Currency).IsInEnum();
+        RuleFor(x => x.SortType).IsInEnum();
         RuleFor(x => x.Page).GreaterThanOrEqualTo(1);
         RuleFor(x => x.PageSize).InclusiveBetween(1, PageConsts.MaxPageSize);
     }

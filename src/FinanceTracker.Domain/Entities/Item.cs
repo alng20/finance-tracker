@@ -11,6 +11,8 @@ public class Item
     public ItemCategory Category { get; private set; } = null!;
     public Unit Unit { get; private set; }
 
+    // TODO: Add price per 1 unit for piece items (100g, 100ml, 1piece, etc.) to track different sizes items
+
     public DateTimeOffset? DeletedAt { get; private set; }
 
     public static Item Create(string name, Guid categoryId, Unit unit)

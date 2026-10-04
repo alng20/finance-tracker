@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Common.Models;
 using FinanceTracker.Application.Purchases.DTOs;
+using FinanceTracker.Application.Purchases.Enums;
 
 namespace FinanceTracker.Application.Common.Interfaces.Providers;
 
@@ -23,6 +24,7 @@ public interface IPurchaseProvider
         int pageSize,
         DateOnly? fromDate,
         DateOnly? toDate,
+        PricesSortType sortType,
         CancellationToken cancellationToken
     );
 }

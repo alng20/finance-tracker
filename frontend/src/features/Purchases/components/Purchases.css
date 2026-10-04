@@ -11,3 +11,25 @@
   box-shadow: var(--shadow);
   font-family: var(--font-ui);
 }
+
+.purchases__eyebrow {
+  margin: 0 0 8px;
+  color: #637786;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.purchases__title {
+  margin: 0;
+  color: #172b3a;
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.purchases__description {
+  margin: 8px 0 0;
+  color: #637786;
+  font-family: var(--font-ui);
+  font-size: 14px;
+}
